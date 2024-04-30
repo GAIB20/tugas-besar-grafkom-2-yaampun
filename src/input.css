@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sub {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.divider {
+    width: 100%;
+    border-bottom: 2px solid black;
+    margin-bottom: 0.5rem
+}
+
+.btn {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    padding: 0.25rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.btn:hover {
+    background-color: #e0e0e0;
+    border-color: #d4d4d4;
+    color: #333;
+}

@@ -2,22 +2,14 @@
   "name": "tugas-besar-grafkom-2-yaampun",
   "version": "1.0.0",
   "description": "For Computer Graphics Course - IF3260",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && npx tailwindcss -i style.css -o ./dist/style.css",
-    "dev": "concurrently \"npx webpack --watch\" \"live-server\""
+    "dev": "tailwindcss -i ./src/input.css -o ./output.css --watch"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "tailwindcss": "^3.4.3",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
-    "concurrently": "^8.2.2",
-    "live-server": "^1.2.2"
+    "tailwindcss": "^3.4.3"
   }
 }

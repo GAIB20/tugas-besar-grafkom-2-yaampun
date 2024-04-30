@@ -1,15 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"
-            ,"index.html",
-            ".dist/**/*.{html,js"],
+  content: ["./src/**/*.{html,js}",
+            "./index.html"],
   theme: {
-    extend: {
-      //reggae
-      fontFamily: {
-        reggae: ['Reggae One', 'sans-serif'],
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }

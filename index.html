@@ -1,65 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/dist/style.css" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap"
-            rel="stylesheet"
-        />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./output.css" rel="stylesheet">
+</head>
+<body class="h-screen w-screen overflow-auto px-5 flex flex-col items-center">
+    <p class="text-3xl font-bold text-center">3D MODEL WEBGL</p>
+    <div class="flex flex-row w-full">
 
-        <script id="vertex-shader-2d" type="x-shader/x-vertex">
-            // GLSL for vertex shader
-  
-            void main() {
+        <!-- left side -->
+        <div class="grow">
+            <div>
+                <p class="sub">Graph</p>
+                <div class="divider"></div>
 
-            }
-        </script>
-        <script id="fragment-shader-2d" type="x-shader/x-fragment">
-            // fragment shader tidak punya default precision, jadi kita harus memilihnya.
-            // mediump merupakan default bagus yang berarti "medium precision".
-            // selain itu juga ada highp (high precision) dan lowp (low precision).
-            precision mediump float;
-
-            // vector 4 component [r,g,b,a] (alpha -> opacity)
-            varying vec4 v_color;
-
-            void main() {
-
-            }
-        </script>
-        <script type="text/javascript" src="./dist/index.js" defer></script>
-    </head>
-    <body>
-        <canvas id="gl-canvas"></canvas>
-        <div class="title-wrap">
-            <h1 id="title" class="text-3xl font-bold font-reggae">YaAmpun</h1>
-        </div>
-        <div class="shape-control control">
-            <div class="btn-wrap">
-                <input
-                    type="file"
-                    accept=".json"
-                    id="load"
-                    style="display: none"
-                />
-                <label for="load" class="btn2">Load</label>
-            </div>
-            <button class="btn btn2" id="save">Save</button>
-        </div>
-        <div class="bottom-control control">
-            <div class="right-bottom">
-                <div class="top">
-                    <button class="btn" id="line">Line</button>
-                    <button class="btn" id="square">Square</button>
-                </div>
-                <div class="top">
-                    <button class="btn" id="rectangle">Rectangle</button>
-                    <button class="btn" id="polygon">Polygon</button>
+                <div class="max-h-[40vh] overflow-auto">
+                    <div class="bg-slate-400 w-full h-[1000px]">test</div>
                 </div>
             </div>
-            <div class="bottom-tools title-color" id="tools"></div>
+
+            <div>
+                <p class="sub">Camera</p>
+                <div class="divider"></div>
+                <div class="flex flex-row gap-5">
+
+                
+                    <div class="flex flex-col">
+                        <p>Translation</p>
+                        <div class="flex flex-row gap-5">
+                            <label for="camera-x-slider">X:</label>
+                            <input type="range" min="-10" max="10" value="0" id="camera-x-slider"/>
+                        </div>
+                        <div class="flex flex-row gap-5">
+                            <label for="camera-y-slider">Y:</label>
+                            <input type="range" min="-10" max="10" value="0" id="camera-y-slider"/>
+                        </div>
+                        <div class="flex flex-row gap-5">
+                            <label for="camera-z-slider">Z:</label>
+                            <input type="range" min="-10" max="10" value="0" id="camera-z-slider"/>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="camera-radius-slider">Radius</label>
+                        <input type="range" min="-10" max="10" value="0" id="camera-radius-slider"/>
+
+                        <button class="btn mt-2">Default View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p class="sub">Light</p>
+                <div class="divider"></div>
+
+                <div class="flex flex-row gap-5">
+
+                
+                    <div class="flex flex-col">
+                        <p>Translation</p>
+                        <div class="flex flex-row gap-5">
+                            <label for="light-x-slider">X:</label>
+                            <input type="range" min="-10" max="10" value="0" id="light-x-slider"/>
+                        </div>
+                        <div class="flex flex-row gap-5">
+                            <label for="light-y-slider">Y:</label>
+                            <input type="range" min="-10" max="10" value="0" id="light-y-slider"/>
+                        </div>
+                        <div class="flex flex-row gap-5">
+                            <label for="light-z-slider">Z:</label>
+                            <input type="range" min="-10" max="10" value="0" id="light-z-slider"/>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="light-radius-slider">Radius</label>
+                        <input type="range" min="-10" max="10" value="0" id="light-radius-slider"/>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
+
+
+        <!-- canvas -->
+        <div class="mt-5 px-5 grow flex justify-center">
+            <div class="w-[30vw] h-[30vw] bg-slate-400">
+            </div>
+        </div>
+        
+
+        <!-- right side -->
+        <div class="grow">
+            <div>
+                <p class="sub">Model & Projection</p>
+                <div class="divider"></div>
+                
+                <div class="flex flex-row gap-5 mb-2">
+
+                
+                    <div class="flex flex-row gap-5 items-center">
+                        <label for="model-selection">Model</label>
+                        <select class="border-2 border-slate rounded-md" name="model-selection" id="model-selection">
+                            <option value="">Hollow model 1</option>
+                            <option value="">Hollow model 2</option>
+                            <option value="">Hollow model 3</option>
+                            <option value="">Articulated model 1</option>
+                            <option value="">Articulated model 2</option>
+                            <option value="">Articulated model 3</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-row gap-5">
+                        <button class="btn">Save</button>
+                        <button class="btn">Load</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-row space-x-5">
+                    <p>Projection</p>
+                    <div class="flex flex-row items-center gap-5 justify-center">
+                        <div class="flex flex-row justify-center space-x-1">
+                            <input type="radio" name="projection" id="orthographic">
+                            <label for="orthographic">Orthographic</label>
+                        </div>
+                        <div class="flex flex-row justify-center space-x-1">
+                            <input type="radio" name="projection" id="oblique">
+                            <label for="oblique">Oblique</label>
+                        </div>
+                        <div class="flex flex-row justify-center space-x-1">
+                            <input type="radio" name="projection" id="perspective">
+                            <label for="perspective">Perspective</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+                <p class="sub">Transformation</p>
+                <div class="divider"></div>
+                <div>
+                    <div>
+                        <p>Rotation</p>
+                        <div class="flex flex-row gap-5">
+                            <div class="flex flex-row gap-2">
+                                <label for="rotation-x-slider">X</label>
+                                <input type="range" min="-10" max="10" value="0" id="rotation-x-slider"/>
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label for="rotation-y-slider">Y</label>
+                                <input type="range" min="-10" max="10" value="0" id="rotation-y-slider"/>
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label for="rotation-z-slider">Z</label>
+                                <input type="range" min="-10" max="10" value="0" id="rotation-z-slider"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Translation</p>
+                        <div class="flex flex-row gap-5">
+                            <div class="flex flex-row gap-2">
+                                <label for="translation-x-slider">X</label>
+                                <input type="range" min="-10" max="10" value="0" id="translation-x-slider"/>
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label for="translation-y-slider">Y</label>
+                                <input type="range" min="-10" max="10" value="0" id="translation-y-slider"/>
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label for="translation-z-slider">Z</label>
+                                <input type="range" min="-10" max="10" value="0" id="translation-z-slider"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Scalation</p>
+                        <div class="flex flex-row gap-5">
+                            <div class="flex flex-row gap-2">
+                                <label for="scalation-x-slider">X</label>
+                                <input type="range" min="-10" max="10" value="0" id="scalation-x-slider"/>
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label for="scalation-y-slider">Y</label>
+                                <input type="range" min="-10" max="10" value="0" id="scalation-y-slider"/>
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label for="scalation-z-slider">Z</label>
+                                <input type="range" min="-10" max="10" value="0" id="scalation-z-slider"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p class="sub">Material</p>
+                <div class="divider"></div>
+
+                <div class="flex flex-col gap-3">
+                    <div>
+                        <p>Basic</p>
+                        <div class="flex flex-row items-center gap-3">
+                            <label for="color-picker">Color</label>
+                            <input type="color" id="color-picker">
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>Phong</p>
+                        <div>
+                            <div class="flex flex-row items-center gap-3">
+                                <label for="shiness-slider">Shiness</label>
+                                <input type="range" min="0" max="100" value="0" id="shiness-slider">
+                            </div>
+                            <div class="flex flex-row gap-4">
+
+                                <div class="flex flex-row items-center gap-2">
+                                    <label for="">Specular</label>
+                                    <input type="color">
+                                </div>
+                                <div class="flex flex-row items-center gap-2">
+                                    <label for="">Diffuse</label>
+                                    <input type="color">
+                                </div>
+                                <div class="flex flex-row items-center gap-2">
+                                    <label for="">Bump</label>
+                                    <input type="color">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p class="sub">Animation & Frame</p>
+                <div class="divider"></div>
+
+                <div class="flex flex-row gap-5">
+                    <button class="btn">Play</button>
+                    <button class="btn">Pause</button>
+                    <button class="btn">Auto</button>
+                    <button class="btn">Reverse</button>
+                </div>
+
+                <p class="mt-5">Frame</p>
+                <div class="flex flex-row gap-5">
+                    <button class="btn">Next</button>
+                    <button class="btn">Prev</button>
+                    <button class="btn">First</button>
+                    <button class="btn">Last</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
