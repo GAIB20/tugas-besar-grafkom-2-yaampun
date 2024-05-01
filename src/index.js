@@ -25,16 +25,18 @@ const fragmentShader = createShader(
 // const program = createProgram(gl, vertexShader, fragmentShader);
 const program = webglUtils.createProgramFromScripts(gl, ["vertex-shader-3d", "fragment-shader-3d"]);
 
-gl.useProgram(program);
-
 resizeCanvasToDisplaySize(gl.canvas);
 
 gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
 gl.clear(gl.COLOR_BUFFER_BIT);
 
-gl.enable(gl.CULL_FACE);
 gl.enable(gl.DEPTH_TEST);
+gl.enable(gl.CULL_FACE);
+
+
+gl.useProgram(program);
+
 
 const drawHandler = new DrawHandler(gl, program, document);
 
