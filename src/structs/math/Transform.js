@@ -43,10 +43,15 @@ export default class Transform{
 
         //translate to the centroid
         //perform rotation
+
+        // translate to the centroid
+        matrix = Mat4.multiply(matrix, Mat4.getTranslation(this.centroid.x, this.centroid.y, this.centroid.z));
         matrix = Mat4.multiply(matrix, Mat4.getRotationX(degToRad(this.rotation.x)));
         matrix = Mat4.multiply(matrix, Mat4.getRotationY(degToRad(this.rotation.y)));
         matrix = Mat4.multiply(matrix, Mat4.getRotationZ(degToRad(this.rotation.z))); 
+        
         // translate back to the original position
+        matrix = Mat4.multiply(matrix, Mat4.getTranslation(-this.centroid.x, -this.centroid.y, -this.centroid.z));
         //perform scaling
         matrix = Mat4.multiply(matrix, Mat4.getScale(this.scale.x, this.scale.y, this.scale.z));
         return matrix;
