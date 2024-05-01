@@ -86,12 +86,16 @@ export default class Mat4{
         return this.data;
     }
 
+    foo(){
+        console.log("foo");
+    }
+
     static multiply(a, b){
         let result = Mat4.getEmpty();
         for(let i = 0; i < 4; i++){
-            let row = a.getRow(i);
+            let row = b.getRow(i);
             for(let j = 0; j < 4; j++){
-                let col = b.getColumn(j);
+                let col = a.getColumn(j);
                 result.data[i * 4 + j] = Vec4.dot(row, col);
             }
         }

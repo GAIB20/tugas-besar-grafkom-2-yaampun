@@ -103,24 +103,24 @@ export default class HollowHandler{
         let scaleX = document.getElementById("scalation-x-slider");
         scaleX.oninput = () => {
             let scaleXLabel = document.getElementById("scalation-x-slider-value");
-            scaleXLabel.innerHTML = scaleX.value;
-            this.model.transform.scale.x = scaleX.value;
+            scaleXLabel.innerHTML = scaleX.value/10;
+            this.model.transform.scale.x = scaleX.value/10;
         }
 
         //handle scale Y slider
         let scaleY = document.getElementById("scalation-y-slider");
         scaleY.oninput = () => {
             let scaleYLabel = document.getElementById("scalation-y-slider-value");
-            scaleYLabel.innerHTML = scaleY.value;
-            this.model.transform.scale.y = scaleY.value;
+            scaleYLabel.innerHTML = scaleY.value/10;
+            this.model.transform.scale.y = scaleY.value/10;
         }
 
         //handle scale Z slider
         let scaleZ = document.getElementById("scalation-y-slider");
         scaleZ.oninput = () => {
             let scaleZLabel = document.getElementById("scalation-y-slider-value");
-            scaleZLabel.innerHTML = scaleZ.value;
-            this.model.transform.scale.z = scaleZ.value;
+            scaleZLabel.innerHTML = scaleZ.value/10;
+            this.model.transform.scale.z = scaleZ.value/10;
         }
 
         //set current scale values

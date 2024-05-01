@@ -12,7 +12,7 @@ export default class DummyModel extends BaseModel{
 
     initTransform(renderProps){
         let { gl, program } = renderProps;
-        let projection = [gl.canvas.width, gl.canvas.height, 400];
+        let projection = [gl.canvas.clientWidth, gl.canvas.clientHeight, 400];
         let translation = [0, 0, 0];
         let rotation = [0, 0, 0];
         let scale = [1, 1, 1];
