@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="./output.css" rel="stylesheet">
+    <script id="vertex-shader-3d" type="x-shader/x-vertex">
+        attribute vec4 a_position;
+        attribute vec4 a_color;
+
+        uniform mat4 u_matrix;
+
+        varying vec4 v_color;
+
+        void main() {
+        // Multiply the position by the matrix.
+        gl_Position = u_matrix * a_position;
+
+        // Pass the color to the fragment shader.
+        v_color = a_color;
+        }
+    </script>
+    <script id="fragment-shader-3d" type="x-shader/x-fragment">
+        precision mediump float;
+
+        // Passed in from the vertex shader.
+        varying vec4 v_color;
+
+        void main() {
+        gl_FragColor = v_color;
+        }
+    </script>
+    <script type="text/javascript" src="./dist/index.js" defer></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
 </head>
 <body class="h-screen w-screen overflow-auto px-5 flex flex-col items-center">
     <p class="text-3xl font-bold text-center">3D MODEL WEBGL</p>
@@ -85,7 +114,8 @@
 
         <!-- canvas -->
         <div class="mt-5 px-5 grow flex justify-center">
-            <div class="w-[30vw] h-[30vw] bg-slate-400">
+            <div>
+                <canvas id="gl-canvas" class="w-[30vw] h-[30vw] border-dashed border-2 border-indigo-600"></canvas>
             </div>
         </div>
         
@@ -146,15 +176,18 @@
                         <div class="flex flex-row gap-5">
                             <div class="flex flex-row gap-2">
                                 <label for="rotation-x-slider">X</label>
-                                <input type="range" min="-10" max="10" value="0" id="rotation-x-slider"/>
+                                <input type="range" min="-180" max="180" value="0" id="rotation-x-slider"/>
+                                <label id="rotation-x-slider-value">0</label>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label for="rotation-y-slider">Y</label>
-                                <input type="range" min="-10" max="10" value="0" id="rotation-y-slider"/>
+                                <input type="range" min="-180" max="180" value="0" id="rotation-y-slider"/>
+                                <label id="rotation-y-slider-value">0</label>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label for="rotation-z-slider">Z</label>
-                                <input type="range" min="-10" max="10" value="0" id="rotation-z-slider"/>
+                                <input type="range" min="-180" max="180" value="0" id="rotation-z-slider"/>
+                                <label id="rotation-z-slider-value">0</label>
                             </div>
                         </div>
                     </div>
@@ -163,15 +196,18 @@
                         <div class="flex flex-row gap-5">
                             <div class="flex flex-row gap-2">
                                 <label for="translation-x-slider">X</label>
-                                <input type="range" min="-10" max="10" value="0" id="translation-x-slider"/>
+                                <input type="range" min="-100" max="100" value="0" id="translation-x-slider"/>
+                                <label id="translation-x-slider-value">0</label>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label for="translation-y-slider">Y</label>
-                                <input type="range" min="-10" max="10" value="0" id="translation-y-slider"/>
+                                <input type="range" min="-100" max="100" value="0" id="translation-y-slider"/>
+                                <label id="translation-y-slider-value">0</label>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label for="translation-z-slider">Z</label>
-                                <input type="range" min="-10" max="10" value="0" id="translation-z-slider"/>
+                                <input type="range" min="-100" max="100" value="0" id="translation-z-slider"/>
+                                <label id="translation-z-slider-value">0</label>
                             </div>
                         </div>
                     </div>
@@ -181,14 +217,17 @@
                             <div class="flex flex-row gap-2">
                                 <label for="scalation-x-slider">X</label>
                                 <input type="range" min="-10" max="10" value="0" id="scalation-x-slider"/>
+                                <label id="scalation-x-slider-value">0</label>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label for="scalation-y-slider">Y</label>
                                 <input type="range" min="-10" max="10" value="0" id="scalation-y-slider"/>
+                                <label id="scalation-y-slider-value">0</label>
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label for="scalation-z-slider">Z</label>
                                 <input type="range" min="-10" max="10" value="0" id="scalation-z-slider"/>
+                                <label id="scalation-z-slider-value">0</label>
                             </div>
                         </div>
                     </div>
