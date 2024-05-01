@@ -40,6 +40,8 @@ export default class Transform{
         let matrix = Mat4.projection(this.projection.x, this.projection.y, this.projection.z); 
         //perform translation
         matrix = Mat4.multiply(matrix, Mat4.getTranslation(this.translation.x, this.translation.y, this.translation.z));
+
+        //translate to the centroid
         //perform rotation
         matrix = Mat4.multiply(matrix, Mat4.getRotationX(degToRad(this.rotation.x)));
         matrix = Mat4.multiply(matrix, Mat4.getRotationY(degToRad(this.rotation.y)));

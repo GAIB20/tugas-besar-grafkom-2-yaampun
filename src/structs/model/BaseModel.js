@@ -92,6 +92,17 @@ export default class BaseModel {
      */
     render(r) {
         if (this.isNullVertex()) return;
+        const {gl, program, positionBuffer, colorBuffer} = r;
+        // Clear the canvas.
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        // Turn on culling. By default backfacing triangles
+        // will be culled.
+        gl.enable(gl.CULL_FACE);
+
+        // Enable the depth buffer
+        gl.enable(gl.DEPTH_TEST);
+        gl.useProgram(program);
         this.positionProc(r);
         this.colorProc(r);
         this.matrixProc(r);

@@ -15,6 +15,7 @@
   "dependencies": {
     "concurrently": "^8.2.2",
     "live-server": "^1.2.2",
+    "webgl-utils": "^1.0.1",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
   }
