@@ -24,6 +24,7 @@ var matrices = {
     let a2 = right + left;
     let b2 = top + bottom;
     let c2 = far + near;
+  
     return [
       2 / a,
       0,

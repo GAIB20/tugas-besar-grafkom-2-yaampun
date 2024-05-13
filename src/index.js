@@ -80,7 +80,8 @@ function setDefaultState(objects) {
 
 function setTransform(object) {
     /* Setup transform matrix */
-    console.log(object)
+    // console.log(object)
+
     var transformMatrix = Mat4.translate(
       object.transform.translate[0],
       object.transform.translate[1],
@@ -199,6 +200,7 @@ function setCamera(object) {
       Mat4.rotateX(object.viewMatrix.camera[0])
     );
   
+    // handle radius
     viewMatrix = Mat4.multiply(
       viewMatrix,
       Mat4.translate(0, 0, object.viewMatrix.camera[2])
@@ -225,9 +227,13 @@ function setCamera(object) {
     const top = 2;
     let farOrtho = objects[0].viewMatrix.far * 1;
     let nearOrtho = -farOrtho;
+
+
   
     if (projection === "orthographic") {
-      return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
+    //   return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
+    return Mat4.projectionOrtographic(left, right, bottom, top, nearOrtho, farOrtho)
+    // return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
     } else if (projection === "oblique") {
       return Mat4.multiply(
         matrices.oblique(theta, phi),
@@ -248,8 +254,8 @@ function setProjectionMatrix(matrix, object) {
     const projectionView = setProjection();
     const view = Mat4.inverse(camera);
     var viewProjectionMatrix = Mat4.multiply(projectionView, view);
-    if (factor < 0.01) {
-        factor = 0.01;
+    if (factor < 0.1) {
+        factor = 0.1;
     }
 
     if (projection === "perspective") {

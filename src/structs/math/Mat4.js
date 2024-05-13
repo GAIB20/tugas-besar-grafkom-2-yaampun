@@ -49,12 +49,19 @@ class Mat4{
                 0, 0, 1, 0,
                 0, 0, 0, 1];
     }   
-    static projection(width, height, depth) {
+    static projectionOrtographic(left, right, bottom, top, near, far) {
         // Note: This matrix flips the Y axis so 0 is at the top.
-        return [2 / width, 0, 0, 0,
-                0, -2 / height, 0, 0,
-                0, 0, 2 / depth, 0,
-                -1, 1, 0, 1];
+        const width = right-left
+        const height = top-bottom
+        const depth = far - near
+        const horizontalRatio = (right + left) / width
+        const verticalRatio = (top + bottom) / height
+        const depthRatio = (far + near) / depth
+
+        return [2 / (width), 0, 0, 0,
+                0, 2 / (height), 0, 0,
+                0, 0, -2 / (depth), 0,
+                horizontalRatio, verticalRatio, depthRatio, 1];
     }
 
     static transpose(a) {

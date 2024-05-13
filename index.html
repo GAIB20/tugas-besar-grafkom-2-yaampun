@@ -124,7 +124,10 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="camera-radius-slider">Radius</label>
-                        <input type="range" min="-10" max="10" value="0" id="camera-radius-slider"/>
+                        <div class="flex flex-row">
+                        <input type="range" min="0" max="10" value="5" id="camera-radius-slider"/>
+                        <a id="camera-radius-slider-value">5</a>
+                        </div>
 
                         <button class="btn mt-2">Default View</button>
                     </div>
