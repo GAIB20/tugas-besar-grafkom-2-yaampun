@@ -1,4 +1,4 @@
-import endModel from "./structs/model/test.js";
+import model from "./structs/model/pig.js";
 import Mat4 from "./structs/math/Mat4.js";
 import matrices from "./structs/math/matrices.js";
 import handler from "./handler/handler.js";
@@ -28,7 +28,7 @@ var worldViewProjectionMatrix;
 initState();
 
 function initState() {
-    objects = endModel;
+    objects = model;
     focus = null;
     lighting = false;
     lightDirection = [0, 0, 1];
