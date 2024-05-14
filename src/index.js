@@ -1,7 +1,9 @@
 import model from "./structs/model/pig.js";
 import Mat4 from "./structs/math/Mat4.js";
+import Vec3 from "./structs/math/Vec3.js";
+import Vec4 from "./structs/math/Vec4.js";
 import matrices from "./structs/math/matrices.js";
-import handler from "./handler/handler.js";
+import Camera from "./utils/Camera.js";
 
 
 const canvas = document.getElementById("gl-canvas");
@@ -13,11 +15,14 @@ const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.text
 
 // state
 var objects;
-var target;
+export var target;
 var lighting;
 var lightDirection;
 var texture;
 var projection;
+export function setProjectionValue(newProjection) {
+  projection = newProjection;
+}
 var factor;
 var theta;
 var phi;
@@ -31,7 +36,7 @@ function initState() {
     objects = model;
     focus = null;
     lighting = false;
-    lightDirection = [0, 0, 1];
+    lightDirection = Vec3.fromArray([0,0,1])
     texture = "none";
     projection = "orthographic";
     factor = 0.0;
@@ -191,11 +196,11 @@ function render() {
     gl.enable(gl.DEPTH_TEST);
 
     setDefaultState(objects);
-    handler(target);
+
 
 
     objects[0].setWorldMtx(null);
-    normalizeLight = matrices.normalize(lightDirection);
+    normalizeLight = Vec3.unitVector(lightDirection).asArray()
     renderLoop(objects);
     
   window.requestAnimFrame(render);
@@ -222,6 +227,7 @@ function setCamera(object) {
       object.viewMatrix.lookAt,
       object.viewMatrix.up
     );
+    // let cameraMatrix = Camera.lookDirection(camPos, object.viewMatrix.lookAt, object.viewMatrix.up);
   
     return cameraMatrix;
   }
@@ -237,19 +243,17 @@ function setCamera(object) {
     let farOrtho = objects[0].viewMatrix.far * 1;
     let nearOrtho = -farOrtho;
 
-
-  
     if (projection === "orthographic") {
     //   return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
-    return Mat4.projectionOrtographic(left, right, bottom, top, nearOrtho, farOrtho)
+    return Camera.projectionOrtographic(left, right, bottom, top, nearOrtho, farOrtho)
     // return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
     } else if (projection === "oblique") {
       return Mat4.multiply(
-        matrices.oblique(theta, phi),
-        matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho)
+        Camera.projectionOblique(theta, phi),
+        Camera.projectionOrtographic(left, right, bottom, top, nearOrtho, farOrtho)
       );
     } else if (projection === "perspective") {
-      return matrices.perspective(
+      return Camera.projectionPerspective(
         fovy,
         aspect,
         objects[0].viewMatrix.near,

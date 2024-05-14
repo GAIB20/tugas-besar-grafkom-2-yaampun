@@ -12,7 +12,8 @@ export default class Vec4{
     }
 
     static dot(a, b){
-        return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+        let res = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
+        return res;
     }
 
     static norm(a){
@@ -30,6 +31,10 @@ export default class Vec4{
 
     asArray(){  
         return [this.x, this.y, this.z, this.w];
+    }
+
+    static fromArray(array){
+        return new Vec4(array[0], array[1], array[2], array[3]);
     }
 
 }
