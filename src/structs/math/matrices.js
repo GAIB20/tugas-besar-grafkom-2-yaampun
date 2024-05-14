@@ -1,10 +1,10 @@
 /* ======= Transformation Matrices ======= */
 
-var matrices = {
+export default class matrices{
   
 
   /* 1d matrix 1 x 3 */
-  normalize: function (array) {
+  static normalize(array) {
     let distance = calculateEulerDistance(array);
 
     let result = [0, 0, 0];
@@ -14,10 +14,10 @@ var matrices = {
     }
 
     return result;
-  },
+  }
 
   /* projection */
-  orthographic: function (left, right, bottom, top, near, far) {
+  static orthographic(left, right, bottom, top, near, far) {
     let a = right - left;
     let b = top - bottom;
     let c = far - near;
@@ -43,9 +43,9 @@ var matrices = {
       -c2 / c,
       1,
     ];
-  },
+  }
 
-  oblique: function (theta, phi) {
+  static oblique(theta, phi) {
     let t = degToRad(theta);
     let p = degToRad(phi);
 
@@ -53,9 +53,9 @@ var matrices = {
     let cotP = -1 / Math.tan(p);
 
     return [1, 0, 0, 0, 0, 1, 0, 0, cotT, cotP, 1, 0, 0, 0, 0, 1];
-  },
+  }
 
-  perspective: function (fieldOfViewInRadians, aspect, near, far) {
+  static perspective (fieldOfViewInRadians, aspect, near, far) {
     var f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
     var rangeInv = 1.0 / (near - far);
 
@@ -77,9 +77,9 @@ var matrices = {
       near * far * rangeInv * 2,
       0,
     ];
-  },
+  }
 
-  applyTransform: function (transformMatrix, point) {
+  static applyTransform (transformMatrix, point) {
     // apply 4*4 matrix to 4*1 vector
     console.table(point);
     let x =
@@ -99,9 +99,9 @@ var matrices = {
       transformMatrix[11] * 1;
 
     return [x, y, z];
-  },
+  }
 
-  lookAt: function (cameraPosition, target, up) {
+  static lookAt (cameraPosition, target, up) {
     let zAxis = normalize(subtractVectors(cameraPosition, target));
     let xAxis = normalize(cross(up, zAxis));
     let yAxis = normalize(cross(zAxis, xAxis));
@@ -123,9 +123,9 @@ var matrices = {
       cameraPosition[2],
       1,
     ];
-  },
+  }
 
-  makeZtoWMatrix: function (fudgeFactor) {
+  static makeZtoWMatrix (fudgeFactor) {
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, fudgeFactor, 0, 0, 0, 1];
-  },
+  }
 };

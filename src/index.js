@@ -1,3 +1,9 @@
+import endModel from "./structs/model/test.js";
+import Mat4 from "./structs/math/Mat4.js";
+import matrices from "./structs/math/matrices.js";
+import handler from "./handler/handler.js";
+
+
 const canvas = document.getElementById("gl-canvas");
 const gl = canvas.getContext("webgl");
 
@@ -15,6 +21,8 @@ var projection;
 var factor;
 var theta;
 var phi;
+var normalizeLight;
+var worldViewProjectionMatrix;
 // console.log(defaultObjects);
 
 initState();
@@ -183,6 +191,7 @@ function render() {
     gl.enable(gl.DEPTH_TEST);
 
     setDefaultState(objects);
+    handler(target);
 
 
     objects[0].setWorldMtx(null);

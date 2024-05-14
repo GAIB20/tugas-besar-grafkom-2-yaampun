@@ -1,6 +1,7 @@
 // const { default: Mat4 } = require("./structs/math/Mat4");
+import Mat4 from "./math/Mat4.js";
 
-class Node {
+export default class Node {
     constructor() {
         this.children = [];
         this.localMatrix = Mat4.getIdentity();

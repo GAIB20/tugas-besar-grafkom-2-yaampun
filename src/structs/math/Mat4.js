@@ -1,5 +1,5 @@
-
-class Mat4{
+import Vec4 from "./Vec4.js";
+export default class Mat4{
     static getEmpty(){
         return [0, 0, 0, 0,
                 0, 0, 0, 0,
@@ -141,6 +141,7 @@ class Mat4{
         ];
     }
 
+    // return b * a
     static multiply(a, b){
         var a00 = a[0 * 4 + 0];
         var a01 = a[0 * 4 + 1];
@@ -193,6 +194,16 @@ class Mat4{
             b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32,
             b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33,
         ];
+
+        // implement with vec4 version
+        // let res = Mat4.getEmpty();
+        // for(let i = 0; i < 4; ++i){
+        //     for(let j = 0; j < 4; ++j){
+        //         res[i * 4 + j] = Vec4.dot(Mat4.getRow(a, i), Mat4.getColumn(b, j));
+        //     }
+        // }
+        // return res;
+
     }
 
     static rotateX(rad) {
@@ -235,5 +246,15 @@ class Mat4{
             0, 0, sz, 0,
             0, 0, 0, 1
         ];
+    }
+
+    // utils
+    static getRow(matrix, row){
+        // use Vec4 to get the row
+        return new Vec4(matrix[row], matrix[row + 4], matrix[row + 8], matrix[row + 12]);
+    }
+
+    static getColumn(matrix, column){
+        return new Vec4(matrix[column * 4], matrix[column * 4 + 1], matrix[column * 4 + 2], matrix[column * 4 + 3]);
     }
 }

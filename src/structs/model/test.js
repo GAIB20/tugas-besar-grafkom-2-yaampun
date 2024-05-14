@@ -1,3 +1,6 @@
+import Mat4 from "../math/Mat4.js";
+import Node from "../node.js";
+
 const seat = new Node();
 seat.name = "seat";
 seat.model = boxModel(0.2, 1.2, 0.9, [0, 0, 0]);
@@ -214,3 +217,5 @@ rightEye.setParent(back);
 var endModel = [
   seat
 ];
+
+export default endModel;
