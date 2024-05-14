@@ -17,7 +17,7 @@ export default class Vec3{
     }
 
     static cross(a, b){
-        return new Vec3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+        return new Vec3(a.z * b.y - a.y * b.z, a.x * b.z - a.z * b.x ,a.y * b.x - a.x * b.y);
     }
 
     static norm(a){

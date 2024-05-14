@@ -2,7 +2,6 @@ import model from "./structs/model/pig.js";
 import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
-import matrices from "./structs/math/matrices.js";
 import Camera from "./utils/Camera.js";
 
 
@@ -19,16 +18,22 @@ export var target;
 var lighting;
 var lightDirection;
 var texture;
-var projection;
-export function setProjectionValue(newProjection) {
-  projection = newProjection;
+var projection_type;
+export function setProjectionType(newProjection) {
+  projection_type = newProjection;
 }
 var factor;
-var theta;
-var phi;
+var oblique_theta;
+export function setObliqueTheta(newTheta) {
+  oblique_theta = newTheta;
+}
+var oblique_phi;
+export function setObliquePhi(newPhi) {
+  oblique_phi = newPhi;
+}
 var normalizeLight;
 var worldViewProjectionMatrix;
-// console.log(defaultObjects);
+
 
 initState();
 
@@ -38,10 +43,10 @@ function initState() {
     lighting = false;
     lightDirection = Vec3.fromArray([0,0,1])
     texture = "none";
-    projection = "orthographic";
+    projection_type = "orthographic";
     factor = 0.0;
-    theta = 90.0;
-    phi = 90.0;
+    oblique_theta = 90.0;
+    oblique_phi = 90.0;
     setDefaultRotation(objects)
     // initAnimation(objects);
     // showComponents(objects);
@@ -93,7 +98,6 @@ function setDefaultState(objects) {
 
 function setTransform(object) {
     /* Setup transform matrix */
-    // console.log(object)
 
     var transformMatrix = Mat4.translate(
       object.transform.translate[0],
@@ -101,9 +105,6 @@ function setTransform(object) {
       object.transform.translate[2]
     );
     
-
-
-
     transformMatrix = Mat4.multiply(
       transformMatrix,
       Mat4.rotateX(object.transform.rotate[0])
@@ -132,12 +133,12 @@ function setTransform(object) {
   }
 
 function setDefaultRotation(objects) {
-    objects.forEach(object => {
+    for(let object of objects){
         object.transform.rotate = object.transform.rotate.map((val) => degToRad(val));
-        if (object.children.length > 0) {
+        if(object.children.length > 0){
             setDefaultRotation(object.children);
         }
-    });
+    }
 
 }
 
@@ -207,73 +208,25 @@ function render() {
     
 }
 
-function setCamera(object) {
-    /* Setup view matrix */
-    var viewMatrix = Mat4.multiply(
-      Mat4.rotateY(object.viewMatrix.camera[1]),
-      Mat4.rotateX(object.viewMatrix.camera[0])
-    );
-  
-    // handle radius
-    viewMatrix = Mat4.multiply(
-      viewMatrix,
-      Mat4.translate(0, 0, object.viewMatrix.camera[2])
-    );
-  
-    let camPos = [viewMatrix[12], viewMatrix[13], viewMatrix[14]];
-  
-    let cameraMatrix = matrices.lookAt(
-      camPos,
-      object.viewMatrix.lookAt,
-      object.viewMatrix.up
-    );
-    // let cameraMatrix = Camera.lookDirection(camPos, object.viewMatrix.lookAt, object.viewMatrix.up);
-  
-    return cameraMatrix;
-  }
-
-  function setProjection () {
-    
-    const aspect = canvas.width / canvas.height;
-    const fovy = degToRad(45);
-    const left = -2;
-    const right = 2;
-    const bottom = -2;
-    const top = 2;
-    let farOrtho = objects[0].viewMatrix.far * 1;
-    let nearOrtho = -farOrtho;
-
-    if (projection === "orthographic") {
-    //   return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
-    return Camera.projectionOrtographic(left, right, bottom, top, nearOrtho, farOrtho)
-    // return matrices.orthographic(left, right, bottom, top, nearOrtho, farOrtho);
-    } else if (projection === "oblique") {
-      return Mat4.multiply(
-        Camera.projectionOblique(theta, phi),
-        Camera.projectionOrtographic(left, right, bottom, top, nearOrtho, farOrtho)
-      );
-    } else if (projection === "perspective") {
-      return Camera.projectionPerspective(
-        fovy,
-        aspect,
-        objects[0].viewMatrix.near,
-        objects[0].viewMatrix.far
-      );
-    }
-  }
 
 function setProjectionMatrix(matrix, object) {
-    const camera = setCamera(object);
-    const projectionView = setProjection();
-    const view = Mat4.inverse(camera);
-    var viewProjectionMatrix = Mat4.multiply(projectionView, view);
-    if (factor < 0.1) {
-        factor = 0.1;
+    // const camera = setCamera(object);
+    const projectionView = Camera.projectionMatrix(projection_type, 
+                                                    degToRad(45), 
+                                                    (canvas.width / canvas.height), 
+                                                    object.viewMatrix.near, 
+                                                    object.viewMatrix.far,
+                                                    oblique_theta,
+                                                    oblique_phi)
+    const viewMatrix = Camera.viewMatrix(object.viewMatrix.camera, object.viewMatrix.lookAt, object.viewMatrix.up);
+    var viewProjectionMatrix = Mat4.multiply(projectionView, viewMatrix);
+    if (factor < 0.01) {
+        factor = 0.01;
     }
 
-    if (projection === "perspective") {
+    if (projection_type === "perspective") {
         viewProjectionMatrix = Mat4.multiply(
-            matrices.makeZtoWMatrix(factor),
+            Camera.makeZToWMatrix(factor),
             viewProjectionMatrix,
         );
     }

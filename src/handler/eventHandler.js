@@ -1,4 +1,5 @@
-import { target, setProjectionValue } from "../index.js"
+import { target, setProjectionType, setObliquePhi, setObliqueTheta} from "../index.js"
+import { degToRad } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
 const translationY = document.getElementById('translation-y-slider');
@@ -29,6 +30,9 @@ const cameraRadius = document.getElementById('camera-radius-slider');
 // camera roll-pitch
 const cameraRoll = document.getElementById('camera-roll-slider');
 const cameraPitch = document.getElementById('camera-pitch-slider');
+// camera theta-phi
+const cameraTheta = document.getElementById('camera-theta-slider');
+const cameraPhi = document.getElementById('camera-phi-slider');
 // set orthographic as default input radio button
 orthographic.checked = true;
 // event listener
@@ -45,16 +49,16 @@ translationZ.addEventListener('input', function(){
     translataionZValue.textContent = target.transform.translate[2];
 });
 rotationX.addEventListener('input', function(){
-    target.transform.rotate[0] = (2 * rotationX.value) / 100;
-    rotationXValue.textContent = target.transform.rotate[0];
+    target.transform.rotate[0] = degToRad(rotationX.value);
+    rotationXValue.textContent = rotationX.value;
 })
 rotationY.addEventListener('input', function(){
-    target.transform.rotate[1] = (2 * rotationY.value) / 100;
-    rotationYValue.textContent = target.transform.rotate[1];
+    target.transform.rotate[1] = degToRad(rotationY.value);
+    rotationYValue.textContent = rotationY.value;
 })
 rotationZ.addEventListener('input', function(){
-    target.transform.rotate[2] = (2 * rotationZ.value) / 100;
-    rotationZValue.textContent = target.transform.rotate[2];
+    target.transform.rotate[2] = degToRad(rotationZ.value);
+    rotationZValue.textContent = rotationZ.value;
 })
 scalationX.addEventListener('input', function(){
     target.transform.scale[0] =  scalationX.value / 20;
@@ -68,16 +72,20 @@ scalationZ.addEventListener('input', function(){
     target.transform.scale[2] =  scalationZ.value / 20;
     scalationZValue.textContent = target.transform.scale[2];
 })
+
 // camera
 orthographic.addEventListener('click', function(){
-    setProjectionValue("orthographic");
+    setProjectionType("orthographic");
 })
+
 oblique.addEventListener('click', function(){
-    setProjectionValue("oblique");
+    setProjectionType("oblique");
 })
+
 perspective.addEventListener('click', function(){
-    setProjectionValue("perspective");
+    setProjectionType("perspective");
 })
+
 function handleCameraView(node) {
     let epsilon = 0.001;
     
@@ -112,6 +120,20 @@ cameraPitch.addEventListener('input', function(){
     handleCameraView(target)
     document.getElementById('camera-pitch-slider-value').textContent = cameraPitch.value;
 })
+
+//theta, phi
+cameraTheta.addEventListener('input', function(){
+    let theta = degToRad(parseFloat(cameraTheta.value))
+    setObliqueTheta(theta);
+    document.getElementById('camera-theta-slider-value').textContent = cameraTheta.value;
+})
+
+cameraPhi.addEventListener('input', function(){
+    let phi = degToRad(parseFloat(cameraPhi.value))
+    setObliquePhi(phi);
+    document.getElementById('camera-phi-slider-value').textContent = cameraPhi.value;
+})
+
 
 
 
