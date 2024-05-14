@@ -29,6 +29,9 @@ const perspective = document.getElementById('perspective');
 
 // camera radius
 const cameraRadius = document.getElementById('camera-radius-slider');
+// camera roll-pitch
+const cameraRoll = document.getElementById('camera-roll-slider');
+const cameraPitch = document.getElementById('camera-pitch-slider');
 
 // set orthographic as default input radio button
 orthographic.checked = true;
@@ -93,23 +96,54 @@ perspective.addEventListener('click', function(){
     projection = 'perspective';
 })
 
+function handleCameraView(node) {
+    let epsilon = 0.00001;
+    
+    //radius, roll, pitch
+    let radius = parseFloat(cameraRadius.value)/10;
+    let roll = degToRad(parseFloat(cameraRoll.value));
+    let pitch = degToRad(parseFloat(cameraPitch.value));
+
+
+  node.viewMatrix.camera = [
+    roll,
+    pitch,
+    radius == 0 ? epsilon : radius,  
+  ];
+  for(let child of node.children){
+    handleCameraView(child);
+  }
+}
+
 cameraRadius.addEventListener('input', function(){
     // get camera radius
     // target is a root Node, recurse to set camera radius
     let epsilon = 0.0001;
 
     let val = parseFloat(cameraRadius.value);
-    function setCameraRadius(node){
-        node.viewMatrix.camera[2] = val + epsilon;
-        for(let child of node.children){
-            setCameraRadius(child);
-        }
-    }
+    val /= 10;
 
     
-    setCameraRadius(target);
+    handleCameraView(target);
+
     // update camera radius value
     document.getElementById('camera-radius-slider-value').textContent = val;
+})
+
+cameraRoll.addEventListener('input', function(){
+    
+    handleCameraView(target)
+
+    document.getElementById('camera-roll-slider-value').textContent = cameraRoll.value;
+})
+
+cameraPitch.addEventListener('input', function(){
+   
+
+
+
+    handleCameraView(target)
+    document.getElementById('camera-pitch-slider-value').textContent = cameraPitch.value;
 })
 
 

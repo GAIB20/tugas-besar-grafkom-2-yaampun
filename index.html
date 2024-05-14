@@ -108,25 +108,27 @@
 
                 
                     <div class="flex flex-col">
-                        <p>Translation</p>
-                        <div class="flex flex-row gap-5">
-                            <label for="camera-x-slider">X:</label>
-                            <input type="range" min="-10" max="10" value="0" id="camera-x-slider"/>
+                        <p>Look At</p>
+                        <div class="flex flex-col">
+                            <label for="camera-roll-slider">Roll (φ):</label>
+                            <input type="range" min="-90" max="90" value="0" id="camera-roll-slider"/>
+                            <a id="camera-roll-slider-value">0</a>
                         </div>
-                        <div class="flex flex-row gap-5">
-                            <label for="camera-y-slider">Y:</label>
-                            <input type="range" min="-10" max="10" value="0" id="camera-y-slider"/>
+                        <div class="flex flex-col">
+                            <label for="camera-pitch-slider">Pitch (θ):</label>
+                            <input type="range" min="-180" max="180" value="0" id="camera-pitch-slider"/>
+                            <a id="camera-pitch-slider-value">0</a>
                         </div>
-                        <div class="flex flex-row gap-5">
+                        <!-- <div class="flex flex-row gap-5">
                             <label for="camera-z-slider">Z:</label>
                             <input type="range" min="-10" max="10" value="0" id="camera-z-slider"/>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="flex flex-col">
                         <label for="camera-radius-slider">Radius</label>
-                        <div class="flex flex-row">
-                        <input type="range" min="0" max="10" value="5" id="camera-radius-slider"/>
-                        <a id="camera-radius-slider-value">5</a>
+                        <div class="flex flex-col">
+                            <input type="range" min="-100" max="100" value="50" id="camera-radius-slider"/>
+                            <a id="camera-radius-slider-value">5</a>
                         </div>
 
                         <button class="btn mt-2">Default View</button>
