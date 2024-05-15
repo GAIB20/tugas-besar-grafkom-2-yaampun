@@ -3,7 +3,7 @@ import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
-import { displayComponent } from "./handler/eventHandler.js";
+import { displayComponent, clearComponent } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 
 
@@ -18,10 +18,14 @@ const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.text
 var model = [pigModel, hollowModel];
 var objects;
 export var target;
+export function setTarget(value) {
+  target = value;
+}
 var lighting;
 var lightDirection;
 var texture;
 var projection_type;
+
 export function setProjectionType(newProjection) {
   projection_type = newProjection;
 }
@@ -41,7 +45,7 @@ var worldViewProjectionMatrix;
 initState();
 
 function initState() {
-    objects = model[1];
+    objects = model[0];
     focus = null;
     lighting = false;
     lightDirection = Vec3.fromArray([0,0,1])
@@ -239,9 +243,12 @@ function setProjectionMatrix(matrix, object) {
     return worldViewProjectionMatrix;
 }
 
-export function setTarget(value) {
-  target = value;
+export function changeModelObject (index) {
+    objects = model[index];
+    setTarget(objects[0]);
+    clearComponent();
+    displayComponent(0, objects);
+    setDefaultRotation(objects);
+    render();
+
 }
-
-
-

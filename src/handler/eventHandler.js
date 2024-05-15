@@ -1,4 +1,4 @@
-import { target, setProjectionType, setObliquePhi, setObliqueTheta, setTarget} from "../index.js"
+import { target, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, changeModelObject} from "../index.js"
 import { degToRad } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
@@ -81,7 +81,7 @@ scalationZ.addEventListener('input', function(){
 // model selection
 modelSelection.addEventListener('change', function(){   
     console.log(modelSelection.value);
-    // changeModelObject(models[modelSelection.value]);
+    changeModelObject(modelSelection.value);
 })
 
 // camera
@@ -96,6 +96,10 @@ oblique.addEventListener('click', function(){
 perspective.addEventListener('click', function(){
     setProjectionType("perspective");
 })
+
+export function clearComponent () {
+    componentContainer.innerHTML = '';
+}
 
 export function displayComponent(treeLevel = 0, objects){
     objects.forEach((object) => {
