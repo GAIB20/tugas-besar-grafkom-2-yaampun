@@ -1,4 +1,4 @@
-import { target, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, changeModelObject} from "../index.js"
+import { target, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, changeModelObject, changeMappingTexture } from "../index.js"
 import { degToRad } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
@@ -39,6 +39,7 @@ const cameraPhi = document.getElementById('camera-phi-slider');
 orthographic.checked = true;
 
 const modelSelection = document.getElementById('model-selection');
+const mappingSelection = document.getElementById('mapping-selection');
 
 // event listener
 translationX.addEventListener('input', function(){
@@ -174,6 +175,12 @@ cameraPhi.addEventListener('input', function(){
     document.getElementById('camera-phi-slider-value').textContent = cameraPhi.value;
 })
 
+var state = {
+    objects: []
+};
 
-
-
+// texture selection
+mappingSelection.addEventListener("change", function (e) {
+    console.log(mappingSelection.value)
+    changeMappingTexture(state.objects, mappingSelection.value);
+});

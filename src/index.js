@@ -5,7 +5,7 @@ import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
 import { displayComponent, clearComponent } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
-
+import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
 
 const canvas = document.getElementById("gl-canvas");
 const gl = canvas.getContext("webgl");
@@ -251,4 +251,40 @@ export function changeModelObject (index) {
     setDefaultRotation(objects);
     render();
 
+}
+
+export function changeMappingTexture(objects, textureType) {
+  objects.forEach((object) => {
+    if (textureType === "0") {
+      object.program = createShaderProgram(
+        gl,
+        vertex_shader_3d,
+        fragment_shader_3d_no_lighting
+      );
+    } else if (textureType === "1") {
+      createPaperTexture(gl);
+      object.program = createShaderProgram(
+        gl,
+        vertex_shader_3d,
+        fragment_shader_texture
+      );
+    } else if (textureType === "2") {
+      createEnvironmentTexture(gl);
+      object.program = createShaderProgram(
+        gl,
+        vertex_shader_3d,
+        fragment_shader_environment
+      )
+    } else if (textureType === "3") {
+      createBumpTexture(gl);
+      object.program = createShaderProgram(
+        gl,
+        vertex_shader_3d,
+        fragment_shader_bump
+      );
+    }
+    if (object.children.length > 0) {
+      changeMappingTexture(object.children, textureType);
+    }
+  });
 }
