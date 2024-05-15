@@ -3,6 +3,8 @@ import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
+import { displayComponent } from "./handler/eventHandler.js";
+
 
 
 const canvas = document.getElementById("gl-canvas");
@@ -48,8 +50,8 @@ function initState() {
     oblique_theta = 90.0;
     oblique_phi = 90.0;
     setDefaultRotation(objects)
+    displayComponent(0, objects);
     // initAnimation(objects);
-    // showComponents(objects);
 
 }
 
@@ -234,6 +236,10 @@ function setProjectionMatrix(matrix, object) {
     worldViewProjectionMatrix = Mat4.multiply(viewProjectionMatrix, matrix);
 
     return worldViewProjectionMatrix;
+}
+
+export function setTarget(value) {
+  target = value;
 }
 
 

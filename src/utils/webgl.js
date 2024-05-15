@@ -1,15 +1,26 @@
-function createShaderProgram(gl, vertexShaderTxt, fragmentShaderTxt) {
-    vShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vShader, vertexShaderTxt);
-    gl.compileShader(vShader);
+function compileShader(gl, shaderSource, shaderType) {
+  // Create the shader object
+  var shader = gl.createShader(shaderType);
+ 
+  // Set the shader source code.
+  gl.shaderSource(shader, shaderSource);
+ 
+  // Compile the shader
+  gl.compileShader(shader);
+ 
+  // Check if it compiled
+  var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+  if (!success) {
+    // Something went wrong during compilation; get the error
+    throw "could not compile shader:" + gl.getShaderInfoLog(shader);
+  }
+ 
+  return shader;
+}
 
-    const vertexShader = vShader;
-
-    fShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fShader, fragmentShaderTxt);
-    gl.compileShader(fShader);
-
-    const fragmentShader = fShader;
+function createShaderProgram(gl, vertexShaderSource, fragmentShaderSource) {
+    const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+    const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
 
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);

@@ -1,4 +1,4 @@
-import { target, setProjectionType, setObliquePhi, setObliqueTheta} from "../index.js"
+import { target, setProjectionType, setObliquePhi, setObliqueTheta, setTarget} from "../index.js"
 import { degToRad } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
@@ -21,6 +21,8 @@ const scalationZ = document.getElementById('scalation-z-slider');
 const scalationXValue = document.getElementById('scalation-x-slider-value');
 const scalationYValue = document.getElementById('scalation-y-slider-value');
 const scalationZValue = document.getElementById('scalation-z-slider-value');
+// component container
+const componentContainer = document.getElementById('component-container');
 //camera
 const orthographic = document.getElementById('orthographic');
 const oblique = document.getElementById('oblique');
@@ -85,6 +87,31 @@ oblique.addEventListener('click', function(){
 perspective.addEventListener('click', function(){
     setProjectionType("perspective");
 })
+
+export function displayComponent(treeLevel = 0, objects){
+    objects.forEach((object) => {
+        let newComponent = document.createElement('div'); 
+        newComponent.style = 'padding-left: ' + treeLevel*1.5 + 'em;';
+        newComponent.innerHTML += `
+            <button class="max-w-fit component">${object.name}</button>
+        `;
+        let createdButton = newComponent.querySelector('.component');
+        createdButton.addEventListener('click', function(evt) {
+            setTarget(object);
+            let components = document.getElementsByClassName("component");
+            for (let i = 0; i < components.length; i++) {
+                components[i].className = components[i].className.replace(" border-2", "");
+            }
+            evt.currentTarget.className += " border-2";
+        });
+        componentContainer.appendChild(newComponent);
+        
+        if(object.children.length > 0){
+            displayComponent(treeLevel + 1, object.children);
+        }
+    })
+}
+
 
 function handleCameraView(node) {
     let epsilon = 0.001;
