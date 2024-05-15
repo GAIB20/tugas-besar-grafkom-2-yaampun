@@ -37,6 +37,9 @@ const cameraTheta = document.getElementById('camera-theta-slider');
 const cameraPhi = document.getElementById('camera-phi-slider');
 // set orthographic as default input radio button
 orthographic.checked = true;
+
+const modelSelection = document.getElementById('model-selection');
+
 // event listener
 translationX.addEventListener('input', function(){
     target.transform.translate[0] = (2 * translationX.value) / 100;
@@ -73,6 +76,12 @@ scalationY.addEventListener('input', function(){
 scalationZ.addEventListener('input', function(){
     target.transform.scale[2] =  scalationZ.value / 20;
     scalationZValue.textContent = target.transform.scale[2];
+})
+
+// model selection
+modelSelection.addEventListener('change', function(){   
+    console.log(modelSelection.value);
+    // changeModelObject(models[modelSelection.value]);
 })
 
 // camera

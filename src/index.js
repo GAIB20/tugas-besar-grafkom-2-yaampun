@@ -1,10 +1,10 @@
-import model from "./structs/model/pig.js";
+import pigModel from "./structs/model/pig.js";
 import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
 import { displayComponent } from "./handler/eventHandler.js";
-
+import hollowModel from "./structs/model/hollowThingy.js";
 
 
 const canvas = document.getElementById("gl-canvas");
@@ -15,6 +15,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
+var model = [pigModel, hollowModel];
 var objects;
 export var target;
 var lighting;
@@ -40,7 +41,7 @@ var worldViewProjectionMatrix;
 initState();
 
 function initState() {
-    objects = model;
+    objects = model[1];
     focus = null;
     lighting = false;
     lightDirection = Vec3.fromArray([0,0,1])

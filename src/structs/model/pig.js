@@ -287,9 +287,9 @@ leftFrontLeg.setParent(pig);
 rightRearLeg.setParent(pig);
 leftRearLeg.setParent(pig);
 
-var model = [
+var pigModel = [
     pig
 ];
 
-export default model;
+export default pigModel;
   
