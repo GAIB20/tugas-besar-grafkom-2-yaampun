@@ -6,6 +6,7 @@ import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
 import { displayComponent, clearComponent, initOptionModel } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
+import hollowRingModel from "./structs/model/ring.js";
 import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
 
 const canvas = document.getElementById("gl-canvas");
@@ -16,7 +17,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-var model = [chickenModel, pigModel, hollowModel];
+var model = [chickenModel, pigModel, hollowModel, hollowRingModel];
 var objects;
 export var target;
 export function setTarget(value) {
