@@ -1,4 +1,4 @@
-import { target, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, changeModelObject, changeMappingTexture } from "../index.js"
+import { target, targetRoot, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, setTargetRoot, changeModelObject, changeMappingTexture } from "../index.js"
 import { degToRad } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
@@ -134,31 +134,31 @@ function handleCameraView(node) {
     let radius = parseFloat(cameraRadius.value)/10;
     let roll = degToRad(parseFloat(cameraRoll.value));
     let pitch = degToRad(parseFloat(cameraPitch.value));
-node.viewMatrix.camera = [
-    roll,
-    pitch,
-    radius == 0 ? epsilon : radius,  
-];
-for(let child of node.children){
-    handleCameraView(child);
-}
+    node.viewMatrix.camera = [
+        roll,
+        pitch,
+        radius == 0 ? epsilon : radius,  
+    ];
+    for(let child of node.children){
+        handleCameraView(child);
+    }
 }
 cameraRadius.addEventListener('input', function(){
     let val = parseFloat(cameraRadius.value);
     val /= 10;
     
-    handleCameraView(target);
+    handleCameraView(targetRoot);
     // update camera radius value
     document.getElementById('camera-radius-slider-value').textContent = val;
 })
 cameraRoll.addEventListener('input', function(){
     
-    handleCameraView(target)
+    handleCameraView(targetRoot)
     document.getElementById('camera-roll-slider-value').textContent = cameraRoll.value;
 })
 cameraPitch.addEventListener('input', function(){
 
-    handleCameraView(target)
+    handleCameraView(targetRoot)
     document.getElementById('camera-pitch-slider-value').textContent = cameraPitch.value;
 })
 

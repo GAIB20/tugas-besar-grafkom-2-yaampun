@@ -21,6 +21,10 @@ export var target;
 export function setTarget(value) {
   target = value;
 }
+export var targetRoot;
+export function setTargetRoot(value) {
+  targetRoot = value;
+}
 var lighting;
 var lightDirection;
 var texture;
@@ -65,6 +69,7 @@ window.onload = () => {
         throw new Error("WebGL not supported");
     }
     target = objects[0];
+    targetRoot = target;
 
 
     render();
@@ -246,6 +251,7 @@ function setProjectionMatrix(matrix, object) {
 export function changeModelObject (index) {
     objects = model[index];
     setTarget(objects[0]);
+    setTargetRoot(objects[0]);
     clearComponent();
     displayComponent(0, objects);
     setDefaultRotation(objects);
