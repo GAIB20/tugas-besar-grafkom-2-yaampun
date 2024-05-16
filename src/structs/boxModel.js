@@ -110,6 +110,7 @@ function generateColors(vertices, color = null) {
 function boxModel(height, width, depth, offset) {
 
   let vertices = generateVertices(height, width, depth, offset);
+  let center = [offset[0], offset[1], offset[2]];
   let faces = generateFaces();
   let texCoord = generateTexCoor();
   let normals = generateNormals(vertices, faces);
@@ -127,5 +128,6 @@ function boxModel(height, width, depth, offset) {
     normals: normals,
     colors: colors,
     texCoord: texCoord,
+    center : center
   };
 }

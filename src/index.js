@@ -116,6 +116,14 @@ function setTransform(object) {
       object.transform.translate[1],
       object.transform.translate[2]
     );
+
+    let _center = object.model.center
+    if(_center){
+      transformMatrix = Mat4.multiply(
+        transformMatrix,
+        Mat4.translate(_center[0], _center[1], _center[2])
+      );
+    }
     
     transformMatrix = Mat4.multiply(
       transformMatrix,
@@ -131,6 +139,13 @@ function setTransform(object) {
       transformMatrix,
       Mat4.rotateZ(object.transform.rotate[2])
     );
+
+    if(_center){
+      transformMatrix = Mat4.multiply(
+        transformMatrix,
+        Mat4.translate(-_center[0], -_center[1], -_center[2])
+      );
+    }
   
     transformMatrix = Mat4.multiply(
       transformMatrix,

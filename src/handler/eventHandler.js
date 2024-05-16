@@ -1,5 +1,5 @@
 import { target, targetRoot, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, setTargetRoot, changeModelObject, changeMappingTexture } from "../index.js"
-import { degToRad } from "../structs/math/mathUtils.js";
+import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
 const translationY = document.getElementById('translation-y-slider');
@@ -112,6 +112,7 @@ export function displayComponent(treeLevel = 0, objects){
         let createdButton = newComponent.querySelector('.component');
         createdButton.addEventListener('click', function(evt) {
             setTarget(object);
+            handleTransform(object);
             let components = document.getElementsByClassName("component");
             for (let i = 0; i < components.length; i++) {
                 components[i].className = components[i].className.replace(" border-2", "");
@@ -124,6 +125,43 @@ export function displayComponent(treeLevel = 0, objects){
             displayComponent(treeLevel + 1, object.children);
         }
     })
+}
+
+function handleTransform(node){
+    // change translation, rotation, scalation
+    let [tx, ty, tz] = node.transform.translate
+    // times 50
+    tx *= 50;
+    ty *= 50;
+    tz *= 50;
+    let [rx, ry, rz] = node.transform.rotate
+    // change with radToDeg
+    rx = radToDeg(rx);
+    ry = radToDeg(ry);
+    rz = radToDeg(rz);
+    let [sx, sy, sz] = node.transform.scale
+  
+    translationX.value = tx;
+    translationY.value = ty;
+    translationZ.value = tz;
+    translataionXValue.textContent = tx;
+    translataionYValue.textContent = ty;
+    translataionZValue.textContent = tz;
+
+    rotationX.value = rx;
+    rotationY.value = ry;
+    rotationZ.value = rz;
+    rotationXValue.textContent = rx;
+    rotationYValue.textContent = ry;
+    rotationZValue.textContent = rz;
+
+    scalationXValue.textContent = sx;
+    scalationYValue.textContent = sy;
+    scalationZValue.textContent = sz;
+    scalationX.value = sx*20;
+    scalationY.value = sx*20;
+    scalationZ.value = sz*20;
+    
 }
 
 
