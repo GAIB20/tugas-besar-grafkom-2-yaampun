@@ -1,4 +1,12 @@
-import { target, targetRoot, setProjectionType, setObliquePhi, setObliqueTheta, setTarget, setTargetRoot, changeModelObject, changeMappingTexture } from "../index.js"
+import { target, 
+    targetRoot, 
+    setProjectionType, 
+    setObliquePhi, 
+    setObliqueTheta, 
+    setTarget, 
+    setTargetRoot, 
+    changeModelObject, 
+    changeMappingTexture} from "../index.js"
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 
 const translationX = document.getElementById('translation-x-slider');
@@ -40,6 +48,18 @@ orthographic.checked = true;
 
 const modelSelection = document.getElementById('model-selection');
 const mappingSelection = document.getElementById('mapping-selection');
+
+// initial
+export function initOptionModel(model){
+    modelSelection.innerHTML = '';
+    model.forEach((object, index) => {
+        var option = document.createElement('option');
+        option.value = index;
+        option.textContent = object[0].name;
+        modelSelection.appendChild(option);
+    })
+
+}
 
 // event listener
 translationX.addEventListener('input', function(){
@@ -131,9 +151,7 @@ function handleTransform(node){
     // change translation, rotation, scalation
     let [tx, ty, tz] = node.transform.translate
     // times 50
-    tx *= 50;
-    ty *= 50;
-    tz *= 50;
+
     let [rx, ry, rz] = node.transform.rotate
     // change with radToDeg
     rx = radToDeg(rx);
@@ -141,9 +159,9 @@ function handleTransform(node){
     rz = radToDeg(rz);
     let [sx, sy, sz] = node.transform.scale
   
-    translationX.value = tx;
-    translationY.value = ty;
-    translationZ.value = tz;
+    translationX.value = tx*50;
+    translationY.value = ty*50;
+    translationZ.value = tz*50;
     translataionXValue.textContent = tx;
     translataionYValue.textContent = ty;
     translataionZValue.textContent = tz;

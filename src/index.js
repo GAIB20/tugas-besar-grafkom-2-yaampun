@@ -1,9 +1,10 @@
 import pigModel from "./structs/model/pig.js";
+import chickenModel from "./structs/model/chicken.js";
 import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
-import { displayComponent, clearComponent } from "./handler/eventHandler.js";
+import { displayComponent, clearComponent, initOptionModel } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
 
@@ -15,7 +16,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-var model = [pigModel, hollowModel];
+var model = [chickenModel, pigModel, hollowModel];
 var objects;
 export var target;
 export function setTarget(value) {
@@ -60,6 +61,7 @@ function initState() {
     oblique_phi = 90.0;
     setDefaultRotation(objects)
     displayComponent(0, objects);
+    initOptionModel(model);
     // initAnimation(objects);
 
 }
@@ -262,6 +264,7 @@ function setProjectionMatrix(matrix, object) {
 
     return worldViewProjectionMatrix;
 }
+
 
 export function changeModelObject (index) {
     objects = model[index];
