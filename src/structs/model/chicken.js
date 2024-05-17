@@ -1,5 +1,6 @@
 import Node from "../node.js";
 import { degToRad } from "../math/mathUtils.js";
+import Animation from "../../utils/Animation.js";
 
 // Create the chicken body node
 const chicken = new Node();
@@ -41,29 +42,7 @@ chicken.animation = {
     isAnimate: false,
     frames: chickenFrames(),
     currentFrame: 0,
-    animationFunction: `((_chicken, deltaTime) => {
-        let frames = _chicken.animation.frames;
-        if(_chicken.animation.currentFrame >= frames.length || _chicken.animation.currentFrame < 0){
-            if(_chicken.animation.isAuto){
-                if(_chicken.animation.currentFrame < 0){
-                    _chicken.animation.currentFrame = frames.length - 1;
-                }
-                _chicken.animation.currentFrame = _chicken.animation.currentFrame % frames.length;
-            }
-            else{
-                return;
-            }
-        }
-        if (_chicken.animation.isAnimate) {
-            _chicken.transform = frames[_chicken.animation.currentFrame];
-            if(_chicken.animation.isReverse){
-                _chicken.animation.currentFrame--;
-            }
-            else{
-                _chicken.animation.currentFrame++;
-            }
-        }
-    })`,
+    animationFunction: Animation.animationScript(),
     isAuto: false,
     isReverse: false
 };
@@ -276,30 +255,7 @@ leftWing.animation = {
     isAnimate: false,
     frames: leftWingFrames(),
     currentFrame: 0,
-    animationFunction: `((_leftWing, deltaTime) => {
-        let frames = _leftWing.animation.frames;
-        if(_leftWing.animation.currentFrame >= frames.length || _leftWing.animation.currentFrame < 0){
-            if(_leftWing.animation.isAuto){
-                if(_leftWing.animation.currentFrame < 0){
-                    _leftWing.animation.currentFrame = frames.length - 1;    
-                }
-                _leftWing.animation.currentFrame = _leftWing.animation.currentFrame % frames.length;
-            }
-            else{
-                return;
-            }
-        }
-        if (_leftWing.animation.isAnimate) {
-            _leftWing.transform = frames[_leftWing.animation.currentFrame];
-            if(_leftWing.animation.isReverse){
-                _leftWing.animation.currentFrame--;
-                console.log(_leftWing.animation.currentFrame);
-            }
-            else{
-                _leftWing.animation.currentFrame++;
-            }
-        }
-    })`,
+    animationFunction: Animation.animationScript(),
     isAuto: false,
     isReverse: false
 };
@@ -355,30 +311,7 @@ rightWing.animation = {
     isAnimate: false,
     frames: rightWingFrames(),
     currentFrame: 0,
-    animationFunction: `((_rightWing, deltaTime) => {
-        let frames = _rightWing.animation.frames;
-        // handle auto
-        if(_rightWing.animation.currentFrame >= frames.length || _rightWing.animation.currentFrame < 0){
-            if(_rightWing.animation.isAuto){
-                if(_rightWing.animation.currentFrame < 0){
-                    _rightWing.animation.currentFrame = frames.length - 1;    
-                }
-                _rightWing.animation.currentFrame = _rightWing.animation.currentFrame % frames.length;
-            }
-            else{
-                return;
-            }
-        }
-        if (_rightWing.animation.isAnimate) {
-            _rightWing.transform = frames[_rightWing.animation.currentFrame];
-            if(_rightWing.animation.isReverse){
-                _rightWing.animation.currentFrame--;
-            }
-            else{
-                _rightWing.animation.currentFrame++;
-            }
-        }
-    })`,
+    animationFunction: Animation.animationScript(),
     isAuto: false,
     isReverse: false
 };
@@ -441,29 +374,7 @@ rightLeg.animation = {
     isAnimate: false,
     frames : rightLegFrames(),
     currentFrame : 0,
-    animationFunction: `((_rightLeg, deltaTime) => {
-        let frames = _rightLeg.animation.frames;
-        if(_rightLeg.animation.currentFrame >= frames.length || _rightLeg.animation.currentFrame < 0){
-            if(_rightLeg.animation.isAuto){
-                if(_rightLeg.animation.currentFrame < 0){
-                    _rightLeg.animation.currentFrame = frames.length - 1;    
-                }
-                _rightLeg.animation.currentFrame = _rightLeg.animation.currentFrame % frames.length;
-            }
-            else{
-                return;
-            }
-        }
-        if (_rightLeg.animation.isAnimate) {
-            _rightLeg.transform = frames[_rightLeg.animation.currentFrame];
-            if(_rightLeg.animation.isReverse){
-                _rightLeg.animation.currentFrame--;
-            }
-            else{
-                _rightLeg.animation.currentFrame++;
-            }
-        }
-    })`,
+    animationFunction: Animation.animationScript(),
     isAuto: false,
     isReverse: false
 };
@@ -550,29 +461,7 @@ leftLeg.animation = {
     isAnimate: false,
     frames : leftLegFrames(),
     currentFrame : 0,
-    animationFunction: `((_leftLeg, deltaTime) => {
-        let frames = _leftLeg.animation.frames;
-        if(_leftLeg.animation.currentFrame >= frames.length || _leftLeg.animation.currentFrame < 0){
-            if(_leftLeg.animation.isAuto){
-                if(_leftLeg.animation.currentFrame < 0){
-                    _leftLeg.animation.currentFrame = frames.length - 1;
-                }
-                _leftLeg.animation.currentFrame = _leftLeg.animation.currentFrame % frames.length;
-            }
-            else{
-                return;
-            }
-        }
-        if (_leftLeg.animation.isAnimate) {
-            _leftLeg.transform = frames[_leftLeg.animation.currentFrame];
-            if(_leftLeg.animation.isReverse){
-                _leftLeg.animation.currentFrame--;
-            }
-            else{
-                _leftLeg.animation.currentFrame++;
-            }
-        }
-    })`,
+    animationFunction: Animation.animationScript(),
     isAuto: false,
     isReverse: false
 };

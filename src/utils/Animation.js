@@ -64,4 +64,31 @@ export default class Animation{
             Animation.reverseAnimation(model)
         }
     }
+
+    static animationScript(){
+        const animationScript = `((_node, deltaTime) => {
+            let frames = _node.animation.frames;
+            if(_node.animation.currentFrame >= frames.length || _node.animation.currentFrame < 0){
+                if(_node.animation.isAuto){
+                    if(_node.animation.currentFrame < 0){
+                        _node.animation.currentFrame = frames.length - 1;
+                    }
+                    _node.animation.currentFrame = _node.animation.currentFrame % frames.length;
+                }
+                else{
+                    return;
+                }
+            }
+            if (_node.animation.isAnimate) {
+                _node.transform = frames[_node.animation.currentFrame];
+                if(_node.animation.isReverse){
+                    _node.animation.currentFrame--;
+                }
+                else{
+                    _node.animation.currentFrame++;
+                }
+            }
+        })`
+        return animationScript;
+    }
 }
