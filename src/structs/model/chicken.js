@@ -2,6 +2,7 @@ import Node from "../node.js";
 
 // Create the chicken body node
 const chicken = new Node();
+chicken.flag = "articulated";
 chicken.name = "chicken";
 chicken.model = boxModel(1, 1.5, 1, [0, 0, 0]);
 chicken.transform = {
@@ -18,8 +19,10 @@ chicken.viewMatrix = {
     far: 50,
 };
 chicken.animation = {
-    isAnimate: false,
-    degAnimate: 0.1,
+    isAnimate: true,
+    degAnimate: 1,
+    animationFunction: null
+    
 };
 
 // Create the head node
@@ -196,56 +199,12 @@ rightWing.animation = {
     degAnimate: 0.1,
 };
 
-// Create the left leg node
-const leftLeg = new Node();
-leftLeg.name = "leftLeg";
-leftLeg.model = boxModel(0.6, 0.2, 0.2, [0, 0, 0]);
-leftLeg.transform = {
-    translate: [-0.5, -0.8, -0.35],
-    rotate: [0, 0, 0],
-    scale: [1, 1, 1],
-};
-leftLeg.pickedColor = [1, 0.5, 0];
-leftLeg.viewMatrix = {
-    camera: [0, 0, 5],
-    lookAt: [0, 0, 0],
-    up: [0, 1, 0],
-    near: 0.1,
-    far: 50,
-};
-leftLeg.animation = {
-    isAnimate: false,
-    degAnimate: 0.1,
-};
-
-// crete the left foot node
-const leftFoot = new Node();
-leftFoot.name = "leftFoot";
-leftFoot.model = boxModel(0.1, 0.4, 0.3, [0, 0, 0]);
-leftFoot.transform = {
-    translate: [0.02, -0.34, 0.72],
-    rotate: [0, 0, 0],
-    scale: [1, 1, 1],
-};
-leftFoot.pickedColor = [1, 0.5, 0];
-leftFoot.viewMatrix = {
-    camera: [0, 0, 5],
-    lookAt: [0, 0, 0],
-    up: [0, 1, 0],
-    near: 0.1,
-    far: 50,
-};
-leftFoot.animation = {
-    isAnimate: false,
-    degAnimate: 0.1,
-};
-
 // Create the right leg node
 const rightLeg = new Node();
 rightLeg.name = "rightLeg";
 rightLeg.model = boxModel(0.6, 0.2, 0.2, [0, 0, 0]);
 rightLeg.transform = {
-    translate: [-0.5, -0.8, 0.35],
+    translate: [-0.5, -0.8, -0.35],
     rotate: [0, 0, 0],
     scale: [1, 1, 1],
 };
@@ -258,16 +217,29 @@ rightLeg.viewMatrix = {
     far: 50,
 };
 rightLeg.animation = {
-    isAnimate: false,
-    degAnimate: 0.1,
+    isAnimate: true,
+    omega: 1,
+    animationFunction: `((_rightLeg, deltaTime) => {
+        if (_rightLeg.animation.isAnimate) {
+            _rightLeg.transform.rotate[2] += _rightLeg.animation.omega * deltaTime;
+            if (_rightLeg.transform.rotate[2] >= Math.PI / 6) {
+                _rightLeg.transform.rotate[2] = Math.PI / 6
+                _rightLeg.animation.omega = -1;
+            }
+            else if(_rightLeg.transform.rotate[2] <= - Math.PI / 6){
+                _rightLeg.transform.rotate[2] = -Math.PI / 6
+                _rightLeg.animation.omega = 1;
+            }
+        }  
+    })`
 };
 
-// Create the right foot node
+// crete the right foot node
 const rightFoot = new Node();
 rightFoot.name = "rightFoot";
 rightFoot.model = boxModel(0.1, 0.4, 0.3, [0, 0, 0]);
 rightFoot.transform = {
-    translate: [0.02, -0.34, -0.72],
+    translate: [0.02, -0.34, 0],
     rotate: [0, 0, 0],
     scale: [1, 1, 1],
 };
@@ -280,6 +252,65 @@ rightFoot.viewMatrix = {
     far: 50,
 };
 rightFoot.animation = {
+    isAnimate: true,
+    degAnimate: 0.1,
+    animationFunction: null
+};
+
+// Create the left leg node
+const leftLeg = new Node();
+leftLeg.name = "leftLeg";
+leftLeg.model = boxModel(0.6, 0.2, 0.2, [0, 0, 0]);
+leftLeg.transform = {
+    translate: [-0.5, -0.8, 0.35],
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+};
+leftLeg.pickedColor = [1, 0.5, 0];
+leftLeg.viewMatrix = {
+    camera: [0, 0, 5],
+    lookAt: [0, 0, 0],
+    up: [0, 1, 0],
+    near: 0.1,
+    far: 50,
+};
+leftLeg.animation = {
+    isAnimate: true,
+    degAnimate: 0.1,
+    omega: 1,
+    animationFunction: `((_leftLeg, deltaTime) => {
+        if (_leftLeg.animation.isAnimate) {
+            _leftLeg.transform.rotate[2] += _leftLeg.animation.omega * deltaTime;
+            if (_leftLeg.transform.rotate[2] >= Math.PI / 6) {
+                _leftLeg.transform.rotate[2] = Math.PI / 6
+                _leftLeg.animation.omega = -1;
+            }
+            else if(_leftLeg.transform.rotate[2] <= - Math.PI / 6){
+                _leftLeg.transform.rotate[2] = -Math.PI / 6
+                _leftLeg.animation.omega = 1;
+            }
+        }  
+    })`
+};
+
+// Create the left foot node
+const leftFoot = new Node();
+leftFoot.name = "leftFoot";
+leftFoot.model = boxModel(0.1, 0.4, 0.3, [0, 0, 0]);
+leftFoot.transform = {
+    translate: [0.02, -0.34, 0],
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+};
+leftFoot.pickedColor = [1, 0.5, 0];
+leftFoot.viewMatrix = {
+    camera: [0, 0, 5],
+    lookAt: [0, 0, 0],
+    up: [0, 1, 0],
+    near: 0.1,
+    far: 50,
+};
+leftFoot.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };

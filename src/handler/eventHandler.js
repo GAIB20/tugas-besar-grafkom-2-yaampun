@@ -147,16 +147,18 @@ export function displayComponent(treeLevel = 0, objects){
     })
 }
 
-function handleTransform(node){
+export function handleTransform(node){
     // change translation, rotation, scalation
     let [tx, ty, tz] = node.transform.translate
     // times 50
 
     let [rx, ry, rz] = node.transform.rotate
     // change with radToDeg
+    if(node.flag == "articulated"){
     rx = radToDeg(rx);
     ry = radToDeg(ry);
     rz = radToDeg(rz);
+    }
     let [sx, sy, sz] = node.transform.scale
   
     translationX.value = tx*50;

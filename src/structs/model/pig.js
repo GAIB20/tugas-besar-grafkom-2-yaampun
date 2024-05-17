@@ -1,6 +1,7 @@
 import Node from "../node.js";
 
 const pig = new Node();
+pig.flag = "articulated";
 pig.name = "pig";
 pig.model = boxModel(1, 1.5, 1, [0, 0, 0]);
 pig.transform = {

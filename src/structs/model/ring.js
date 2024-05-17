@@ -41,14 +41,15 @@ function generateBoxes(){
 }
 
 const hollow = new Node();
+hollow.flag = "hollow";
 hollow.name = "Ring";
 hollow.model = ring();
 hollow.transform = {
 translate: [0, 0, 0],
-rotate: [0, 0, 0],
+rotate: [10, 0, 0],
 scale: [1, 1, 1],
 };
-hollow.pickedColor = [0.921568627,0.568627451,0.898039216],
+hollow.pickedColor = [45/255,215/255,96/255],
 hollow.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],

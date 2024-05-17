@@ -44,11 +44,12 @@ function hollowThingy() {
 }
   
 const hollow = new Node();
+hollow.flag = "hollow";
 hollow.name = "Hollow Thingy";
 hollow.model = hollowThingy();
 hollow.transform = {
   translate: [0, 0, 0],
-  rotate: [0, 0, 0],
+  rotate: [91, 0, 0],
   scale: [1, 1, 1],
 };
 hollow.pickedColor = [0.921568627,0.568627451,0.898039216],

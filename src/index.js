@@ -4,10 +4,11 @@ import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
-import { displayComponent, clearComponent, initOptionModel } from "./handler/eventHandler.js";
+import { displayComponent, clearComponent, initOptionModel, handleTransform } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
 import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
+import Animation from "./utils/Animation.js";
 
 const canvas = document.getElementById("gl-canvas");
 const gl = canvas.getContext("webgl");
@@ -47,6 +48,9 @@ export function setObliquePhi(newPhi) {
 var normalizeLight;
 var worldViewProjectionMatrix;
 
+// animation
+var t_animation = 0;
+
 
 initState();
 
@@ -63,7 +67,7 @@ function initState() {
     setDefaultRotation(objects)
     displayComponent(0, objects);
     initOptionModel(model);
-    // initAnimation(objects);
+    handleTransform(objects[0])
 
 }
 
@@ -218,7 +222,8 @@ window.requestAnimFrame = (function () {
     );
   })();
 
-function render() {
+
+function render(now) {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -227,11 +232,19 @@ function render() {
     gl.enable(gl.DEPTH_TEST);
 
     setDefaultState(objects);
+    // delta time
+    if(!now) now = 0;
+    now *= 0.001;
+
+    let deltaTime = now - t_animation;
+    t_animation = now;
 
 
 
     objects[0].setWorldMtx(null);
+
     normalizeLight = Vec3.unitVector(lightDirection).asArray()
+    Animation.animate(targetRoot, deltaTime);
     renderLoop(objects);
     
   window.requestAnimFrame(render);
@@ -273,7 +286,7 @@ export function changeModelObject (index) {
     setTargetRoot(objects[0]);
     clearComponent();
     displayComponent(0, objects);
-    setDefaultRotation(objects);
+    handleTransform(objects[0]);
     render();
 
 }
