@@ -234,6 +234,26 @@ rightFrontLeg.animation = {
   isAnimate: false,
   degAnimate: 0.1,
 };
+const rightFrontToe = new Node();
+rightFrontToe.name = "rightFrontToe";
+rightFrontToe.model = boxModel(0.1, 0.2, 0.2, [0, 0, 0]);
+rightFrontToe.transform = {
+  translate: [0, -0.45, 0.05], 
+  rotate: [0, 0, 0],
+  scale: [1, 1, 1],
+};
+rightFrontToe.pickedColor = whiteColor;
+rightFrontToe.viewMatrix = {
+  camera: [0, 0, 5],
+  lookAt: [0, 0, 0],
+  up: [0, 1, 0],
+  near: 0.1,
+  far: 50,
+};
+rightFrontToe.animation = {
+  isAnimate: false,
+  degAnimate: 0.1,
+};
 
 const leftFrontLeg = new Node();
 leftFrontLeg.name = "leftFrontLeg";
@@ -252,6 +272,26 @@ leftFrontLeg.viewMatrix = {
   far: 50,
 };
 leftFrontLeg.animation = {
+  isAnimate: false,
+  degAnimate: 0.1,
+};
+const leftFrontToe = new Node();
+leftFrontToe.name = "leftFrontToe";
+leftFrontToe.model = boxModel(0.1, 0.2, 0.15, [0, 0, 0]);
+leftFrontToe.transform = {
+  translate: [-0, -0.45, 0.05], 
+  rotate: [0, 0, 0],
+  scale: [1, 1, 1],
+};
+leftFrontToe.pickedColor = whiteColor;
+leftFrontToe.viewMatrix = {
+  camera: [0, 0, 5],
+  lookAt: [0, 0, 0],
+  up: [0, 1, 0],
+  near: 0.1,
+  far: 50,
+};
+leftFrontToe.animation = {
   isAnimate: false,
   degAnimate: 0.1,
 };
@@ -276,6 +316,26 @@ rightRearLeg.animation = {
   isAnimate: false,
   degAnimate: 0.1,
 };
+const rightRearToe = new Node();
+rightRearToe.name = "rightRearToe";
+rightRearToe.model = boxModel(0.1, 0.2, 0.2, [0, 0, 0]);
+rightRearToe.transform = {
+  translate: [0, -0.45, 0.05],
+  rotate: [0, 0, 0],
+  scale: [1, 1, 1],
+};
+rightRearToe.pickedColor = whiteColor;
+rightRearToe.viewMatrix = {
+  camera: [0, 0, 5],
+  lookAt: [0, 0, 0],
+  up: [0, 1, 0],
+  near: 0.1,
+  far: 50,
+};
+rightRearToe.animation = {
+  isAnimate: false,
+  degAnimate: 0.1,
+};
 
 const leftRearLeg = new Node();
 leftRearLeg.name = "leftRearLeg";
@@ -294,6 +354,26 @@ leftRearLeg.viewMatrix = {
   far: 50,
 };
 leftRearLeg.animation = {
+  isAnimate: false,
+  degAnimate: 0.1,
+};
+const leftRearToe = new Node();
+leftRearToe.name = "leftRearToe";
+leftRearToe.model = boxModel(0.1, 0.2, 0.2, [0, 0, 0]);
+leftRearToe.transform = {
+  translate: [-0, -0.45, 0.05], 
+  rotate: [0, 0, 0],
+  scale: [1, 1, 1],
+};
+leftRearToe.pickedColor = whiteColor;
+leftRearToe.viewMatrix = {
+  camera: [0, 0, 5],
+  lookAt: [0, 0, 0],
+  up: [0, 1, 0],
+  near: 0.1,
+  far: 50,
+};
+leftRearToe.animation = {
   isAnimate: false,
   degAnimate: 0.1,
 };
@@ -349,9 +429,13 @@ blackLeftEye.setParent(whiteLeftEye);
 nose.setParent(head);
 undernose.setParent(head);
 rightFrontLeg.setParent(fox);
+rightFrontToe.setParent(rightFrontLeg);
 leftFrontLeg.setParent(fox);
+leftFrontToe.setParent(leftFrontLeg);
 rightRearLeg.setParent(fox);
+rightRearToe.setParent(rightRearLeg);
 leftRearLeg.setParent(fox);
+leftRearToe.setParent(leftRearLeg);
 tail.setParent(fox);
 tailedge.setParent(fox);
 
