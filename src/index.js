@@ -1,5 +1,6 @@
 import pigModel from "./structs/model/pig.js";
 import chickenModel from "./structs/model/chicken.js";
+import foxModel from "./structs/model/fox.js";
 import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
@@ -18,7 +19,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-var model = [chickenModel, pigModel, hollowModel, hollowRingModel];
+var model = [chickenModel, pigModel, foxModel, hollowModel, hollowRingModel];
 var objects;
 export var target;
 export function setTarget(value) {
