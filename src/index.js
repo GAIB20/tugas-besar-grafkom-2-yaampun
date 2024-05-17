@@ -51,7 +51,7 @@ var worldViewProjectionMatrix;
 
 // animation
 var t_animation = 0;
-
+var fps_time = 0.15;
 
 initState();
 
@@ -235,17 +235,19 @@ function render(now) {
     setDefaultState(objects);
     // delta time
     if(!now) now = 0;
-    now *= 0.001;
+    if(t_animation === 0) t_animation = now;
 
-    let deltaTime = now - t_animation;
-    t_animation = now;
+    if((now - t_animation) >= fps_time){
+      t_animation = now;
+      let deltaTime = now - t_animation;
+      Animation.animate(targetRoot, deltaTime);
+    }
 
 
 
     objects[0].setWorldMtx(null);
 
     normalizeLight = Vec3.unitVector(lightDirection).asArray()
-    Animation.animate(targetRoot, deltaTime);
     renderLoop(objects);
     
   window.requestAnimFrame(render);

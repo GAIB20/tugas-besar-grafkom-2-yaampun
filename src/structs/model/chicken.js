@@ -1,4 +1,5 @@
 import Node from "../node.js";
+import { degToRad } from "../math/mathUtils.js";
 
 // Create the chicken body node
 const chicken = new Node();
@@ -18,11 +19,53 @@ chicken.viewMatrix = {
     near: 0.1,
     far: 50,
 };
-chicken.animation = {
-    isAnimate: true,
-    degAnimate: 1,
-    animationFunction: null
+
+function chickenFrames(){
+    let transform = {
+        translate: [0, 0, 0],
+        rotate: [degToRad(42), degToRad(-55), degToRad(27)],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 100; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.translate[0] = k / 50;
+        frames.push(_transform);
+    }
     
+    return frames;
+
+}
+
+chicken.animation = {
+    isAnimate: false,
+    frames: chickenFrames(),
+    currentFrame: 0,
+    animationFunction: `((_chicken, deltaTime) => {
+        let frames = _chicken.animation.frames;
+        if(_chicken.animation.currentFrame >= frames.length || _chicken.animation.currentFrame < 0){
+            if(_chicken.animation.isAuto){
+                if(_chicken.animation.currentFrame < 0){
+                    _chicken.animation.currentFrame = frames.length - 1;
+                }
+                _chicken.animation.currentFrame = _chicken.animation.currentFrame % frames.length;
+            }
+            else{
+                return;
+            }
+        }
+        if (_chicken.animation.isAnimate) {
+            _chicken.transform = frames[_chicken.animation.currentFrame];
+            if(_chicken.animation.isReverse){
+                _chicken.animation.currentFrame--;
+            }
+            else{
+                _chicken.animation.currentFrame++;
+            }
+        }
+    })`,
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the head node
@@ -44,7 +87,11 @@ head.viewMatrix = {
 };
 head.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null, 
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the beak node
@@ -66,7 +113,11 @@ beak.viewMatrix = {
 };
 beak.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 
 const whiteLeftEye = new Node();
@@ -87,7 +138,11 @@ whiteLeftEye.viewMatrix = {
 };
 whiteLeftEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 
 const blackLeftEye = new Node();
@@ -108,7 +163,12 @@ blackLeftEye.viewMatrix = {
 };
 blackLeftEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
+
 };
 
 const whiteRightEye = new Node();
@@ -129,7 +189,12 @@ whiteRightEye.viewMatrix = {
 };
 whiteRightEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
+
 };
 
 const blackRightEye = new Node();
@@ -150,7 +215,11 @@ blackRightEye.viewMatrix = {
 };
 blackRightEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 
 
@@ -172,9 +241,67 @@ leftWing.viewMatrix = {
     near: 0.1,
     far: 50,
 };
+
+function leftWingFrames(){
+
+    let transform = {
+        translate: [0, 0, -0.75],
+        rotate: [0, 0, 90],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 4; ++k){
+        for(let i = 0; i <= 12; i++){
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[0] = -Math.PI / 9 + Math.PI/9 * i / 6;
+            frames.push(_transform); 
+        }
+        for(let i =0 ; i <= 12; i++){
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[0] = Math.PI / 9 - Math.PI/9 * i / 6;
+            frames.push(_transform);
+        }
+    }
+    // from -pi/9 to 0
+    for(let i = 0; i <= 6; i++){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[0] = -Math.PI / 9 + Math.PI/9 * i / 6;
+        frames.push(_transform); 
+    }
+    return frames;
+
+}
+
 leftWing.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: leftWingFrames(),
+    currentFrame: 0,
+    animationFunction: `((_leftWing, deltaTime) => {
+        let frames = _leftWing.animation.frames;
+        if(_leftWing.animation.currentFrame >= frames.length || _leftWing.animation.currentFrame < 0){
+            if(_leftWing.animation.isAuto){
+                if(_leftWing.animation.currentFrame < 0){
+                    _leftWing.animation.currentFrame = frames.length - 1;    
+                }
+                _leftWing.animation.currentFrame = _leftWing.animation.currentFrame % frames.length;
+            }
+            else{
+                return;
+            }
+        }
+        if (_leftWing.animation.isAnimate) {
+            _leftWing.transform = frames[_leftWing.animation.currentFrame];
+            if(_leftWing.animation.isReverse){
+                _leftWing.animation.currentFrame--;
+                console.log(_leftWing.animation.currentFrame);
+            }
+            else{
+                _leftWing.animation.currentFrame++;
+            }
+        }
+    })`,
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the right wing node
@@ -194,9 +321,66 @@ rightWing.viewMatrix = {
     near: 0.1,
     far: 50,
 };
+
+function rightWingFrames(){
+    let transform = {
+        translate: [0, 0, 0.75],
+        rotate: [0, 0, 90],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 4; ++k){
+        for(let i = 0; i <= 12; i++){
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[0] = Math.PI / 9 - Math.PI/9 * i / 6;
+            frames.push(_transform); 
+        }
+        for(let i =0 ; i <= 12; i++){
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[0] = - Math.PI / 9 + Math.PI/9 * i / 6;
+            frames.push(_transform);
+        }
+    }
+    // from pi/6 to 0
+    for(let i = 0; i <= 6; i++){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[0] = Math.PI / 9 - Math.PI/9 * i / 6;
+        frames.push(_transform); 
+    }
+    return frames;
+
+}
+
 rightWing.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: rightWingFrames(),
+    currentFrame: 0,
+    animationFunction: `((_rightWing, deltaTime) => {
+        let frames = _rightWing.animation.frames;
+        // handle auto
+        if(_rightWing.animation.currentFrame >= frames.length || _rightWing.animation.currentFrame < 0){
+            if(_rightWing.animation.isAuto){
+                if(_rightWing.animation.currentFrame < 0){
+                    _rightWing.animation.currentFrame = frames.length - 1;    
+                }
+                _rightWing.animation.currentFrame = _rightWing.animation.currentFrame % frames.length;
+            }
+            else{
+                return;
+            }
+        }
+        if (_rightWing.animation.isAnimate) {
+            _rightWing.transform = frames[_rightWing.animation.currentFrame];
+            if(_rightWing.animation.isReverse){
+                _rightWing.animation.currentFrame--;
+            }
+            else{
+                _rightWing.animation.currentFrame++;
+            }
+        }
+    })`,
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the right leg node
@@ -216,22 +400,72 @@ rightLeg.viewMatrix = {
     near: 0.1,
     far: 50,
 };
+
+function rightLegFrames(){
+    let transform = {
+        translate: [-0.5, -0.8, -0.35],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 4; ++k){
+        for(let i = 0; i <= 12; i++){
+            // append for angle pi/6 - pi/3 * i/12 to frames
+            // clone the transform object
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[2] = Math.PI / 6 - Math.PI/3 * i / 12;
+            frames.push(_transform); 
+        }
+        for(let i =0 ; i <= 12; i++){
+            // append for angle pi/6 * i/12 to frames
+            // clone the transform object
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[2] = - Math.PI / 6 + Math.PI/3 * i / 12;
+            frames.push(_transform);
+        }
+    }
+    // from pi/6 to 0
+    for(let i = 0; i <= 6; i++){
+        // append for angle pi/6 - pi/3 * i/12 to frames
+        // clone the transform object
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[2] = Math.PI / 6 - Math.PI/6 * i / 6;
+        frames.push(_transform); 
+    }
+
+    return frames;
+}
+
+
 rightLeg.animation = {
-    isAnimate: true,
-    omega: 1,
+    isAnimate: false,
+    frames : rightLegFrames(),
+    currentFrame : 0,
     animationFunction: `((_rightLeg, deltaTime) => {
+        let frames = _rightLeg.animation.frames;
+        if(_rightLeg.animation.currentFrame >= frames.length || _rightLeg.animation.currentFrame < 0){
+            if(_rightLeg.animation.isAuto){
+                if(_rightLeg.animation.currentFrame < 0){
+                    _rightLeg.animation.currentFrame = frames.length - 1;    
+                }
+                _rightLeg.animation.currentFrame = _rightLeg.animation.currentFrame % frames.length;
+            }
+            else{
+                return;
+            }
+        }
         if (_rightLeg.animation.isAnimate) {
-            _rightLeg.transform.rotate[2] += _rightLeg.animation.omega * deltaTime;
-            if (_rightLeg.transform.rotate[2] >= Math.PI / 6) {
-                _rightLeg.transform.rotate[2] = Math.PI / 6
-                _rightLeg.animation.omega = -1;
+            _rightLeg.transform = frames[_rightLeg.animation.currentFrame];
+            if(_rightLeg.animation.isReverse){
+                _rightLeg.animation.currentFrame--;
             }
-            else if(_rightLeg.transform.rotate[2] <= - Math.PI / 6){
-                _rightLeg.transform.rotate[2] = -Math.PI / 6
-                _rightLeg.animation.omega = 1;
+            else{
+                _rightLeg.animation.currentFrame++;
             }
-        }  
-    })`
+        }
+    })`,
+    isAuto: false,
+    isReverse: false
 };
 
 // crete the right foot node
@@ -252,9 +486,12 @@ rightFoot.viewMatrix = {
     far: 50,
 };
 rightFoot.animation = {
-    isAnimate: true,
-    degAnimate: 0.1,
-    animationFunction: null
+    isAnimate: false,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the left leg node
@@ -274,23 +511,70 @@ leftLeg.viewMatrix = {
     near: 0.1,
     far: 50,
 };
+
+function leftLegFrames(){
+    let transform = {
+        translate: [-0.5, -0.8, 0.35],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 4; ++k){
+        for(let i = 0; i <= 12; i++){
+            // append for angle pi/6 - pi/3 * i/12 to frames
+            // clone the transform object
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[2] = - Math.PI / 6 + Math.PI/3 * i / 12;
+            frames.push(_transform); 
+        }
+        for(let i =0 ; i <= 12; i++){
+            // append for angle pi/6 * i/12 to frames
+            // clone the transform object
+            let _transform = JSON.parse(JSON.stringify(transform));
+            _transform.rotate[2] = Math.PI / 6 - Math.PI/3 * i / 12;
+            frames.push(_transform);
+        }
+    }
+    // from -pi/6 to 0
+    for(let i = 0; i <= 6; i++){
+        // append for angle pi/6 - pi/3 * i/12 to frames
+        // clone the transform object
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[2] = -Math.PI / 6 + Math.PI/6 * i / 6;
+        frames.push(_transform); 
+    }
+    return frames;
+}
+
 leftLeg.animation = {
-    isAnimate: true,
-    degAnimate: 0.1,
-    omega: 1,
+    isAnimate: false,
+    frames : leftLegFrames(),
+    currentFrame : 0,
     animationFunction: `((_leftLeg, deltaTime) => {
+        let frames = _leftLeg.animation.frames;
+        if(_leftLeg.animation.currentFrame >= frames.length || _leftLeg.animation.currentFrame < 0){
+            if(_leftLeg.animation.isAuto){
+                if(_leftLeg.animation.currentFrame < 0){
+                    _leftLeg.animation.currentFrame = frames.length - 1;
+                }
+                _leftLeg.animation.currentFrame = _leftLeg.animation.currentFrame % frames.length;
+            }
+            else{
+                return;
+            }
+        }
         if (_leftLeg.animation.isAnimate) {
-            _leftLeg.transform.rotate[2] += _leftLeg.animation.omega * deltaTime;
-            if (_leftLeg.transform.rotate[2] >= Math.PI / 6) {
-                _leftLeg.transform.rotate[2] = Math.PI / 6
-                _leftLeg.animation.omega = -1;
+            _leftLeg.transform = frames[_leftLeg.animation.currentFrame];
+            if(_leftLeg.animation.isReverse){
+                _leftLeg.animation.currentFrame--;
             }
-            else if(_leftLeg.transform.rotate[2] <= - Math.PI / 6){
-                _leftLeg.transform.rotate[2] = -Math.PI / 6
-                _leftLeg.animation.omega = 1;
+            else{
+                _leftLeg.animation.currentFrame++;
             }
-        }  
-    })`
+        }
+    })`,
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the left foot node
@@ -312,7 +596,11 @@ leftFoot.viewMatrix = {
 };
 leftFoot.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 
 // Create the tail node

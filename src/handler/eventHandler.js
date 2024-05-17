@@ -8,6 +8,7 @@ import { target,
     changeModelObject, 
     changeMappingTexture} from "../index.js"
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
+import Animation from "../utils/Animation.js";
 
 const translationX = document.getElementById('translation-x-slider');
 const translationY = document.getElementById('translation-y-slider');
@@ -46,8 +47,21 @@ const cameraPhi = document.getElementById('camera-phi-slider');
 // set orthographic as default input radio button
 orthographic.checked = true;
 
+// model 
 const modelSelection = document.getElementById('model-selection');
 const mappingSelection = document.getElementById('mapping-selection');
+
+// animation
+
+// pause, play, auto, reverse
+const pauseContinue = document.getElementById('pause-continue-animation');
+const play = document.getElementById('play-animation');
+const auto = document.getElementById('auto-animation');
+const reverse = document.getElementById('reverse-animation');
+
+
+
+
 
 // initial
 export function initOptionModel(model){
@@ -242,3 +256,33 @@ mappingSelection.addEventListener("change", function (e) {
     console.log(mappingSelection.value)
     changeMappingTexture(state.objects, mappingSelection.value);
 });
+
+// animation
+pauseContinue.addEventListener('click', function(){
+    if(targetRoot.animation.isAnimate){
+        // change to continue
+        pauseContinue.textContent = "Continue";
+    }
+    else{
+        pauseContinue.textContent = "Pause";
+    }
+    Animation.pauseContinueAnimation(targetRoot);
+    
+})
+
+play.addEventListener('click', function(){
+    pauseContinue.textContent = "Pause";
+    Animation.playAnimation(targetRoot);
+})
+
+
+auto.addEventListener('click', function(){
+    // change to continue
+    auto.textContent = !targetRoot.animation.isAuto ? "Stop Auto" : "Auto";
+    Animation.setAuto(targetRoot);
+})
+
+reverse.addEventListener('click', function(){
+    reverse.textContent = !targetRoot.animation.isReverse ? "Stop Reverse" : "Reverse";
+    Animation.reverseAnimation(targetRoot);
+})

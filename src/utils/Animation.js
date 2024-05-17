@@ -29,4 +29,39 @@ export default class Animation{
         // recurse each node child
         
     }
+
+    static setAuto(parent_model){
+        parent_model.animation.isAuto = !parent_model.animation.isAuto;
+        for(let model of parent_model.children){    
+            Animation.setAuto(model)
+        }
+    }
+
+    static playAnimation(parent_model){
+        parent_model.animation.isAnimate = true;
+        if(parent_model.animation.isReverse){
+            if(parent_model.animation.frames){
+            parent_model.animation.currentFrame = parent_model.animation.frames.length - 1;
+            }
+            else parent_model.animation.currentFrame = 0;
+        }
+        else parent_model.animation.currentFrame = 0;
+        for(let model of parent_model.children){    
+            Animation.playAnimation(model)
+        }
+    }
+
+    static pauseContinueAnimation(parent_model){
+        parent_model.animation.isAnimate = !parent_model.animation.isAnimate;
+        for(let model of parent_model.children){    
+            Animation.pauseContinueAnimation(model)
+        }
+    }
+
+    static reverseAnimation(parent_model){
+        parent_model.animation.isReverse = !parent_model.animation.isReverse;
+        for(let model of parent_model.children){    
+            Animation.reverseAnimation(model)
+        }
+    }
 }
