@@ -4,6 +4,7 @@ import { target,
     setObliquePhi, 
     setObliqueTheta, 
     setTarget, 
+    lightDirection,
     setTargetRoot, 
     changeModelObject, 
     changeMappingTexture} from "../index.js"
@@ -64,6 +65,15 @@ const redAmbient = document.getElementById('red-slider');
 const greenAmbient = document.getElementById('green-slider');
 const blueAmbient = document.getElementById('blue-slider');
 
+// light position
+const lightX = document.getElementById('light-x-slider');
+const lightY = document.getElementById('light-y-slider');
+const lightZ = document.getElementById('light-z-slider');
+
+// phong
+const shininess = document.getElementById('shininess-slider');
+const specular = document.getElementById('specular-slider');
+const diffuse = document.getElementById('diffuse-slider');
 
 
 // initial
@@ -166,9 +176,12 @@ export function displayComponent(treeLevel = 0, objects){
 }
 
 function setSlider(node){
-    redAmbient.value = node.ambientColor[0];
-    greenAmbient.value = node.ambientColor[1];
-    blueAmbient.value = node.ambientColor[2];
+    redAmbient.value = node.ambient[0];
+    greenAmbient.value = node.ambient[1];
+    blueAmbient.value = node.ambient[2];
+    shininess.value = node.shininess;
+    specular.value = node.specular[0];
+    diffuse.value = node.diffuse[0];
 }
 
 
@@ -299,9 +312,9 @@ reverse.addEventListener('click', function(){
 })
 
 function handleAmbientColor(node){
-    node.ambientColor[0] = redAmbient.value;
-    node.ambientColor[1] = greenAmbient.value;
-    node.ambientColor[2] = blueAmbient.value;
+    node.ambient[0] = redAmbient.value;
+    node.ambient[1] = greenAmbient.value;
+    node.ambient[2] = blueAmbient.value;
     for(let child of node.children){
         handleAmbientColor(child);
     }
@@ -319,3 +332,39 @@ blueAmbient.addEventListener('input', function(){
     handleAmbientColor(target);
 })
 
+function handlePhong(node){
+    node.shininess = 100 - shininess.value;
+    node.specular[0] = specular.value;
+    node.specular[1] = specular.value;
+    node.specular[2] = specular.value;
+    node.diffuse[0] = diffuse.value;
+    node.diffuse[1] = diffuse.value;
+    node.diffuse[2] = diffuse.value;
+    for(let child of node.children){
+        handlePhong(child);
+    }
+}
+
+shininess.addEventListener('input', function(){
+    handlePhong(target);
+});
+
+specular.addEventListener('input', function(){
+    handlePhong(target);
+});
+
+diffuse.addEventListener('input', function(){
+    handlePhong(target);
+});
+
+lightX.addEventListener('input', function(){
+    lightDirection[0] = parseFloat(lightX.value);
+})
+
+lightY.addEventListener('input', function(){
+    lightDirection[1] = parseFloat(lightY.value);
+})
+
+lightZ.addEventListener('input', function(){
+    lightDirection[2] = parseFloat(lightZ.value);
+})

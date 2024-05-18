@@ -30,10 +30,9 @@ export function setTargetRoot(value) {
   targetRoot = value;
 }
 var lighting;
-var lightDirection;
+export var lightDirection;
 var texture;
 var projection_type;
-var lightPos = [1.0, 1.0, 0.0];
 
 export function setProjectionType(newProjection) {
   projection_type = newProjection;
@@ -60,7 +59,7 @@ function initState() {
     objects = model[0];
     focus = null;
     lighting = false;
-    lightDirection = Vec3.fromArray([0,0,1])
+    lightDirection = [0.0, 0.0, 1.0]
     texture = "none";
     projection_type = "orthographic";
     factor = 0.0;
@@ -195,10 +194,10 @@ function renderLoop(objects) {
 
         setAttr(gl, object.program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent);
 
-        const diffuseColor = [1, 1, 1];
-        const specularColor = [0, 0, 0];
-        const ambientColor = [1, 1 ,1]
-        const shininess = 1;
+        // const diffuse = [1, 1, 1];
+        // const specular = [0, 0, 0];
+        // const ambient = [1, 1 ,1]
+        // const shininess = 100;
 
         var uniforms = {
             uWorldViewProjection: object.worldMatrix,
@@ -206,11 +205,11 @@ function renderLoop(objects) {
             uReverseLightDirection: normalizeLight,
             uColor: object.pickedColor.concat(1.0),
             uModelMatrix: modelMatrix,
-            uAmbientColor: object.ambientColor,
-            uDiffuseColor: diffuseColor,
-            uSpecularColor: specularColor,
-            uShininess: shininess,
-            uLightPos: lightPos,
+            uAmbientColor: object.ambient,
+            uDiffuseColor: object.diffuse,
+            uSpecularColor: object.specular,
+            uShininess: object.shininess,
+            uLightPos: normalizeLight,
         }
 
         setUniforms(gl, object.program, uniforms);
@@ -256,10 +255,9 @@ function render(now) {
     }
 
 
-
     objects[0].setWorldMtx(null);
 
-    normalizeLight = Vec3.unitVector(lightDirection).asArray()
+    normalizeLight = Vec3.unitVector(Vec3.fromArray(lightDirection)).asArray()
     renderLoop(objects);
     
   window.requestAnimFrame(render);
