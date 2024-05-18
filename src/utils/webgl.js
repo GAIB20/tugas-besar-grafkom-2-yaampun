@@ -1,92 +1,3 @@
-/* ======= Shader object ======= */
-const vertex_shader_3d = `
-attribute vec3 aPosition;
-attribute vec3 aColor;
-attribute vec3 aTangent;
-attribute vec3 aBitangent;
-attribute vec3 aNormal;
-attribute vec2 aTexture;
-
-uniform mat4 uWorldViewProjection;
-uniform mat4 uWorldInverseTranspose;
-
-varying vec3 vNormal;
-varying vec3 vPosition;
-varying vec4 fragColor;
-varying vec2 vTexture;
-varying float colorFactor;
-varying mat4 viewMatrix;
-varying mat3 vTBN;
-varying vec3 ts_light_pos; 
-varying vec3 ts_view_pos;  
-varying vec3 ts_frag_pos;
-
-mat3 transpose(in mat3 inMatrix)
-{
-    vec3 i0 = inMatrix[0];
-    vec3 i1 = inMatrix[1];
-    vec3 i2 = inMatrix[2];
-
-    mat3 outMatrix = mat3(
-        vec3(i0.x, i1.x, i2.x),
-        vec3(i0.y, i1.y, i2.y),
-        vec3(i0.z, i1.z, i2.z)
-    );
-
-    return outMatrix;
-}
-
-void main(void) {
-    viewMatrix = uWorldViewProjection;
-    gl_Position = uWorldViewProjection * vec4(aPosition, 1.0);
-  
-    vPosition = (uWorldInverseTranspose * vec4(aPosition, 1.0)).xyz;
-    vNormal = mat3(uWorldInverseTranspose) * aNormal;
-    fragColor = vec4(aColor, 1.0);
-    vTexture = aTexture;
-
-    vec3 t = normalize(mat3(uWorldInverseTranspose) * aTangent);
-    vec3 b = normalize(mat3(uWorldInverseTranspose) * aBitangent);
-    vec3 n = normalize(mat3(uWorldInverseTranspose) * aNormal);
-    mat3 tbn = transpose(mat3(t, b, n));
-
-    ts_frag_pos = vec3(uWorldViewProjection * vec4(aPosition, 1.0));
-
-    vTBN = tbn;
-    vec3 light_pos = vec3(0, 0, 1);
-    ts_light_pos = tbn * light_pos;
-    ts_view_pos = tbn * vec3(0, 0, 0);
-    ts_frag_pos = tbn * ts_frag_pos;
-  }
-`;
-
-const fragment_shader_3d = `
-precision mediump float;
-
-varying vec3 vNormal;
-
-uniform vec3 uReverseLightDirection;
-uniform vec4 uColor;
-
-void main(void) {
-    vec3 normal = normalize(vNormal);
-
-    float light = dot(normal, uReverseLightDirection);
-    gl_FragColor = uColor;
-    //add the ambience light
-    gl_FragColor.rgb *= light;
-}
-`;
-
-const fragment_shader_3d_no_lighting = `
-precision mediump float;
-varying vec4 fragColor;
-
-void main(void) {
-    gl_FragColor = fragColor;
-}
-`;
-
 const fragment_shader_texture = `
 precision mediump float;
 
@@ -185,68 +96,52 @@ function createShaderProgram(gl, vertexShaderSource, fragmentShaderSource) {
 }
 
 function setAttr(gl, program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent) {
+  const bindAttrib = (bufferData, attribName, size) => {
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, bufferData, gl.STATIC_DRAW);
+      const location = gl.getAttribLocation(program, attribName);
+      gl.enableVertexAttribArray(location);
+      gl.vertexAttribPointer(location, size, gl.FLOAT, false, 0, 0);
+  };
 
-    const vertexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_position, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aPosition"));
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aPosition"), 3, gl.FLOAT, false, 0, 0);
-  
-    const normalBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_normal, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aNormal"));
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aNormal"), 3, gl.FLOAT, false, 0, 0);
-  
-    const colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_color, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aColor"), 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aColor"));
-  
-    const textureBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_texture, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aTexture"), 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aTexture"));
-  
-    const vbo_tang = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo_tang);
-    gl.bufferData(gl.ARRAY_BUFFER, a_tangent, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aTangent"), 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aTangent"));
-  
-    const vbo_bitang = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo_bitang);
-    gl.bufferData(gl.ARRAY_BUFFER, a_bitangent, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aBitangent"), 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aBitangent"));
+  bindAttrib(a_position, "aPosition", 3);
+  bindAttrib(a_normal, "aNormal", 3);
+  bindAttrib(a_color, "aColor", 3);
+  bindAttrib(a_texture, "aTexture", 2);
+  bindAttrib(a_tangent, "aTangent", 3);
+  bindAttrib(a_bitangent, "aBitangent", 3);
 }
 
 function setUniforms(gl, program, uniforms) {
-    worldViewProjection = gl.getUniformLocation(program, "uWorldViewProjection");
-    worldInverseTranspose = gl.getUniformLocation(program,"uWorldInverseTranspose");
-    color = gl.getUniformLocation(program, "uColor");
-    reverseLightDirection = gl.getUniformLocation(program,"uReverseLightDirection");
-    texture =  gl.getUniformLocation(program, "uTexture");
-    worldCameraPosition = gl.getUniformLocation(program, "uWorldCameraPosition");
-    modelMatrix = gl.getUniformLocation(program, "uModelMatrix");
-  
-    gl.uniformMatrix4fv(
-      worldViewProjection,
-      false,
-      uniforms.uWorldViewProjection
-    );
-    gl.uniformMatrix4fv(
-      worldInverseTranspose,
-      false,
-      uniforms.uWorldInverseTranspose
-    );
-    gl.uniform4fv(color, uniforms.uColor);
-    gl.uniform3fv(
-      reverseLightDirection,
-      uniforms.uReverseLightDirection
-    );
-    gl.uniform1i(texture, 0);
-    gl.uniformMatrix4fv(modelMatrix, false, uniforms.uModelMatrix);
+  const setUniformMatrix4fv = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniformMatrix4fv(location, false, data);
+  };
+
+  const setUniform3fv = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniform3fv(location, data);
+  };
+
+  const setUniform4fv = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniform4fv(location, data);
+  };
+
+  const setUniform1f = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniform1f(location, data);
+  };
+
+  setUniformMatrix4fv("uWorldViewProjection", uniforms.uWorldViewProjection);
+  setUniformMatrix4fv("uWorldInverseTranspose", uniforms.uWorldInverseTranspose);
+  setUniformMatrix4fv("uModelMatrix", uniforms.uModelMatrix);
+  setUniform3fv("uReverseLightDirection", uniforms.uReverseLightDirection);
+  setUniform4fv("uColor", uniforms.uColor);
+  setUniform3fv("uAmbientColor", uniforms.uAmbientColor); 
+  setUniform3fv("uDiffuseColor", uniforms.uDiffuseColor); // Set the diffuse color uniform
+  setUniform3fv("uSpecularColor", uniforms.uSpecularColor); // Set the specular color uniform
+  setUniform1f("uShininess", uniforms.uShininess); // Set the shininess uniform
+  setUniform3fv("uLightPos", uniforms.uLightPos);
 }

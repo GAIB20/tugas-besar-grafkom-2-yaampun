@@ -59,7 +59,10 @@ const play = document.getElementById('play-animation');
 const auto = document.getElementById('auto-animation');
 const reverse = document.getElementById('reverse-animation');
 
-
+// ambient light
+const redAmbient = document.getElementById('red-slider');
+const greenAmbient = document.getElementById('green-slider');
+const blueAmbient = document.getElementById('blue-slider');
 
 
 
@@ -147,6 +150,7 @@ export function displayComponent(treeLevel = 0, objects){
         createdButton.addEventListener('click', function(evt) {
             setTarget(object);
             handleTransform(object);
+            setSlider(object);
             let components = document.getElementsByClassName("component");
             for (let i = 0; i < components.length; i++) {
                 components[i].className = components[i].className.replace(" border-2", "");
@@ -160,6 +164,13 @@ export function displayComponent(treeLevel = 0, objects){
         }
     })
 }
+
+function setSlider(node){
+    redAmbient.value = node.ambientColor[0];
+    greenAmbient.value = node.ambientColor[1];
+    blueAmbient.value = node.ambientColor[2];
+}
+
 
 export function handleTransform(node){
     // change translation, rotation, scalation
@@ -286,3 +297,25 @@ reverse.addEventListener('click', function(){
     reverse.textContent = !targetRoot.animation.isReverse ? "Stop Reverse" : "Reverse";
     Animation.reverseAnimation(targetRoot);
 })
+
+function handleAmbientColor(node){
+    node.ambientColor[0] = redAmbient.value;
+    node.ambientColor[1] = greenAmbient.value;
+    node.ambientColor[2] = blueAmbient.value;
+    for(let child of node.children){
+        handleAmbientColor(child);
+    }
+}
+
+redAmbient.addEventListener('input', function(){
+    handleAmbientColor(target);
+})
+
+greenAmbient.addEventListener('input', function(){
+    handleAmbientColor(target);
+})
+
+blueAmbient.addEventListener('input', function(){
+    handleAmbientColor(target);
+})
+

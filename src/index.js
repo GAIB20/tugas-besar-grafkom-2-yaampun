@@ -19,7 +19,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-var model = [chickenModel, pigModel, foxModel, hollowModel, hollowRingModel];
+var model = [pigModel, chickenModel, foxModel, hollowModel, hollowRingModel];
 var objects;
 export var target;
 export function setTarget(value) {
@@ -33,6 +33,7 @@ var lighting;
 var lightDirection;
 var texture;
 var projection_type;
+var lightPos = [1.0, 1.0, 0.0];
 
 export function setProjectionType(newProjection) {
   projection_type = newProjection;
@@ -187,18 +188,29 @@ function renderLoop(objects) {
 
         var a_position = new Float32Array(object.model.vertices.flat(1));
         var a_normal = new Float32Array(object.model.normals.flat(1));
-        var a_color = new Float32Array(object.model.colors.flat(1));
+        var a_color = new Float32Array(object.pickedColor.flat(1));
         var a_texture = new Float32Array(object.model.texCoord);
         var a_tangent = new Float32Array(object.model.tangents.flat(1));
         var a_bitangent = new Float32Array(object.model.bitangents.flat(1));
 
         setAttr(gl, object.program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent);
+
+        const diffuseColor = [1, 1, 1];
+        const specularColor = [0, 0, 0];
+        const ambientColor = [1, 1 ,1]
+        const shininess = 1;
+
         var uniforms = {
             uWorldViewProjection: object.worldMatrix,
             uWorldInverseTranspose: object.worldInverseMatrix,
             uReverseLightDirection: normalizeLight,
             uColor: object.pickedColor.concat(1.0),
             uModelMatrix: modelMatrix,
+            uAmbientColor: object.ambientColor,
+            uDiffuseColor: diffuseColor,
+            uSpecularColor: specularColor,
+            uShininess: shininess,
+            uLightPos: lightPos,
         }
 
         setUniforms(gl, object.program, uniforms);
@@ -226,7 +238,7 @@ window.requestAnimFrame = (function () {
 
 function render(now) {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);
+    gl.clearColor(0.8, 0.8, 0.8, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.enable(gl.CULL_FACE);

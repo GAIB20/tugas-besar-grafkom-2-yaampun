@@ -15,6 +15,8 @@
 
         uniform mat4 uWorldViewProjection;
         uniform mat4 uWorldInverseTranspose;
+        uniform vec3 uLightPos;
+        uniform vec3 uViewPos;
 
         varying vec3 vNormal;
         varying vec3 vPosition;
@@ -26,6 +28,9 @@
         varying vec3 ts_light_pos; 
         varying vec3 ts_view_pos;  
         varying vec3 ts_frag_pos;
+
+        varying vec3 vViewDir;
+        varying vec3 vLightDir;
 
         mat3 transpose(in mat3 inMatrix)
         {
@@ -63,23 +68,48 @@
             ts_light_pos = tbn * light_pos;
             ts_view_pos = tbn * vec3(0, 0, 0);
             ts_frag_pos = tbn * ts_frag_pos;
+            
+            vec4 worldPos = uWorldViewProjection * vec4(aPosition, 1.0);
+            vViewDir = uViewPos - worldPos.xyz;
+            vLightDir = uLightPos - worldPos.xyz;
         }
     </script>
     <script id="fragment-shader-3d" type="x-shader/x-fragment">
         precision mediump float;
 
         varying vec3 vNormal;
+        varying vec3 vViewDir;
+        varying vec3 vLightDir;
+
+        uniform vec3 uAmbientColor;
+        uniform vec3 uDiffuseColor;
+        uniform vec3 uSpecularColor;
+        uniform float uShininess;
+        uniform vec3 uLightPos;
 
         uniform vec3 uReverseLightDirection;
         uniform vec4 uColor;
 
         void main(void) {
             vec3 normal = normalize(vNormal);
+            vec3 viewDir = normalize(vViewDir);
+            vec3 lightDir = normalize(vLightDir);
+            
+            // Lambertian (diffuse) reflection
+            float diffuseFactor = max(dot(normal, lightDir), 0.0);
+            vec3 diffuse = uDiffuseColor * diffuseFactor;
 
-            float light = dot(normal, uReverseLightDirection);
-            gl_FragColor = uColor;
-            //add the ambience light
-            gl_FragColor.rgb *= light;
+            // Specular reflection
+            vec3 reflectDir = reflect(-lightDir, normal);
+            float specularFactor = pow(max(dot(viewDir, reflectDir), 0.0), uShininess);
+            vec3 specular = uSpecularColor * specularFactor;
+
+            // Ambient reflection
+            vec3 ambient = uAmbientColor;
+
+            vec3 finalColor = (ambient + diffuse + specular) * uColor.rgb;
+
+            gl_FragColor = vec4(finalColor, 1.0);
         }
     </script>
     
@@ -89,12 +119,11 @@
     <script type="module" src="src/handler/eventHandler.js"></script>
 
 </head>
-<body class="h-screen w-screen overflow-auto px-5 flex flex-col items-center">
-    <p class="text-3xl font-bold text-center">3D MODEL WEBGL</p>
-    <div class="flex flex-row w-full">
+<body class="h-screen w-screen px-5 flex flex-col">
+    <div class="flex flex-row max-w-full max-h-screen overflow-hidden">
 
         <!-- left side -->
-        <div class="grow">
+        <div class="grow max-h-full overflow-auto">
             <div>
                 <p class="sub">Graph</p>
                 <div class="divider"></div>
@@ -156,43 +185,53 @@
                 <div class="divider"></div>
 
                 <div class="flex flex-row gap-5">
+                    
+                    <div class="flex flex-col grow">
 
-                
-                    <div class="flex flex-col">
-                        <p>Translation</p>
-                        <div class="flex flex-row gap-5">
-                            <label for="light-x-slider">X:</label>
-                            <input type="range" min="-10" max="10" value="0" id="light-x-slider"/>
-                        </div>
-                        <div class="flex flex-row gap-5">
-                            <label for="light-y-slider">Y:</label>
-                            <input type="range" min="-10" max="10" value="0" id="light-y-slider"/>
-                        </div>
-                        <div class="flex flex-row gap-5">
-                            <label for="light-z-slider">Z:</label>
-                            <input type="range" min="-10" max="10" value="0" id="light-z-slider"/>
-                        </div>
+                    
+                        <!-- <p>Translation</p>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex flex-row">
+                                <label for="light-x-slider">X:</label>
+                                <input type="range" min="-10" max="10" value="0" id="light-x-slider"/>
+                            </div>
+                            <div class="flex flex-row">
+                                <label for="light-y-slider">Y:</label>
+                                <input type="range" min="-10" max="10" value="0" id="light-y-slider"/>
+                            </div>
+                            <div class="flex flex-row">
+                                <label for="light-z-slider">Z:</label>
+                                <input type="range" min="-10" max="10" value="0" id="light-z-slider"/>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="flex flex-row gap-5">
+
+                    
+                    
+                    <!-- directional -->
+                    <div>
+
                     </div>
 
-                    <div class="flex flex-col">
-                        <label for="light-radius-slider">Radius</label>
-                        <input type="range" min="-10" max="10" value="0" id="light-radius-slider"/>
-                    </div>
                 </div>
             </div>
         </div>
 
 
         <!-- canvas -->
-        <div class="mt-5 px-5 grow flex justify-center">
-            <div>
-                <canvas id="gl-canvas" width="720" height="720" class="border-dashed border-2 border-indigo-600"></canvas>
+        <div class="grow px-5 flex">
+            <div class="w-full items-center flex flex-col">
+                <p class="text-3xl font-bold mb-5">3D MODEL WEBGL</p>
+                <canvas id="gl-canvas" width="620" height="620" class="border-dashed border-2 border-indigo-600"></canvas>
             </div>
         </div>
         
 
         <!-- right side -->
-        <div class="grow ">
+        <div class="grow max-h-full overflow-auto pb-20">
             <div>
                 <p class="sub">Model & Projection</p>
                 <div class="divider"></div>
@@ -330,15 +369,29 @@
                     
                     
                     <div>
-                        <p>Basic</p>
-                        <div class="flex flex-row items-center gap-3">
-                            <label for="color-picker">Color</label>
-                            <input type="color" id="color-picker">
+                        <p class="font-bold">Basic</p>
+                        <div class="flex flex-col">
+                            <p>Ambient Color</p>
+                            <div>
+                                <div class="flex flex-row">
+                                    <label for="red-slider">R:</label>
+                                    <input type="range" min="0" max="1" value="1" step="0.01" id="red-slider"/>
+                                </div>
+                                <div class="flex flex-row">
+                                    <label for="green-slider">G:</label>
+                                    <input type="range" min="0" max="1" value="1" step="0.01" id="green-slider"/>
+                                </div>
+                                <div class="flex flex-row">
+                                    <label for="blue-slider">B:</label>
+                                    <input type="range" min="0" max="1" value="1" step="0.01" id="blue-slider"/>
+                                </div>
+                            </div>
+    
                         </div>
                     </div>
 
                     <div>
-                        <p>Phong</p>
+                        <p class="font-bold">Phong</p>
                         <div>
                             <div class="flex flex-row items-center gap-3">
                                 <label for="shiness-slider">Shiness</label>
