@@ -91,4 +91,51 @@ export default class Animation{
         })`
         return animationScript;
     }
+
+    static nextFrame(parent_model){
+        
+        if(parent_model.animation.frames){
+            parent_model.animation.currentFrame++;
+            if(parent_model.animation.currentFrame >= parent_model.animation.frames.length){
+                parent_model.animation.currentFrame = parent_model.animation.frames.length - 1;
+            }
+            parent_model.transform = parent_model.animation.frames[parent_model.animation.currentFrame];
+        }
+        for(let model of parent_model.children){    
+            Animation.nextFrame(model)
+        }
+    }
+
+    static prevFrame(parent_model){
+        if(parent_model.animation.frames){
+            parent_model.animation.currentFrame--;
+            if(parent_model.animation.currentFrame < 0){
+                parent_model.animation.currentFrame = 0;
+            }
+            parent_model.transform = parent_model.animation.frames[parent_model.animation.currentFrame];
+        }
+        for(let model of parent_model.children){    
+            Animation.prevFrame(model)
+        }
+    }
+
+    static firstFrame(parent_model){
+        if(parent_model.animation.frames){
+            parent_model.animation.currentFrame = 0;
+            parent_model.transform = parent_model.animation.frames[parent_model.animation.currentFrame];
+        }
+        for(let model of parent_model.children){    
+            Animation.firstFrame(model)
+        }
+    }
+
+    static lastFrame(parent_model){
+        if(parent_model.animation.frames){
+            parent_model.animation.currentFrame = parent_model.animation.frames.length - 1;
+            parent_model.transform = parent_model.animation.frames[parent_model.animation.currentFrame];
+        }
+        for(let model of parent_model.children){    
+            Animation.lastFrame(model)
+        }
+    }
 }

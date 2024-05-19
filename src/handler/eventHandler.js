@@ -60,6 +60,12 @@ const play = document.getElementById('play-animation');
 const auto = document.getElementById('auto-animation');
 const reverse = document.getElementById('reverse-animation');
 
+// next, prev, first, last
+const next = document.getElementById('next-animation');
+const prev = document.getElementById('prev-animation');
+const first = document.getElementById('first-animation');
+const last = document.getElementById('last-animation');
+
 // ambient light
 const redAmbient = document.getElementById('red-slider');
 const greenAmbient = document.getElementById('green-slider');
@@ -192,7 +198,7 @@ export function handleTransform(node){
 
     let [rx, ry, rz] = node.transform.rotate
     // change with radToDeg
-    if(node.flag == "articulated"){
+    if(true){
     rx = radToDeg(rx);
     ry = radToDeg(ry);
     rz = radToDeg(rz);
@@ -309,6 +315,23 @@ auto.addEventListener('click', function(){
 reverse.addEventListener('click', function(){
     reverse.textContent = !targetRoot.animation.isReverse ? "Stop Reverse" : "Reverse";
     Animation.reverseAnimation(targetRoot);
+})
+
+// next, prev, first, last
+next.addEventListener('click', function(){
+    Animation.nextFrame(targetRoot);
+})
+
+prev.addEventListener('click', function(){
+    Animation.prevFrame(targetRoot);
+})
+
+first.addEventListener('click', function(){
+    Animation.firstFrame(targetRoot);
+})
+
+last.addEventListener('click', function(){
+    Animation.lastFrame(targetRoot);
 })
 
 function handleAmbientColor(node){

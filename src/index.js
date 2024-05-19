@@ -65,7 +65,9 @@ function initState() {
     factor = 0.0;
     oblique_theta = 90.0;
     oblique_phi = 90.0;
-    setDefaultRotation(objects)
+    for(let i = 0; i < model.length; i++){
+        setDefaultRotation(model[i]);
+    }
     displayComponent(0, objects);
     initOptionModel(model);
     handleTransform(objects[0])
@@ -295,6 +297,7 @@ function setProjectionMatrix(matrix, object) {
 
 export function changeModelObject (index) {
     objects = model[index];
+    console.log(objects[0])
     setTarget(objects[0]);
     setTargetRoot(objects[0]);
     clearComponent();
