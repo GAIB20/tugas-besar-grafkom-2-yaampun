@@ -12,7 +12,11 @@ chicken.transform = {
     rotate: [42, -55, 27],
     scale: [1, 1, 1],
 };
-chicken.pickedColor = [1, 1, 0];
+chicken.pickedColor = [0.9, 0.9, 0],
+chicken.diffuse = [0, 0, 0],
+chicken.specular = [0, 0, 0],
+chicken.ambient = [1, 1, 1],
+chicken.shininess = 1,
 chicken.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -56,7 +60,11 @@ head.transform = {
     rotate: [0, 0, 0],
     scale: [1, 1, 1],
 };
-head.pickedColor = [1, 1, 0];
+head.pickedColor = [0.9, 0.9, 0];
+head.diffuse = [0, 0, 0];
+head.specular = [0, 0, 0];
+head.ambient = [1, 1, 1];
+head.shininess = 1,
 head.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -83,6 +91,10 @@ beak.transform = {
     scale: [1, 1, 1],
 };
 beak.pickedColor = [1, 0.5, 0];
+beak.diffuse = [0, 0, 0];
+beak.specular = [0, 0, 0];
+beak.ambient = [1, 1, 1];
+beak.shininess = 1,
 beak.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -108,6 +120,10 @@ whiteLeftEye.transform = {
     scale: [1, 1, 1],
 };
 whiteLeftEye.pickedColor = [0.99, 0.99, 0.99];
+whiteLeftEye.diffuse = [0, 0, 0];
+whiteLeftEye.specular = [0, 0, 0];
+whiteLeftEye.ambient = [1, 1, 1];
+whiteLeftEye.shininess = 1,
 whiteLeftEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -133,6 +149,10 @@ blackLeftEye.transform = {
     scale: [1, 1, 1],
 };
 blackLeftEye.pickedColor = [0, 0, 0];
+blackLeftEye.diffuse = [0, 0, 0];
+blackLeftEye.specular = [0, 0, 0];
+blackLeftEye.ambient = [1, 1, 1];
+whiteLeftEye.shininess = 1,
 blackLeftEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -159,6 +179,10 @@ whiteRightEye.transform = {
     scale: [1, 1, 1],
 };
 whiteRightEye.pickedColor = [0.99, 0.99, 0.99];
+whiteRightEye.diffuse = [0, 0, 0];
+whiteRightEye.specular = [0, 0, 0];
+whiteRightEye.ambient = [1, 1, 1];
+whiteRightEye.shininess = 1,
 whiteRightEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -185,6 +209,10 @@ blackRightEye.transform = {
     scale: [1, 1, 1],
 };
 blackRightEye.pickedColor = [0, 0, 0];
+blackRightEye.diffuse = [0, 0, 0];
+blackRightEye.specular = [0, 0, 0];
+blackRightEye.ambient = [1, 1, 1];
+blackRightEye.shininess = 1,
 blackRightEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -212,7 +240,11 @@ leftWing.transform = {
     rotate: [0, 0, 90],
     scale: [1, 1, 1],
 };
-leftWing.pickedColor = [1, 1, 0];
+leftWing.pickedColor = [0.9, 0.9, 0];
+leftWing.diffuse = [0, 0, 0];
+leftWing.specular = [0, 0, 0];
+leftWing.ambient = [1, 1, 1];
+leftWing.shininess = 1,
 leftWing.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -269,7 +301,11 @@ rightWing.transform = {
     rotate: [0, 0, 90],
     scale: [1, 1, 1],
 };
-rightWing.pickedColor = [1, 1, 0];
+rightWing.pickedColor = [0.9, 0.9, 0];
+rightWing.diffuse = [0, 0, 0];
+rightWing.specular = [0, 0, 0];
+rightWing.ambient = [1, 1, 1];
+rightWing.shininess = 1,
 rightWing.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -326,6 +362,10 @@ rightLeg.transform = {
     scale: [1, 1, 1],
 };
 rightLeg.pickedColor = [1, 0.5, 0];
+rightLeg.diffuse = [0, 0, 0];
+rightLeg.specular = [0, 0, 0];
+rightLeg.ambient = [1, 1, 1];
+rightLeg.shininess = 1,
 rightLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -389,6 +429,10 @@ rightFoot.transform = {
     scale: [1, 1, 1],
 };
 rightFoot.pickedColor = [1, 0.5, 0];
+rightFoot.diffuse = [0, 0, 0];
+rightFoot.specular = [0, 0, 0];
+rightFoot.ambient = [1, 1, 1];
+rightFoot.shininess = 1,
 rightFoot.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -415,6 +459,10 @@ leftLeg.transform = {
     scale: [1, 1, 1],
 };
 leftLeg.pickedColor = [1, 0.5, 0];
+leftLeg.diffuse = [0, 0, 0];
+leftLeg.specular = [0, 0, 0];
+leftLeg.ambient = [1, 1, 1];
+leftLeg.shininess = 1,
 leftLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -476,6 +524,10 @@ leftFoot.transform = {
     scale: [1, 1, 1],
 };
 leftFoot.pickedColor = [1, 0.5, 0];
+leftFoot.diffuse = [0, 0, 0];
+leftFoot.specular = [0, 0, 0];
+leftFoot.ambient = [1, 1, 1];
+leftFoot.shininess = 1,
 leftFoot.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
