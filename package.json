@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tailwindcss -i ./src/input.css -o ./output.css && concurrently \"npx webpack --watch\" \"live-server\""
+    "dev": "concurrently \"npx webpack --watch\" \"live-server\" \"tailwindcss -i ./src/input.css -o ./output.css --watch\""
   },
   "author": "",
   "license": "ISC",
