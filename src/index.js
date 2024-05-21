@@ -212,6 +212,9 @@ function renderLoop(objects) {
             uSpecularColor: object.specular,
             uShininess: object.shininess,
             uLightPos: normalizeLight,
+            ka: object.const.ka,
+            kd: object.const.kd,
+            ks: object.const.ks,
         }
 
         setUniforms(gl, object.program, uniforms);

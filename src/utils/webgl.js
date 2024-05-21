@@ -144,4 +144,7 @@ function setUniforms(gl, program, uniforms) {
   setUniform3fv("uSpecularColor", uniforms.uSpecularColor); // Set the specular color uniform
   setUniform1f("uShininess", uniforms.uShininess); // Set the shininess uniform
   setUniform3fv("uLightPos", uniforms.uLightPos);
+  setUniform1f("ka", uniforms.ka);
+  setUniform1f("kd", uniforms.kd);
+  setUniform1f("ks", uniforms.ks);
 }

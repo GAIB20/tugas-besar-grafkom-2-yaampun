@@ -80,7 +80,12 @@ const lightZ = document.getElementById('light-z-slider');
 const shininess = document.getElementById('shininess-slider');
 const specular = document.getElementById('specular-slider');
 const diffuse = document.getElementById('diffuse-slider');
+const ambient = document.getElementById('ambient-slider');
 
+// colors
+const basicColor = document.getElementById('basic-color');
+const diffuseColor = document.getElementById('diffuse-color');
+const specularColor = document.getElementById('specular-color');
 
 // initial
 export function initOptionModel(model){
@@ -225,7 +230,22 @@ export function handleTransform(node){
     scalationX.value = sx*20;
     scalationY.value = sx*20;
     scalationZ.value = sz*20;
+
+    // change phong slider
+    redAmbient.value = node.ambient[0];
+    greenAmbient.value = node.ambient[1];
+    blueAmbient.value = node.ambient[2];
+    shininess.value = node.shininess;
     
+    basicColor.value = rgbToHex(node.pickedColor);
+    diffuseColor.value = rgbToHex(node.diffuse);
+    specularColor.value = rgbToHex(node.specular);
+    
+    ambient.value = node.const.ka;
+    diffuse.value = node.const.kd;
+    specular.value = node.const.ks;
+    
+
 }
 
 
@@ -357,12 +377,11 @@ blueAmbient.addEventListener('input', function(){
 
 function handlePhong(node){
     node.shininess = 100 - shininess.value;
-    node.specular[0] = specular.value;
-    node.specular[1] = specular.value;
-    node.specular[2] = specular.value;
-    node.diffuse[0] = diffuse.value;
-    node.diffuse[1] = diffuse.value;
-    node.diffuse[2] = diffuse.value;
+    node.specular = hexToRgb(specularColor.value);
+    node.diffuse = hexToRgb(diffuseColor.value);
+    node.const.ks = parseFloat(specular.value);
+    node.const.kd = parseFloat(diffuse.value);
+    node.const.ka = parseFloat(ambient.value);
     for(let child of node.children){
         handlePhong(child);
     }
@@ -372,11 +391,23 @@ shininess.addEventListener('input', function(){
     handlePhong(target);
 });
 
+ambient.addEventListener('input', function(){
+    handlePhong(target);
+});
+
 specular.addEventListener('input', function(){
     handlePhong(target);
 });
 
 diffuse.addEventListener('input', function(){
+    handlePhong(target);
+});
+
+specularColor.addEventListener('input', function(){
+    handlePhong(target);
+});
+
+diffuseColor.addEventListener('input', function(){
     handlePhong(target);
 });
 
@@ -391,3 +422,8 @@ lightY.addEventListener('input', function(){
 lightZ.addEventListener('input', function(){
     lightDirection[2] = parseFloat(lightZ.value);
 })
+
+basicColor.addEventListener('input', function(){
+    target.pickedColor = hexToRgb(basicColor.value);
+});
+

@@ -87,6 +87,10 @@
         uniform float uShininess;
         uniform vec3 uLightPos;
 
+        uniform float kd;
+        uniform float ks;
+        uniform float ka;
+
         uniform vec3 uReverseLightDirection;
         uniform vec4 uColor;
 
@@ -107,7 +111,7 @@
             // Ambient reflection
             vec3 ambient = uAmbientColor;
 
-            vec3 finalColor = (ambient + diffuse + specular) * uColor.rgb;
+            vec3 finalColor = (ambient * ka+ diffuse * kd + specular * ks) * uColor.rgb;
 
             gl_FragColor = vec4(finalColor, 1.0);
         }
@@ -386,6 +390,10 @@
                     
                         <div class="grow">
                             <p class="font-bold">Basic</p>
+                            <div class="flex flex-row gap-5">
+                                <p>Color</p>
+                                <input type="color" id="basic-color">
+                            </div>
                             <div class="flex flex-col">
                                 <p>Ambient Color</p>
                                 <div>
@@ -413,19 +421,23 @@
                                     <label for="shiness-slider">Shininess</label>
                                     <input type="range" min="0.5" max="100" value="0" id="shininess-slider">
                                 </div>
+                                <div class="flex flex-row items-center gap-3">
+                                    <label for="shiness-slider">Ambient</label>
+                                    <input type="range" min="0" max="1" value="0" step="0.1" id="ambient-slider">
+                                </div>
                                 <div class="flex flex-col ">
-                                    <div class="flex flex-col">
-                                        <label for="">Specular</label>
-                                        <div class="flex flex-row gap-2">
-                                            <input type="color">
-                                            <input type="range" min="0" max="1" value="0" step="0.1" id="specular-slider">
-                                        </div>
-                                    </div>
                                     <div class="flex flex-col">
                                         <label for="">Diffuse</label>
                                         <div class="flex flex-row gap-2">
-                                            <input type="color">
+                                            <input type="color" id="diffuse-color">
                                             <input type="range" min="0" max="1" value="0" step="0.1" id="diffuse-slider">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="">Specular</label>
+                                        <div class="flex flex-row gap-2">
+                                            <input type="color" id="specular-color">
+                                            <input type="range" min="0" max="100" value="0" step="0.1" id="specular-slider">
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,3 @@
-/* ======= value conversion ======= */
 function radToDeg(radians) {
     return (radians * 180) / Math.PI;
   }
@@ -7,40 +6,18 @@ function degToRad(degrees) {
   return (degrees * Math.PI) / 180;
 }
 
-function arrDegToRad(arr) {
-  return arr.map((val) => degToRad(val));
+function hexToRgb(hex) {
+  let r = parseInt(hex.substring(1, 3), 16) / 255;
+  let g = parseInt(hex.substring(3, 5), 16) / 255;
+  let b = parseInt(hex.substring(5, 7), 16) / 255;
+  return [r, g, b];
 }
 
-function resizeCanvas(canvas) {
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  const needResize = canvas.width !== width || canvas.height !== height;
-  if (needResize) {
-    canvas.width = width;
-    canvas.height = height;
-  }
-}
-
-function setPrecision(number) {
-  return parseFloat(number.toPrecision(12));
-}
-
-function locateCentroid(matrix) {
-  let x = 0;
-  let y = 0;
-  let z = 0;
-  let vertexCount = matrix.length;
-  for (let i = 0; i < vertexCount; i++) {
-    x = setPrecision(matrix[i][0] + x);
-    y = setPrecision(matrix[i][1] + y);
-    z = setPrecision(matrix[i][2] + z);
-  }
-
-  x = x / vertexCount;
-  y = y / vertexCount;
-  z = z / vertexCount;
-
-  return [x, y, z];
+function rgbToHex(rgb) {
+  let r = Math.round(rgb[0] * 255).toString(16).padStart(2, '0');
+  let g = Math.round(rgb[1] * 255).toString(16).padStart(2, '0');
+  let b = Math.round(rgb[2] * 255).toString(16).padStart(2, '0');
+  return "#" + r + g + b;
 }
 
 function calculateEulerDistance(cross) {
@@ -81,7 +58,6 @@ function toVertices(vertices, faces) {
   }
   return newVertices;
 }
-
 
 
 function randomColors() {

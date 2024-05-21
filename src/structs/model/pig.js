@@ -10,10 +10,15 @@ pig.transform = {
   scale: [1, 1, 1],
 };
 pig.pickedColor = [0.921568627,0.568627451,0.898039216],
-pig.diffuse = [0,0,0],
-pig.specular = [0,0,0],
+pig.diffuse = [1,1,1],
+pig.specular = [1,1,1],
 pig.ambient = [1,1,1],
 pig.shininess = 1,
+pig.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 pig.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -35,10 +40,15 @@ head.transform = {
     scale: [1, 1, 1],
 };
 head.pickedColor = [0.921568627,0.568627451,0.898039216],
-head.diffuse = [0,0,0],
-head.specular = [0,0,0],
+head.diffuse = [1,1,1],
+head.specular = [1,1,1],
 head.ambient = [1,1,1],
 head.shininess = 1,
+head.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 head.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -60,10 +70,15 @@ whiteRightEye.transform = {
     scale: [1, 1, 1],
 };
 whiteRightEye.pickedColor = [0.99,0.99,0.99],
-whiteRightEye.diffuse = [0,0,0],
-whiteRightEye.specular = [0,0,0],
+whiteRightEye.diffuse = [1,1,1],
+whiteRightEye.specular = [1,1,1],
 whiteRightEye.ambient = [1,1,1],
 whiteRightEye.shininess = 1,
+whiteRightEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 whiteRightEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -85,10 +100,15 @@ whiteLeftEye.transform = {
     scale: [1, 1, 1],
 };
 whiteLeftEye.pickedColor = [0.99,0.99,0.99],
-whiteLeftEye.diffuse = [0,0,0],
-whiteLeftEye.specular = [0,0,0],
+whiteLeftEye.diffuse = [1,1,1],
+whiteLeftEye.specular = [1,1,1],
 whiteLeftEye.ambient = [1,1,1],
 whiteLeftEye.shininess = 1,
+whiteLeftEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 whiteLeftEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -110,10 +130,15 @@ blackRightEye.transform = {
     scale: [1, 1, 1],
 };
 blackRightEye.pickedColor = [0,0,0],
-blackRightEye.diffuse = [0,0,0],
-blackRightEye.specular = [0,0,0],
+blackRightEye.diffuse = [1,1,1],
+blackRightEye.specular = [1,1,1],
 blackRightEye.ambient = [1,1,1],
 blackRightEye.shininess = 1,
+blackRightEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 blackRightEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -135,10 +160,15 @@ blackLeftEye.transform = {
     scale: [1, 1, 1],
 };
 blackLeftEye.pickedColor = [0,0,0],
-blackLeftEye.diffuse = [0,0,0],
-blackLeftEye.specular = [0,0,0],
+blackLeftEye.diffuse = [1,1,1],
+blackLeftEye.specular = [1,1,1],
 blackLeftEye.ambient = [1,1,1],
 blackLeftEye.shininess = 1,
+blackLeftEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 blackLeftEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -160,10 +190,15 @@ nose.transform = {
     scale: [1, 1, 1],
 };
 nose.pickedColor = [0.768627451,0.376470588, 0.745098039],
-nose.diffuse = [0,0,0],
-nose.specular = [0,0,0],
+nose.diffuse = [1,1,1],
+nose.specular = [1,1,1],
 nose.ambient = [1,1,1],
 nose.shininess = 1,
+nose.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 nose.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -185,10 +220,15 @@ rightHole.transform = {
     scale: [1, 1, 1],
 };
 rightHole.pickedColor = [0.921568627,0.568627451,0.898039216],
-rightHole.diffuse = [0,0,0],
-rightHole.specular = [0,0,0],
+rightHole.diffuse = [1,1,1],
+rightHole.specular = [1,1,1],
 rightHole.ambient = [1,1,1],
 rightHole.shininess = 1,
+rightHole.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightHole.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -210,10 +250,15 @@ leftHole.transform = {
     scale: [1, 1, 1],
 };
 leftHole.pickedColor = [0.921568627,0.568627451,0.898039216],
-leftHole.diffuse = [0,0,0],
-leftHole.specular = [0,0,0],
+leftHole.diffuse = [1,1,1],
+leftHole.specular = [1,1,1],
 leftHole.ambient = [1,1,1],
 leftHole.shininess = 1,
+leftHole.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftHole.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -235,10 +280,15 @@ rightFrontLeg.transform = {
     scale: [1, 1, 1],
 };
 rightFrontLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
-rightFrontLeg.diffuse = [0,0,0],
-rightFrontLeg.specular = [0,0,0],
+rightFrontLeg.diffuse = [1,1,1],
+rightFrontLeg.specular = [1,1,1],
 rightFrontLeg.ambient = [1,1,1],
 rightFrontLeg.shininess = 1,
+rightFrontLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -260,10 +310,15 @@ leftFrontLeg.transform = {
     scale: [1, 1, 1],
 };
 leftFrontLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
-leftFrontLeg.diffuse = [0,0,0],
-leftFrontLeg.specular = [0,0,0],
+leftFrontLeg.diffuse = [1,1,1],
+leftFrontLeg.specular = [1,1,1],
 leftFrontLeg.ambient = [1,1,1],
 leftFrontLeg.shininess = 1,
+leftFrontLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -285,10 +340,15 @@ rightRearLeg.transform = {
     scale: [1, 1, 1],
 };
 rightRearLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
-rightRearLeg.diffuse = [0,0,0],
-rightRearLeg.specular = [0,0,0],
+rightRearLeg.diffuse = [1,1,1],
+rightRearLeg.specular = [1,1,1],
 rightRearLeg.ambient = [1,1,1],
 rightRearLeg.shininess = 1,
+rightRearLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightRearLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -310,10 +370,15 @@ leftRearLeg.transform = {
     scale: [1, 1, 1],
 };
 leftRearLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
-leftRearLeg.diffuse = [0,0,0],
-leftRearLeg.specular = [0,0,0],
+leftRearLeg.diffuse = [1,1,1],
+leftRearLeg.specular = [1,1,1],
 leftRearLeg.ambient = [1,1,1],
 leftRearLeg.shininess = 1,
+leftRearLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftRearLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
