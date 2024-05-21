@@ -138,4 +138,52 @@ export default class Animation{
             Animation.lastFrame(model)
         }
     }
+
+    static totalModelFrames(parent_model){
+        let totalFrames = 0;
+        if(parent_model.animation.frames){
+            totalFrames = parent_model.animation.frames.length;
+        }
+        for(let child_model of parent_model.children){    
+            // recurse each node child, find max frame
+            let childTotalFrames = Animation.totalModelFrames(child_model);
+            if(childTotalFrames > totalFrames){
+                totalFrames = childTotalFrames;
+            }
+        }
+        return totalFrames;
+    }
+
+    static totalNodeFrames(parent_model){
+        let totalNodeFrames = "-";
+        if(parent_model.animation.frames){
+            // as string
+            totalNodeFrames = parent_model.animation.frames.length.toString();
+        }
+        return totalNodeFrames;
+    }
+
+    static currentModelFrame(parent_model){
+        let currentFrame = 0;
+        if(parent_model.animation.frames){
+            currentFrame = parent_model.animation.currentFrame;
+        }
+        for(let model of parent_model.children){    
+            // recurse each node child, find max frame
+            let childCurrentFrame = Animation.currentModelFrame(model);
+            if(childCurrentFrame > currentFrame){
+                currentFrame = childCurrentFrame;
+            }
+        }
+        return currentFrame;
+    }
+
+    static currentNodeFrame(node){
+        let currFrame = "-"
+        if(node.animation.frames){
+            currFrame = node.animation.currentFrame.toString()
+        }
+        return currFrame
+    }
+
 }

@@ -66,6 +66,12 @@ const prev = document.getElementById('prev-animation');
 const first = document.getElementById('first-animation');
 const last = document.getElementById('last-animation');
 
+// frame handler
+const currentModelFrame = document.getElementById('current-model-frame');
+const currentNodeFrame = document.getElementById('current-node-frame');
+const totalModelFrame = document.getElementById('total-model-frame');
+const totalNodeFrame = document.getElementById('total-node-frame');
+
 // ambient light
 const redAmbient = document.getElementById('red-slider');
 const greenAmbient = document.getElementById('green-slider');
@@ -167,6 +173,7 @@ export function displayComponent(treeLevel = 0, objects){
             setTarget(object);
             handleTransform(object);
             setSlider(object);
+            handleTotalNodeFrame(object)
             let components = document.getElementsByClassName("component");
             for (let i = 0; i < components.length; i++) {
                 components[i].className = components[i].className.replace(" border-2", "");
@@ -391,3 +398,36 @@ lightY.addEventListener('input', function(){
 lightZ.addEventListener('input', function(){
     lightDirection[2] = parseFloat(lightZ.value);
 })
+
+/** HANDLE FRAME */
+
+// total frame
+export function handleTotalModelFrame(parent_node){
+    // get value of total model frame text
+    let _totalFrameText = totalModelFrame.textContent;
+    // get total frame
+    let _totalFrame = Animation.totalModelFrames(parent_node);
+    console.log(_totalFrame)
+    // set total frame
+    _totalFrameText = "Total Model Frames: "+ _totalFrame;
+    totalModelFrame.textContent = _totalFrameText;
+
+
+}
+
+export function handleTotalNodeFrame(node){
+    let _totalFrameText = totalNodeFrame.textContent;
+    let _totalFrame = Animation.totalNodeFrames(node);
+    _totalFrameText = "Total Node Frames: " + _totalFrame
+    totalNodeFrame.textContent = _totalFrameText;
+}
+
+export function handleCurrentModelFrame(parent_model){
+    let _currentFrame = Animation.currentModelFrame(parent_model)
+    currentModelFrame.textContent = "Current Model Frame: " + _currentFrame
+}
+
+export function handleCurrentNodeFrame(node){
+    let _currFrame = Animation.currentNodeFrame(node)
+    currentNodeFrame.textContent = "Current Node Frame: " + _currFrame
+}

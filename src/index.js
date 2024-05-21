@@ -5,7 +5,14 @@ import Mat4 from "./structs/math/Mat4.js";
 import Vec3 from "./structs/math/Vec3.js";
 import Vec4 from "./structs/math/Vec4.js";
 import Camera from "./utils/Camera.js";
-import { displayComponent, clearComponent, initOptionModel, handleTransform } from "./handler/eventHandler.js";
+import { displayComponent, 
+  clearComponent, 
+  initOptionModel, 
+  handleTransform, 
+  handleTotalModelFrame,
+  handleTotalNodeFrame,
+  handleCurrentModelFrame,
+  handleCurrentNodeFrame } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
 import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
@@ -254,6 +261,8 @@ function render(now) {
       t_animation = now;
       let deltaTime = now - t_animation;
       Animation.animate(targetRoot, deltaTime);
+      handleCurrentModelFrame(targetRoot)
+      handleCurrentNodeFrame(target)
     }
 
 
@@ -297,12 +306,13 @@ function setProjectionMatrix(matrix, object) {
 
 export function changeModelObject (index) {
     objects = model[index];
-    console.log(objects[0])
     setTarget(objects[0]);
     setTargetRoot(objects[0]);
     clearComponent();
     displayComponent(0, objects);
     handleTransform(objects[0]);
+    handleTotalModelFrame(targetRoot)
+    handleTotalNodeFrame(targetRoot)
     render();
 
 }
