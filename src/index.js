@@ -273,6 +273,7 @@ function render(now) {
 
     normalizeLight = Vec3.unitVector(Vec3.fromArray(lightDirection)).asArray()
     renderLoop(objects);
+    Animation.handleTransform(target, document);
     
   window.requestAnimFrame(render);
     

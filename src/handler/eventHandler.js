@@ -47,6 +47,8 @@ const cameraTheta = document.getElementById('camera-theta-slider');
 const cameraPhi = document.getElementById('camera-phi-slider');
 // set orthographic as default input radio button
 orthographic.checked = true;
+// camera default view
+const defaultView = document.getElementById('default-view');
 
 // model 
 const modelSelection = document.getElementById('model-selection');
@@ -71,6 +73,9 @@ const currentModelFrame = document.getElementById('current-model-frame');
 const currentNodeFrame = document.getElementById('current-node-frame');
 const totalModelFrame = document.getElementById('total-model-frame');
 const totalNodeFrame = document.getElementById('total-node-frame');
+
+// add frame handler
+const addFrameButton = document.getElementById('cancel-add-frame')
 
 // ambient light
 const redAmbient = document.getElementById('red-slider');
@@ -304,6 +309,21 @@ cameraPhi.addEventListener('input', function(){
     document.getElementById('camera-phi-slider-value').textContent = cameraPhi.value;
 })
 
+// defautl view
+defaultView.addEventListener('click', function(){
+    cameraRadius.value = 50;
+    cameraRoll.value = 0;
+    cameraPitch.value = 0;
+    cameraTheta.value = 90;
+    cameraPhi.value = 90;
+    handleCameraView(targetRoot);
+    document.getElementById('camera-radius-slider-value').textContent = 5;
+    document.getElementById('camera-roll-slider-value').textContent = 0;
+    document.getElementById('camera-pitch-slider-value').textContent = 0;
+    document.getElementById('camera-theta-slider-value').textContent = 90;
+    document.getElementById('camera-phi-slider-value').textContent = 90;
+})
+
 var state = {
     objects: []
 };
@@ -462,6 +482,12 @@ export function handleCurrentNodeFrame(node){
     let _currFrame = Animation.currentNodeFrame(node)
     currentNodeFrame.textContent = "Current Node Frame: " + _currFrame
 }
+
+// add Frame mechanism
+addFrameButton.addEventListener('click', function(){
+    const addFrameModal = document.getElementById('add-frame-modal')
+    addFrameModal.className = addFrameModal.className + " hidden"
+})
 
 basicColor.addEventListener('input', function(){
     target.pickedColor = hexToRgb(basicColor.value);

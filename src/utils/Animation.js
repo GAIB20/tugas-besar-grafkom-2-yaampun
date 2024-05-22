@@ -1,4 +1,5 @@
 import Node from "../structs/node.js";
+import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 export default class Animation{
 
     static parseAnimationFunction(model){
@@ -120,6 +121,7 @@ export default class Animation{
     }
 
     static firstFrame(parent_model){
+        parent_model.animation.isAnimate = false;
         if(parent_model.animation.frames){
             parent_model.animation.currentFrame = 0;
             parent_model.transform = parent_model.animation.frames[parent_model.animation.currentFrame];
@@ -130,6 +132,7 @@ export default class Animation{
     }
 
     static lastFrame(parent_model){
+        parent_model.animation.isAnimate = false;
         if(parent_model.animation.frames){
             parent_model.animation.currentFrame = parent_model.animation.frames.length - 1;
             parent_model.transform = parent_model.animation.frames[parent_model.animation.currentFrame];
@@ -184,6 +187,41 @@ export default class Animation{
             currFrame = node.animation.currentFrame.toString()
         }
         return currFrame
+    }
+
+    static handleTransform(node, doc){
+        if(!node.animation.isAnimate) return;
+        let [tx, ty, tz] = node.transform.translate
+        let [rx, ry, rz] = node.transform.rotate
+        rx = radToDeg(rx); 
+        ry = radToDeg(ry); 
+        rz = radToDeg(rz);
+        let [sx,sy,sz] = node.transform.scale
+
+       // slider tx, ty, tz 
+        doc.getElementById("translation-x-slider").value = tx*50;
+        doc.getElementById("translation-y-slider").value = ty*50;
+        doc.getElementById("translation-z-slider").value = tz*50;
+        doc.getElementById("translation-x-slider-value").innerHTML = tx;    
+        doc.getElementById("translation-y-slider-value").innerHTML = ty;
+        doc.getElementById("translation-z-slider-value").innerHTML = tz;
+        // rotation tx, ty, tz 
+        console.log(rz)
+        doc.getElementById("rotation-x-slider").value = rx;
+        doc.getElementById("rotation-y-slider").value = ry;
+        doc.getElementById("rotation-z-slider").value = rz;
+        doc.getElementById("rotation-x-slider-value").innerHTML = rx.toFixed(2);
+        doc.getElementById("rotation-y-slider-value").innerHTML = ry.toFixed(2);
+        doc.getElementById("rotation-z-slider-value").innerHTML = rz.toFixed(2);
+        console.log(rz)
+
+        // scale tx, ty, tz
+        doc.getElementById("scalation-x-slider").value = sx*10;
+        doc.getElementById("scalation-y-slider").value = sy*10;
+        doc.getElementById("scalation-z-slider").value = sz*10;
+        doc.getElementById("scalation-x-slider-value").innerHTML = sx.toFixed(2);
+        doc.getElementById("scalation-y-slider-value").innerHTML = sy.toFixed(2);
+        doc.getElementById("scalation-z-slider-value").innerHTML = sz.toFixed(2);
     }
 
 }
