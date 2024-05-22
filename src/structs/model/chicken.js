@@ -17,6 +17,11 @@ chicken.diffuse = [0, 0, 0],
 chicken.specular = [0, 0, 0],
 chicken.ambient = [1, 1, 1],
 chicken.shininess = 1,
+chicken.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 chicken.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -65,6 +70,11 @@ head.diffuse = [0, 0, 0];
 head.specular = [0, 0, 0];
 head.ambient = [1, 1, 1];
 head.shininess = 1,
+head.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 head.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -95,6 +105,11 @@ beak.diffuse = [0, 0, 0];
 beak.specular = [0, 0, 0];
 beak.ambient = [1, 1, 1];
 beak.shininess = 1,
+beak.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 beak.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -124,6 +139,11 @@ whiteLeftEye.diffuse = [0, 0, 0];
 whiteLeftEye.specular = [0, 0, 0];
 whiteLeftEye.ambient = [1, 1, 1];
 whiteLeftEye.shininess = 1,
+whiteLeftEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 whiteLeftEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -152,7 +172,12 @@ blackLeftEye.pickedColor = [0, 0, 0];
 blackLeftEye.diffuse = [0, 0, 0];
 blackLeftEye.specular = [0, 0, 0];
 blackLeftEye.ambient = [1, 1, 1];
-whiteLeftEye.shininess = 1,
+blackLeftEye.shininess = 1,
+blackLeftEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 blackLeftEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -183,6 +208,11 @@ whiteRightEye.diffuse = [0, 0, 0];
 whiteRightEye.specular = [0, 0, 0];
 whiteRightEye.ambient = [1, 1, 1];
 whiteRightEye.shininess = 1,
+whiteRightEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 whiteRightEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -213,6 +243,11 @@ blackRightEye.diffuse = [0, 0, 0];
 blackRightEye.specular = [0, 0, 0];
 blackRightEye.ambient = [1, 1, 1];
 blackRightEye.shininess = 1,
+blackRightEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 blackRightEye.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -245,6 +280,11 @@ leftWing.diffuse = [0, 0, 0];
 leftWing.specular = [0, 0, 0];
 leftWing.ambient = [1, 1, 1];
 leftWing.shininess = 1,
+leftWing.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftWing.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -257,7 +297,7 @@ function leftWingFrames(){
 
     let transform = {
         translate: [0, 0, -0.75],
-        rotate: [0, 0, 90],
+        rotate: [0, 0, Math.PI / 2],
         scale: [1, 1, 1],
     }
     let frames = []
@@ -306,6 +346,11 @@ rightWing.diffuse = [0, 0, 0];
 rightWing.specular = [0, 0, 0];
 rightWing.ambient = [1, 1, 1];
 rightWing.shininess = 1,
+rightWing.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightWing.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -317,7 +362,7 @@ rightWing.viewMatrix = {
 function rightWingFrames(){
     let transform = {
         translate: [0, 0, 0.75],
-        rotate: [0, 0, 90],
+        rotate: [0, 0, Math.PI / 2],
         scale: [1, 1, 1],
     }
     let frames = []
@@ -366,6 +411,11 @@ rightLeg.diffuse = [0, 0, 0];
 rightLeg.specular = [0, 0, 0];
 rightLeg.ambient = [1, 1, 1];
 rightLeg.shininess = 1,
+rightLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -433,6 +483,11 @@ rightFoot.diffuse = [0, 0, 0];
 rightFoot.specular = [0, 0, 0];
 rightFoot.ambient = [1, 1, 1];
 rightFoot.shininess = 1,
+rightFoot.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightFoot.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -463,6 +518,11 @@ leftLeg.diffuse = [0, 0, 0];
 leftLeg.specular = [0, 0, 0];
 leftLeg.ambient = [1, 1, 1];
 leftLeg.shininess = 1,
+leftLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -528,6 +588,11 @@ leftFoot.diffuse = [0, 0, 0];
 leftFoot.specular = [0, 0, 0];
 leftFoot.ambient = [1, 1, 1];
 leftFoot.shininess = 1,
+leftFoot.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftFoot.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
