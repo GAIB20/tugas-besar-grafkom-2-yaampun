@@ -1,4 +1,7 @@
 import Node from "../node.js";
+import { degToRad } from "../math/mathUtils.js";
+import Animation from "../../utils/Animation.js";
+
 
 const pig = new Node();
 pig.flag = "articulated";
@@ -27,9 +30,29 @@ pig.viewMatrix = {
     far: 50,
 };
 pig.animation = {
-  isAnimate: false,
-  degAnimate: 0.1,
+    isAnimate: false,
+    frames: pigFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
+
+function pigFrames() {
+    let transform = {
+        translate: [0, 0, 0],
+        rotate: [degToRad(10), degToRad(59), degToRad(0)],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 25; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.translate[1] = k / 25;
+        frames.push(_transform);
+    }
+    
+    return frames;
+}
 
 const head = new Node();
 head.name = "head";
@@ -58,8 +81,32 @@ head.viewMatrix = {
 };
 head.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: headFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
+
+function headFrames() {
+    let transform = {
+        translate: [0, 0, 0],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+    let frames = []
+    for(let k = 0; k < 25; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[2] = -k / 100;
+        _transform.scale[0] = 1 + k / 50;
+        _transform.scale[1] = 1 + k / 50;
+        _transform.scale[2] = 1 + k / 50;
+        frames.push(_transform);
+    }
+
+
+    return frames;
+}
 
 const whiteRightEye = new Node();
 whiteRightEye.name = "whiteRightEye";
@@ -298,8 +345,31 @@ rightFrontLeg.viewMatrix = {
 };
 rightFrontLeg.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: rightFrontLegFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
+
+function rightFrontLegFrames() {
+    let transform = {
+        translate:[-0.6, -0.5, -0.4],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+
+    let frames = []
+    for(let k = 0; k < 25; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[0] = k/25 ;
+        _transform.translate[2] = -0.4 + -0.2/(25-k);
+        frames.push(_transform);
+    }
+
+    return frames;
+}
+
 
 const leftFrontLeg = new Node();
 leftFrontLeg.name = "leftFrontLeg";
@@ -318,7 +388,7 @@ leftFrontLeg.const = {
     kd: 0.5,
     ks: 0.0,
     ka: 1.0,
-}
+};
 leftFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
@@ -328,8 +398,30 @@ leftFrontLeg.viewMatrix = {
 };
 leftFrontLeg.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: leftFrontFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
+
+function leftFrontFrames() {
+    let transform = {
+        translate:[-0.6, -0.5, 0.4],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+
+    let frames = []
+    for(let k = 0; k < 25; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[0] = -k/25 ;
+        _transform.translate[2] = 0.4 + 0.2/(25-k);
+        frames.push(_transform);
+    }
+
+    return frames;
+}
 
 const rightRearLeg = new Node();
 rightRearLeg.name = "rightRearLeg";
@@ -358,8 +450,30 @@ rightRearLeg.viewMatrix = {
 };
 rightRearLeg.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: rightRearLegFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
+
+function rightRearLegFrames() {
+    let transform = {
+        translate:[0, -0.5, -0.4],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+
+    let frames = []
+    for(let k = 0; k < 25; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[0] = k/25 ;
+        _transform.translate[2] = -0.4 + -0.2/(25-k);
+        frames.push(_transform);
+    }
+
+    return frames;
+}
 
 const leftRearLeg = new Node();
 leftRearLeg.name = "leftRearLeg";
@@ -388,9 +502,30 @@ leftRearLeg.viewMatrix = {
 };
 leftRearLeg.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: leftRearFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
 
+function leftRearFrames() {
+    let transform = {
+        translate:[0, -0.5, 0.4],
+        rotate: [0, 0, 0],
+        scale: [1, 1, 1],
+    }
+
+    let frames = []
+    for(let k = 0; k < 25; ++k){
+        let _transform = JSON.parse(JSON.stringify(transform));
+        _transform.rotate[0] = -k/25 ;
+        _transform.translate[2] = 0.4 + 0.2/(25-k);
+        frames.push(_transform);
+    }
+
+    return frames;
+}
 
 head.setParent(pig);
 whiteRightEye.setParent(head);

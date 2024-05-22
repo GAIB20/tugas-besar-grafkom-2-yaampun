@@ -53,6 +53,15 @@ hollow.transform = {
   scale: [1, 1, 1],
 };
 hollow.pickedColor = [0.921568627,0.568627451,0.898039216],
+hollow.diffuse = [1,1,1],
+hollow.specular = [1,1,1],
+hollow.ambient = [1,1,1],
+hollow.shininess = 1,
+hollow.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 hollow.viewMatrix = {
     camera: [0, 0, 5],
     lookAt: [0, 0, 0],
