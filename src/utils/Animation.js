@@ -76,7 +76,7 @@ export default class Animation{
                     }
                     _node.animation.currentFrame = _node.animation.currentFrame % frames.length;
                 }
-                else{
+                else{     
                     return;
                 }
             }
@@ -87,6 +87,7 @@ export default class Animation{
                 }
                 else{
                     _node.animation.currentFrame++;
+                     if(_node.animation.currentFrame == frames.length && !_node.animation.isAuto) _node.animation.currentFrame = frames.length - 1;
                 }
             }
         })`
@@ -226,6 +227,37 @@ export default class Animation{
         parent_model.animation.isAnimate = false;
         for(let model of parent_model.children){    
             Animation.disableAnimation(model)
+        }
+    }
+
+    static deleteCurrentFrame(node){
+        if(node.animation.frames){
+            console.log(node.animation.frames)
+            node.animation.frames.splice(node.animation.currentFrame-1, 1);
+            console.log(node.animation.frames)
+            if(node.animation.currentFrame >= node.animation.frames.length){
+                node.animation.currentFrame = node.animation.frames.length - 1;
+            }
+            if(node.animation.frames.length == 0){
+                node.animation.frames = null;
+                node.animation.currentFrame = 0;
+            }
+        }
+    }
+
+    static editCurrentFrame(node, transform){
+        if(node.animation.frames){
+            let currFrame = node.animation.currentFrame;
+            if(currFrame < node.animation.frames.length){
+                node.animation.frames[currFrame] = transform;
+            }
+            else if(currFrame == node.animation.frames.length){
+                currFrame = currFrame - 1;
+                node.animation.frames[currFrame] = transform;
+            }
+
+            // update node transform
+            node.transform = transform; 
         }
     }
 

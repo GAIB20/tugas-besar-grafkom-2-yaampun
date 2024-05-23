@@ -492,7 +492,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal Structure -->
+    <!-- Add Frame Modal -->
 <div id="add-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
         <h2 class="text-2xl font-bold mb-4">+ Add Frame</h2>
@@ -522,6 +522,56 @@
             <div class="flex justify-end">
                 <button type="button" id="cancel-add-frame" class="btn mr-2">Cancel</button>
                 <button type="button" id="verify-add-frame" class="btn">Add Frame</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Edit Frame Modal -->
+    <div id="edit-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+            <h2 class="text-2xl font-bold mb-4">Edit Current Frame</h2>
+            <form id="edit-frame-form">
+                <div class="mb-4">
+                    <label for="frame-name" class="block text-gray-700">Translation:</label>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <input type="number" id="edit-translation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-translation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-translation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    </div>
+                    <label for="frame-name" class="block text-gray-700">Rotation:</label>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <input type="number" id="edit-rotation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-rotation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-rotation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    </div>  
+                    <label for="frame-name" class="block text-gray-700">Scalation:</label>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <input type="number" id="edit-scalation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-scalation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-scalation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    </div>  
+                   
+                </div>
+                <!-- Add more form inputs as needed -->
+                <div class="flex justify-end">
+                    <button type="button" id="cancel-edit-frame" class="btn mr-2">Cancel</button>
+                    <button type="button" id="verify-edit-frame" class="btn">Verify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<!-- Delete Frame Modal -->
+<div id="delete-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+        <h2 class="text-2xl font-bold mb-4">Delete Current Frame</h2>
+        <form id="delete-frame-form">
+            <div class="mb-4">
+                <label for="frame-name" class="block text-gray-700">Are you sure to delete current animation frame?</label> 
+            </div>
+            <!-- Add more form inputs as needed -->
+            <div class="flex justify-end">
+                <button type="button" id="cancel-delete-frame" class="btn mr-2">Cancel</button>
+                <button type="button" id="verify-delete-frame" class="btn">Verify</button>
             </div>
         </form>
     </div>

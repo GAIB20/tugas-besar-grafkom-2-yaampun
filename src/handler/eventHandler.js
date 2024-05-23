@@ -79,6 +79,16 @@ const addFrameButton = document.getElementById('add-frame')
 const verifyAddFrameButton = document.getElementById('verify-add-frame')
 const cancelAddFrameButton = document.getElementById('cancel-add-frame')
 
+//edit frame
+const editFrameButton = document.getElementById('edit-current-frame')
+const verifyEditFrameButton = document.getElementById('verify-edit-frame')
+const cancelEditFrameButton = document.getElementById('cancel-edit-frame')
+
+// delete frame
+const deleteFrameButton = document.getElementById('delete-current-frame')
+const verifyDeleteFrameButton = document.getElementById('verify-delete-frame')
+const cancelDeleteFrameButton = document.getElementById('cancel-delete-frame')
+
 // ambient light
 const redAmbient = document.getElementById('red-slider');
 const greenAmbient = document.getElementById('green-slider');
@@ -497,6 +507,7 @@ addFrameButton.addEventListener('click', function(){
 })
 
 verifyAddFrameButton.addEventListener('click', function(){
+    Animation.disableAnimation(targetRoot);
     let tx = document.getElementById('add-translation-x').value
     let ty = document.getElementById('add-translation-y').value
     let tz = document.getElementById('add-translation-z').value
@@ -529,8 +540,89 @@ verifyAddFrameButton.addEventListener('click', function(){
     const addFrameModal = document.getElementById('add-frame-modal')
     addFrameModal.className = addFrameModal.className + " hidden"
 
-    // handle 
+})
 
+//edit frame
+
+editFrameButton.addEventListener('click', function(){
+    const editFrameModal = document.getElementById('edit-frame-modal')
+    editFrameModal.className = editFrameModal.className.replace(" hidden", "")
+    // set value
+    let transform = target.transform
+    document.getElementById('edit-translation-x').value = transform.translate[0]
+    document.getElementById('edit-translation-y').value = transform.translate[1]
+    document.getElementById('edit-translation-z').value = transform.translate[2]
+
+    document.getElementById('edit-rotation-x').value = radToDeg(transform.rotate[0])
+    document.getElementById('edit-rotation-y').value = radToDeg(transform.rotate[1])
+    document.getElementById('edit-rotation-z').value = radToDeg(transform.rotate[2])
+
+    document.getElementById('edit-scalation-x').value = transform.scale[0]
+    document.getElementById('edit-scalation-y').value = transform.scale[1]
+    document.getElementById('edit-scalation-z').value = transform.scale[2]
+})
+
+cancelEditFrameButton.addEventListener('click', function(){
+    const editFrameModal = document.getElementById('edit-frame-modal')
+    editFrameModal.className = editFrameModal.className + " hidden"
+})
+
+verifyEditFrameButton.addEventListener('click', function(){
+    // tx, ty, tz, rx, ry, rz, sx, sy, sz
+    Animation.disableAnimation(targetRoot);
+    let tx = document.getElementById('edit-translation-x').value
+    let ty = document.getElementById('edit-translation-y').value
+    let tz = document.getElementById('edit-translation-z').value
+
+    let rx = degToRad(document.getElementById('edit-rotation-x').value)
+    let ry = degToRad(document.getElementById('edit-rotation-y').value)
+    let rz = degToRad(document.getElementById('edit-rotation-z').value)
+
+    let sx = document.getElementById('edit-scalation-x').value
+    let sy = document.getElementById('edit-scalation-y').value
+    let sz = document.getElementById('edit-scalation-z').value
+
+    let transform = {
+        translate : [tx, ty, tz],
+        rotate : [rx, ry, rz],
+        scale : [sx, sy, sz]
+    }
+
+    Animation.editCurrentFrame(target, transform);
+
+    // disable modal
+    const editFrameModal = document.getElementById('edit-frame-modal')
+    editFrameModal.className = editFrameModal.className + " hidden"
+
+})
+
+// delete frame
+deleteFrameButton.addEventListener('click', function(){
+    const deleteFrameModal = document.getElementById('delete-frame-modal')
+    deleteFrameModal.className = deleteFrameModal.className.replace(" hidden", "")
+})
+
+cancelDeleteFrameButton.addEventListener('click', function(){
+    const deleteFrameModal = document.getElementById('delete-frame-modal')
+    deleteFrameModal.className = deleteFrameModal.className + " hidden"
+})
+
+verifyDeleteFrameButton.addEventListener('click', function(){
+    Animation.disableAnimation(targetRoot);
+
+    // delete frame
+    Animation.deleteCurrentFrame(target);
+
+    // update node frame
+    handleTotalModelFrame(targetRoot);
+    handleTotalNodeFrame(target);
+    // if(target.animation.frames !== null){
+    //     target.animation.frames.pop();
+    //     handleTotalModelFrame(targetRoot);
+    //     handleTotalNodeFrame(target);
+    // }
+    const deleteFrameModal = document.getElementById('delete-frame-modal')
+    deleteFrameModal.className = deleteFrameModal.className + " hidden"
 })
 
 // color
