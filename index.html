@@ -473,7 +473,8 @@
                     <div class="flex flex-row gap-5">
                         <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
                                                     font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 
-                                                    dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                    dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                id="add-frame">
                                                     + Add Frame</button>
                         <button type="button" class="focus:outline-none text-white 
                                                     bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 
@@ -492,35 +493,35 @@
         </div>
     </div>
     <!-- Modal Structure -->
-<div id="add-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+<div id="add-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
         <h2 class="text-2xl font-bold mb-4">+ Add Frame</h2>
         <form id="add-frame-form">
             <div class="mb-4">
                 <label for="frame-name" class="block text-gray-700">Translation:</label>
                 <div class="flex flex-row gap-5 pt-5">
-                    <input type="text" id="add-translation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
-                    <input type="text" id="add-translation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
-                    <input type="text" id="add-translation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-translation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-translation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-translation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
                 </div>
                 <label for="frame-name" class="block text-gray-700">Rotation:</label>
                 <div class="flex flex-row gap-5 pt-5">
-                    <input type="text" id="add-rotation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
-                    <input type="text" id="add-rotation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
-                    <input type="text" id="add-rotation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-rotation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-rotation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-rotation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
                 </div>  
                 <label for="frame-name" class="block text-gray-700">Scalation:</label>
                 <div class="flex flex-row gap-5 pt-5">
-                    <input type="text" id="add-scalation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
-                    <input type="text" id="add-scalation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
-                    <input type="text" id="add-scalation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-scalation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-scalation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-scalation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
                 </div>  
                
             </div>
             <!-- Add more form inputs as needed -->
             <div class="flex justify-end">
                 <button type="button" id="cancel-add-frame" class="btn mr-2">Cancel</button>
-                <button type="submit" class="btn">Add Frame</button>
+                <button type="button" id="verify-add-frame" class="btn">Add Frame</button>
             </div>
         </form>
     </div>

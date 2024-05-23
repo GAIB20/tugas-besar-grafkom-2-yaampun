@@ -74,8 +74,10 @@ const currentNodeFrame = document.getElementById('current-node-frame');
 const totalModelFrame = document.getElementById('total-model-frame');
 const totalNodeFrame = document.getElementById('total-node-frame');
 
-// add frame handler
-const addFrameButton = document.getElementById('cancel-add-frame')
+// add frame 
+const addFrameButton = document.getElementById('add-frame')
+const verifyAddFrameButton = document.getElementById('verify-add-frame')
+const cancelAddFrameButton = document.getElementById('cancel-add-frame')
 
 // ambient light
 const redAmbient = document.getElementById('red-slider');
@@ -484,11 +486,54 @@ export function handleCurrentNodeFrame(node){
 }
 
 // add Frame mechanism
-addFrameButton.addEventListener('click', function(){
+cancelAddFrameButton.addEventListener('click', function(){
     const addFrameModal = document.getElementById('add-frame-modal')
     addFrameModal.className = addFrameModal.className + " hidden"
 })
 
+addFrameButton.addEventListener('click', function(){
+    const addFrameModal = document.getElementById('add-frame-modal')
+    addFrameModal.className = addFrameModal.className.replace(" hidden", "")
+})
+
+verifyAddFrameButton.addEventListener('click', function(){
+    let tx = document.getElementById('add-translation-x').value
+    let ty = document.getElementById('add-translation-y').value
+    let tz = document.getElementById('add-translation-z').value
+    
+    // rads
+    let rx = document.getElementById('add-rotation-x').value
+    let ry = document.getElementById('add-rotation-y').value
+    let rz = document.getElementById('add-rotation-z').value
+
+    let sx = document.getElementById('add-scalation-x').value
+    let sy = document.getElementById('add-scalation-y').value
+    let sz = document.getElementById('add-scalation-z').value
+
+    let transform = {
+        translate : [tx, ty, tz],
+        rotate : [degToRad(rx), degToRad(ry), degToRad(rz)],
+        scale : [sx, sy, sz]
+
+    }
+    
+    if(target.animation.frames !== null){
+        target.animation.frames.push(transform)
+        handleTotalModelFrame(targetRoot);
+        handleTotalNodeFrame(target);
+    }
+
+    
+    
+
+    const addFrameModal = document.getElementById('add-frame-modal')
+    addFrameModal.className = addFrameModal.className + " hidden"
+
+    // handle 
+
+})
+
+// color
 basicColor.addEventListener('input', function(){
     target.pickedColor = hexToRgb(basicColor.value);
 });

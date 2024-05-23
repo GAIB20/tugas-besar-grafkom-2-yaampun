@@ -206,22 +206,27 @@ export default class Animation{
         doc.getElementById("translation-y-slider-value").innerHTML = ty;
         doc.getElementById("translation-z-slider-value").innerHTML = tz;
         // rotation tx, ty, tz 
-        console.log(rz)
         doc.getElementById("rotation-x-slider").value = rx;
         doc.getElementById("rotation-y-slider").value = ry;
         doc.getElementById("rotation-z-slider").value = rz;
         doc.getElementById("rotation-x-slider-value").innerHTML = rx.toFixed(2);
         doc.getElementById("rotation-y-slider-value").innerHTML = ry.toFixed(2);
         doc.getElementById("rotation-z-slider-value").innerHTML = rz.toFixed(2);
-        console.log(rz)
-
-        // scale tx, ty, tz
+        // scale sx, sy, sz
         doc.getElementById("scalation-x-slider").value = sx*10;
         doc.getElementById("scalation-y-slider").value = sy*10;
         doc.getElementById("scalation-z-slider").value = sz*10;
-        doc.getElementById("scalation-x-slider-value").innerHTML = sx.toFixed(2);
-        doc.getElementById("scalation-y-slider-value").innerHTML = sy.toFixed(2);
-        doc.getElementById("scalation-z-slider-value").innerHTML = sz.toFixed(2);
+       
+        doc.getElementById("scalation-x-slider-value").innerHTML = (sx * 1.00).toFixed(2);
+        doc.getElementById("scalation-y-slider-value").innerHTML = (sy * 1.00).toFixed(2);
+        doc.getElementById("scalation-z-slider-value").innerHTML = (sz * 1.00).toFixed(2);
+    }
+
+    static disableAnimation(parent_model){
+        parent_model.animation.isAnimate = false;
+        for(let model of parent_model.children){    
+            Animation.disableAnimation(model)
+        }
     }
 
 }

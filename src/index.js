@@ -78,6 +78,8 @@ function initState() {
     displayComponent(0, objects);
     initOptionModel(model);
     handleTransform(objects[0])
+    handleTotalModelFrame(objects[0])
+    handleTotalNodeFrame(objects[0])
 
 }
 
