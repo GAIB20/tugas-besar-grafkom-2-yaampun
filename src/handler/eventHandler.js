@@ -4,12 +4,20 @@ import { target,
     setObliquePhi, 
     setObliqueTheta, 
     setTarget, 
+    renameTarget,
     lightDirection,
+    deleteNode,
+    objects,
     setTargetRoot, 
     changeModelObject, 
-    changeMappingTexture} from "../index.js"
+    changeMappingTexture,
+    addNode,
+    loadObjects,
+    model,
+    addModel} from "../index.js"
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 import Animation from "../utils/Animation.js";
+import { loadJSON, saveJSON } from "../utils/fileManager.js";
 
 const translationX = document.getElementById('translation-x-slider');
 const translationY = document.getElementById('translation-y-slider');
@@ -110,6 +118,17 @@ const basicColor = document.getElementById('basic-color');
 const diffuseColor = document.getElementById('diffuse-color');
 const specularColor = document.getElementById('specular-color');
 
+// node manager
+export const nodeName = document.getElementById('node-name');
+const renameButton = document.getElementById('rename-btn');
+const deleteButton = document.getElementById('delete-btn');
+const addChildButton = document.getElementById('add-child-btn')
+
+// save and load
+const saveButton = document.getElementById('save-btn'); 
+const load = document.getElementById('load-btn');
+
+
 // initial
 export function initOptionModel(model){
     modelSelection.innerHTML = '';
@@ -119,7 +138,6 @@ export function initOptionModel(model){
         option.textContent = object[0].name;
         modelSelection.appendChild(option);
     })
-
 }
 
 // event listener
@@ -195,12 +213,13 @@ export function displayComponent(treeLevel = 0, objects){
             setTarget(object);
             handleTransform(object);
             setSlider(object);
-            handleTotalNodeFrame(object)
+            handleTotalNodeFrame(object);
+            setNodeManager(object);
             let components = document.getElementsByClassName("component");
             for (let i = 0; i < components.length; i++) {
-                components[i].className = components[i].className.replace(" border-2", "");
+                components[i].className = components[i].className.replace(" border-2 border-black px-5", "");
             }
-            evt.currentTarget.className += " border-2";
+            evt.currentTarget.className += " border-2 border-black px-5";
         });
         componentContainer.appendChild(newComponent);
         
@@ -630,3 +649,42 @@ basicColor.addEventListener('input', function(){
     target.pickedColor = hexToRgb(basicColor.value);
 });
 
+function setNodeManager(node){
+    nodeName.value = node.name;
+};
+
+renameButton.addEventListener('click', function(){
+    renameTarget(nodeName.value);
+    clearComponent();
+    displayComponent(0, objects);
+})
+
+deleteButton.addEventListener('click', function(){
+    deleteNode(target.name);
+    clearComponent();
+    displayComponent(0, objects);
+})
+
+addChildButton.addEventListener('click', function() {
+    addNode(nodeName.value);
+    // console.log(target)
+})
+
+saveButton.addEventListener('click', function(){
+    saveJSON(objects);
+});
+
+load.addEventListener('change', function(event){
+    loadJSON(event.target, function(objects){
+        loadObjects(objects);
+        const importedOption = document.createElement('option');
+        importedOption.value = model.length;
+        importedOption.text = objects[0].name;
+        modelSelection.appendChild(importedOption);
+        
+
+        // Set the value of modelSelection to "imported"
+        modelSelection.value = model.length;
+        addModel(objects);
+    });
+})

@@ -135,6 +135,23 @@
                 <div class="max-h-[40vh] overflow-auto " id="component-container">
                 </div>
             </div>
+            <div>
+                <p class="sub">Current Node</p>
+                <div class="divider"></div>
+                
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-row items-center">
+                        <label for="node-name" class="">Name</label>
+                        <input type="text" id="node-name" name="node-name" value="Root" class="border-gray-300 border-2 grow px-2 mx-2">
+                        <button class="btn" id="rename-btn">Rename</button>
+                    </div>
+                    <div class="flex flex-row gap-5">
+                        <button class="btn grow" id="add-child-btn">Add Child</button>
+                        <button class="btn grow" id="delete-btn">Delete Current</button>
+                    </div>
+
+                </div>
+            </div>
 
             <div>
                 <p class="sub">Camera</p>
@@ -266,8 +283,8 @@
                     </div>
 
                     <div class="flex flex-row gap-5">
-                        <button class="btn">Save</button>
-                        <button class="btn">Load</button>
+                        <button class="btn" id="save-btn">Save</button>
+                        <input type="file" class="btn" id="load-btn">Load</input>
                     </div>
                 </div>
 
@@ -518,7 +535,6 @@
                 </div>  
                
             </div>
-            <!-- Add more form inputs as needed -->
             <div class="flex justify-end">
                 <button type="button" id="cancel-add-frame" class="btn mr-2">Cancel</button>
                 <button type="button" id="verify-add-frame" class="btn">Add Frame</button>

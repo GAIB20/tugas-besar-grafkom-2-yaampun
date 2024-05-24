@@ -12,11 +12,14 @@ import { displayComponent,
   handleTotalModelFrame,
   handleTotalNodeFrame,
   handleCurrentModelFrame,
-  handleCurrentNodeFrame } from "./handler/eventHandler.js";
+  handleCurrentNodeFrame,
+  nodeName} from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
 import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
 import Animation from "./utils/Animation.js";
+import Node from "./structs/node.js";
+import { degToRad } from "./structs/math/mathUtils.js";
 
 const canvas = document.getElementById("gl-canvas");
 const gl = canvas.getContext("webgl");
@@ -26,8 +29,11 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-var model = [pigModel, chickenModel, foxModel, hollowModel, hollowRingModel];
-var objects;
+export var model = [pigModel, chickenModel, foxModel, hollowModel, hollowRingModel];
+export var objects;
+export function setObjects(value) {
+  objects = value;
+}
 export var target;
 export function setTarget(value) {
   target = value;
@@ -55,6 +61,7 @@ export function setObliquePhi(newPhi) {
 }
 var normalizeLight;
 var worldViewProjectionMatrix;
+var cubeCount = 0;
 
 // animation
 var t_animation = 0;
@@ -64,7 +71,6 @@ initState();
 
 function initState() {
     objects = model[0];
-    focus = null;
     lighting = false;
     lightDirection = [0.0, 0.0, 1.0]
     texture = "none";
@@ -89,8 +95,6 @@ window.onload = () => {
     }
     target = objects[0];
     targetRoot = target;
-
-
     render();
 }
 
@@ -277,7 +281,7 @@ function render(now) {
     renderLoop(objects);
     Animation.handleTransform(target, document);
     
-  window.requestAnimFrame(render);
+    window.requestAnimFrame(render);
     
 }
 
@@ -357,4 +361,110 @@ export function changeMappingTexture(objects, textureType) {
       changeMappingTexture(object.children, textureType);
     }
   });
+}
+
+export function renameTarget (newName) {
+  for( let i = 0; i < objects.length; i++){
+    if(objects[i].name === target.name){
+      console.log(objects[i].name)
+      console.log(newName)
+      objects[i].name = newName;
+    }
+  }
+  target.name = newName;
+  clearComponent();
+  displayComponent(0, objects);
+}
+
+export function deleteNode (name) {
+  function removeNode (node) {
+    if (node.name === name) {
+      objects.splice(objects.indexOf(node), 1);
+      nodeName.value = ""
+      return;
+    }
+    
+    if (node.children) {
+      for (let i = 0; i < node.children.length; i++) {
+        if (node.children[i].name === name) {
+          node.children.splice(i, 1);
+          nodeName.value = ""
+        }
+        removeNode(node.children[i], name);
+      }
+    }
+  }
+
+  removeNode(objects[0]);
+}
+
+export function addNode () {
+  const newNode = new Node(); 
+  cubeCount++;
+  checkNode(objects, "newCube" + cubeCount);
+  newNode.name = "newCube" + cubeCount;
+  newNode.model = boxModel(1, 1, 1, [0, 0, 0]);
+  newNode.transform = {
+    translate: [0, 0, 0],
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+  };
+  newNode.pickedColor = randomColors(),
+  newNode.diffuse = [1,1,1],
+  newNode.specular = [1,1,1],
+  newNode.ambient = [1,1,1],
+  newNode.shininess = 1,
+  newNode.const = {
+      kd: 0.5,
+      ks: 0.0,
+      ka: 1.0,
+  }
+  newNode.viewMatrix = {
+      camera: [0, 0, 5],
+      lookAt: [0, 0, 0],
+      up: [0, 1, 0],
+      near: 0.1,
+      far: 50,
+  };
+  newNode.animation = {
+      isAnimate: false,
+  };
+  newNode.worldMatrix = target.worldMatrix;
+  if (objects.length !== 0) {
+    newNode.setParent(target);
+  } else {
+    objects.push(newNode);
+    target = objects[0];
+    targetRoot = objects[0];
+    console.log(objects)
+  }
+  clearComponent();
+  displayComponent(0, objects);
+}
+
+function checkNode(objects, name) {
+  for (let i = 0; i < objects.length; i++) {
+    if (objects[i].name === name) {
+      cubeCount++;
+    }
+    if (objects[i].children.length > 0) {
+      checkNode(objects[i].children, name);
+    }
+  }
+}
+
+export function loadObjects(objects) {
+    setObjects(objects);
+    setTarget(objects[0]);
+    setTargetRoot(objects[0]);
+    clearComponent();
+    displayComponent(0, objects);
+    handleTransform(objects[0]);
+    handleTotalModelFrame(targetRoot)
+    handleTotalNodeFrame(targetRoot)
+    render();
+}
+
+export function addModel(object) {
+  model.push(object);
 }
