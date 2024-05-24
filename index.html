@@ -82,10 +82,12 @@
         varying vec3 vLightDir;
 
         uniform vec3 uAmbientColor;
+        uniform vec3 uPhongAmbientColor;
         uniform vec3 uDiffuseColor;
         uniform vec3 uSpecularColor;
         uniform float uShininess;
         uniform vec3 uLightPos;
+        uniform bool uPhong;
 
         uniform float kd;
         uniform float ks;
@@ -95,25 +97,29 @@
         uniform vec4 uColor;
 
         void main(void) {
-            vec3 normal = normalize(vNormal);
-            vec3 viewDir = normalize(vViewDir);
-            vec3 lightDir = normalize(vLightDir);
-            
-            // Lambertian (diffuse) reflection
-            float diffuseFactor = max(dot(normal, lightDir), 0.0);
-            vec3 diffuse = uDiffuseColor * diffuseFactor;
+            if (uPhong) {     
+                vec3 normal = normalize(vNormal);
+                vec3 viewDir = normalize(vViewDir);
+                vec3 lightDir = normalize(vLightDir);
+                
+                // Lambertian (diffuse) reflection
+                float diffuseFactor = max(dot(normal, lightDir), 0.0);
+                vec3 diffuse = uDiffuseColor * diffuseFactor;
 
-            // Specular reflection
-            vec3 reflectDir = reflect(-lightDir, normal);
-            float specularFactor = pow(max(dot(viewDir, reflectDir), 0.0), uShininess);
-            vec3 specular = uSpecularColor * specularFactor;
+                // Specular reflection
+                vec3 reflectDir = reflect(-lightDir, normal);
+                float specularFactor = pow(max(dot(viewDir, reflectDir), 0.0), uShininess);
+                vec3 specular = uSpecularColor * specularFactor;
 
-            // Ambient reflection
-            vec3 ambient = uAmbientColor;
+                // Ambient reflection
+                vec3 ambient = uPhongAmbientColor;
 
-            vec3 finalColor = (ambient * ka+ diffuse * kd + specular * ks) * uColor.rgb;
+                vec3 finalColor = (ambient * ka + diffuse * kd + specular * ks);
 
-            gl_FragColor = vec4(finalColor, 1.0);
+                gl_FragColor = vec4(finalColor, 1.0);
+            } else {
+                gl_FragColor = vec4(uAmbientColor  * uColor.rgb, 1.0);
+            }
         }
     </script>
     
@@ -166,7 +172,7 @@
 
                 
                     <div class="flex flex-col">
-                        <p class="font-bold">Camera Orbit Control</p>
+                        <p class="font-bold">Look At</p>
                         <div class="flex flex-col">
                             <label for="camera-roll-slider">Roll (φ):</label>
                             <input type="range" min="-89" max="89" value="0" id="camera-roll-slider"/>
@@ -409,6 +415,16 @@
                         </div>
                     </div>
                     
+                    <div>
+                        <div class="flex flex-row gap-5 items-center">
+                            <label for="material-selection">Material</label>
+                            <select class="border-2 border-slate rounded-md" name="material-selection" id="material-selection">
+                                <option value="0">Basic</option>
+                                <option value="1">Phong</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="flex flex-row">
 
                     
@@ -445,11 +461,18 @@
                                     <label for="shiness-slider">Shininess</label>
                                     <input type="range" min="0.5" max="100" value="0" id="shininess-slider">
                                 </div>
-                                <div class="flex flex-row items-center gap-3">
-                                    <label for="shiness-slider">Ambient</label>
+                                <!-- <div class="flex flex-row items-center gap-3">
+                                    <label for="ambient-slider">Ambient</label>
                                     <input type="range" min="0" max="1" value="0" step="0.1" id="ambient-slider">
-                                </div>
+                                </div> -->
                                 <div class="flex flex-col ">
+                                    <div class="flex flex-col">
+                                        <label for="">Ambient</label>
+                                        <div class="flex flex-row gap-2">
+                                            <input type="color" id="ambient-color">
+                                            <input type="range" min="0" max="1" value="0" step="0.1" id="ambient-slider">
+                                        </div>
+                                    </div>
                                     <div class="flex flex-col">
                                         <label for="">Diffuse</label>
                                         <div class="flex flex-row gap-2">
@@ -510,7 +533,7 @@
                     </div>
                     <div class="flex flex-row gap-5 pt-5">
                         <button class="btn" id="edit-current-frame">Edit Current Frame</button>
-                        <button class="btn" id="save-animation">Save Model Animation??</button>
+                        <button class="btn" id="save-animation">Save Animation</button>
                     </div>             
                 </div>
             </div>

@@ -73,17 +73,24 @@ function setUniforms(gl, program, uniforms) {
       gl.uniform1f(location, data);
   };
 
+  const setUniform1i = (name, data) => {
+    const location = gl.getUniformLocation(program, name);
+    gl.uniform1i(location, data);
+  };
+
+
   setUniformMatrix4fv("uWorldViewProjection", uniforms.uWorldViewProjection);
   setUniformMatrix4fv("uWorldInverseTranspose", uniforms.uWorldInverseTranspose);
   setUniformMatrix4fv("uModelMatrix", uniforms.uModelMatrix);
-  setUniform3fv("uReverseLightDirection", uniforms.uReverseLightDirection);
   setUniform4fv("uColor", uniforms.uColor);
   setUniform3fv("uAmbientColor", uniforms.uAmbientColor); 
-  setUniform3fv("uDiffuseColor", uniforms.uDiffuseColor); // Set the diffuse color uniform
-  setUniform3fv("uSpecularColor", uniforms.uSpecularColor); // Set the specular color uniform
-  setUniform1f("uShininess", uniforms.uShininess); // Set the shininess uniform
+  setUniform3fv("uPhongAmbientColor", uniforms.uPhongAmbientColor);
+  setUniform3fv("uDiffuseColor", uniforms.uDiffuseColor); 
+  setUniform3fv("uSpecularColor", uniforms.uSpecularColor);
+  setUniform1f("uShininess", uniforms.uShininess); 
   setUniform3fv("uLightPos", uniforms.uLightPos);
   setUniform1f("ka", uniforms.ka);
   setUniform1f("kd", uniforms.kd);
   setUniform1f("ks", uniforms.ks);
+  setUniform1i("uPhong", uniforms.uPhong);
 }
