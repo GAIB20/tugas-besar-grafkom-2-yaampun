@@ -111,6 +111,9 @@ const lightX = document.getElementById('light-x-slider');
 const lightY = document.getElementById('light-y-slider');
 const lightZ = document.getElementById('light-z-slider');
 
+// material selection
+const material = document.getElementById('material-selection');
+
 // phong
 const shininess = document.getElementById('shininess-slider');
 const specular = document.getElementById('specular-slider');
@@ -121,6 +124,7 @@ const ambient = document.getElementById('ambient-slider');
 const basicColor = document.getElementById('basic-color');
 const diffuseColor = document.getElementById('diffuse-color');
 const specularColor = document.getElementById('specular-color');
+const ambientColor = document.getElementById('ambient-color');
 
 // node manager
 export const nodeName = document.getElementById('node-name');
@@ -218,7 +222,6 @@ export function displayComponent(treeLevel = 0, objects){
         createdButton.addEventListener('click', function(evt) {
             setTarget(object);
             handleTransform(object);
-            setSlider(object);
             handleTotalNodeFrame(object);
             setNodeManager(object);
             let components = document.getElementsByClassName("component");
@@ -234,16 +237,6 @@ export function displayComponent(treeLevel = 0, objects){
         }
     })
 }
-
-function setSlider(node){
-    redAmbient.value = node.ambient[0];
-    greenAmbient.value = node.ambient[1];
-    blueAmbient.value = node.ambient[2];
-    shininess.value = node.shininess;
-    specular.value = node.specular[0];
-    diffuse.value = node.diffuse[0];
-}
-
 
 export function handleTransform(node){
     // change translation, rotation, scalation
@@ -287,20 +280,20 @@ export function handleTransform(node){
     shininess.value = node.shininess;
     
     basicColor.value = rgbToHex(node.pickedColor);
-    diffuseColor.value = rgbToHex(node.diffuse);
+    diffuseColor.value = rgbToHex(node.pickedColor);
     specularColor.value = rgbToHex(node.specular);
+    ambientColor.value = rgbToHex(node.phongAmbient);
     
     ambient.value = node.const.ka;
     diffuse.value = node.const.kd;
     specular.value = node.const.ks;
-    
 
+    material.value = node.phong ? 1 : 0;
 }
 
 
 function handleCameraView(node) {
     let epsilon = 0.001;
-    
     //radius, roll, pitch
     let radius = parseFloat(cameraRadius.value)/10;
     let roll = degToRad(parseFloat(cameraRoll.value));
@@ -429,9 +422,6 @@ function handleAmbientColor(node){
     node.ambient[0] = redAmbient.value;
     node.ambient[1] = greenAmbient.value;
     node.ambient[2] = blueAmbient.value;
-    for(let child of node.children){
-        handleAmbientColor(child);
-    }
 }
 
 redAmbient.addEventListener('input', function(){
@@ -448,14 +438,13 @@ blueAmbient.addEventListener('input', function(){
 
 function handlePhong(node){
     node.shininess = 100 - shininess.value;
+    node.phongAmbient = hexToRgb(ambientColor.value);
     node.specular = hexToRgb(specularColor.value);
     node.diffuse = hexToRgb(diffuseColor.value);
     node.const.ks = parseFloat(specular.value);
     node.const.kd = parseFloat(diffuse.value);
     node.const.ka = parseFloat(ambient.value);
-    for(let child of node.children){
-        handlePhong(child);
-    }
+    node.pickedColor = hexToRgb(basicColor.value);
 }
 
 shininess.addEventListener('input', function(){
@@ -474,12 +463,22 @@ diffuse.addEventListener('input', function(){
     handlePhong(target);
 });
 
+ambientColor.addEventListener('input', function(){
+    handlePhong(target);
+});
+
 specularColor.addEventListener('input', function(){
     handlePhong(target);
 });
 
 diffuseColor.addEventListener('input', function(){
-    handlePhong(target);
+    target.pickedColor = hexToRgb(basicColor.value);
+    basicColor.value = diffuseColor.value;
+});
+
+basicColor.addEventListener('input', function(){
+    target.pickedColor = hexToRgb(basicColor.value);
+    diffuseColor.value = basicColor.value;
 });
 
 lightX.addEventListener('input', function(){
@@ -667,10 +666,6 @@ okSaveAnimationModal.addEventListener('click', function(){
     animationModal.className = animationModal.className + " hidden"
 })
 
-// color
-basicColor.addEventListener('input', function(){
-    target.pickedColor = hexToRgb(basicColor.value);
-});
 
 function setNodeManager(node){
     nodeName.value = node.name;
@@ -724,3 +719,7 @@ importButton.addEventListener('change', function(event){
         displayComponent(0, objects);
     });
 })
+
+material.addEventListener('change', function(){
+    target.phong = material.value == 1 ? true : false;
+});

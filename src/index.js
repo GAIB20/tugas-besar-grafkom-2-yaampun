@@ -46,6 +46,7 @@ var lighting;
 export var lightDirection;
 var texture;
 var projection_type;
+var phong = true;
 
 export function setProjectionType(newProjection) {
   projection_type = newProjection;
@@ -111,19 +112,13 @@ function setDefaultState(objects) {
             }
         }
       
-        if (!object.program && !lighting) {
+        if (!object.program ) {
             object.program = createShaderProgram(
                 gl,
                 vertexShaderSource,
                 fragmentShaderSource
             );
-        }
-      
-        //   if (object.animation.isObjectAnimate && object.animation.animate) {
-        //     object.transform = object.animation.animate[counter % fps];
-        //   }
-      
-          // object.transform = object.animation.animate[counter % fps];
+        } 
         object.localMatrix = setTransform(object);
         if (object.children.length > 0) {
             setDefaultState(object.children);
@@ -208,12 +203,6 @@ function renderLoop(objects) {
         var a_bitangent = new Float32Array(object.model.bitangents.flat(1));
 
         setAttr(gl, object.program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent);
-
-        // const diffuse = [1, 1, 1];
-        // const specular = [0, 0, 0];
-        // const ambient = [1, 1 ,1]
-        // const shininess = 100;
-
         var uniforms = {
             uWorldViewProjection: object.worldMatrix,
             uWorldInverseTranspose: object.worldInverseMatrix,
@@ -221,13 +210,15 @@ function renderLoop(objects) {
             uColor: object.pickedColor.concat(1.0),
             uModelMatrix: modelMatrix,
             uAmbientColor: object.ambient,
-            uDiffuseColor: object.diffuse,
+            uDiffuseColor: object.pickedColor,
             uSpecularColor: object.specular,
             uShininess: object.shininess,
             uLightPos: normalizeLight,
             ka: object.const.ka,
             kd: object.const.kd,
             ks: object.const.ks,
+            uPhong: object.phong,
+            uPhongAmbientColor: object.phongAmbient,
         }
 
         setUniforms(gl, object.program, uniforms);
@@ -324,7 +315,6 @@ export function changeModelObject (index) {
     handleTotalModelFrame(targetRoot)
     handleTotalNodeFrame(targetRoot)
     render();
-
 }
 
 export function changeMappingTexture(objects, textureType) {
