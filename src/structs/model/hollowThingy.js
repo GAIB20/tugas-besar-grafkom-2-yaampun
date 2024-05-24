@@ -1,5 +1,6 @@
 import Node from "../node.js";
-
+import { degToRad } from "../math/mathUtils.js";
+import Animation from "../../utils/Animation.js";
 
 function hollowThingy() {
     let vertices = [];
@@ -49,10 +50,10 @@ hollow.name = "Hollow Thingy";
 hollow.model = hollowThingy();
 hollow.transform = {
   translate: [0, 0, 0],
-  rotate: [91, 0, 0],
+  rotate: [0, 0, 0],
   scale: [1, 1, 1],
 };
-hollow.pickedColor = [0.921568627,0.568627451,0.898039216],
+hollow.pickedColor = randomColors(),
 hollow.diffuse = [1,1,1],
 hollow.specular = [1,1,1],
 hollow.ambient = [1,1,1],
@@ -70,9 +71,31 @@ hollow.viewMatrix = {
     far: 50,
 };
 hollow.animation = {
-  isAnimate: false,
-  degAnimate: 0.1,
+  isAnimate: true,
+  frames: hollowFrames(),
+  currentFrame: 0,
+  animationFunction: Animation.animationScript(),
+  isAuto: true,
+  isReverse: false
 };
+
+function hollowFrames () {
+  let transform = {
+    translate: [0, 0, 0],
+    rotate: [degToRad(0), degToRad(0), degToRad(0)],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+  for(let k = 0; k < 361; ++k){
+      let _transform = JSON.parse(JSON.stringify(transform));
+      _transform.rotate[0] = degToRad(k);
+      _transform.rotate[1] = degToRad(k);
+      _transform.rotate[2] = degToRad(k);
+      frames.push(_transform);
+  }
+
+  return frames;
+}
 
 var hollowModel = [
     hollow

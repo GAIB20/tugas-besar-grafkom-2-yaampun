@@ -1,4 +1,6 @@
 import Node from "../node.js";
+import { degToRad } from "../math/mathUtils.js";
+import Animation from "../../utils/Animation.js";
 
 const bodyColor = [0.886, 0.345, 0.133];
 const whiteColor = [0.99, 0.99, 0.99];
@@ -10,10 +12,19 @@ fox.name = "fox";
 fox.model = boxModel(0.6, 0.7, 1, [0, 0, 0]); 
 fox.transform = {
   translate: [0, 0, 0],
-  rotate: [0, 0, 0],
+  rotate: [30,45, 0],
   scale: [1, 1, 1],
 };
 fox.pickedColor = bodyColor;
+fox.diffuse = [1,1,1],
+fox.specular = [1,1,1],
+fox.ambient = [1,1,1],
+fox.shininess = 1,
+fox.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 fox.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -23,8 +34,30 @@ fox.viewMatrix = {
 };
 fox.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+  frames: foxFrames(),
+  currentFrame: 0,
+  animationFunction: Animation.animationScript(),
+  isAuto: false,
+  isReverse: false
 };
+
+function foxFrames() {
+  let transform = {
+    translate: [0, 0, 0],
+    rotate: [degToRad(30), degToRad(45), degToRad(0)],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+  for(let k = 0; k < 50; ++k){
+      let _transform = JSON.parse(JSON.stringify(transform));
+      _transform.translate[0] =  k / 50 ;
+      _transform.translate[2] =  k / 50 ;
+      frames.push(_transform);
+  }
+
+  return frames;
+
+}
 
 const head = new Node();
 head.name = "head";
@@ -35,6 +68,15 @@ head.transform = {
   scale: [1, 1, 1],
 };
 head.pickedColor = bodyColor;
+head.diffuse = [1,1,1],
+head.specular = [1,1,1],
+head.ambient = [1,1,1],
+head.shininess = 1,
+head.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 head.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -56,6 +98,15 @@ whiteRightEye.transform = {
   scale: [1, 1, 1],
 };
 whiteRightEye.pickedColor = whiteColor;
+whiteRightEye.diffuse = [1,1,1],
+whiteRightEye.specular = [1,1,1],
+whiteRightEye.ambient = [1,1,1],
+whiteRightEye.shininess = 1,
+whiteRightEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 whiteRightEye.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -77,6 +128,15 @@ whiteLeftEye.transform = {
   scale: [1, 1, 1],
 };
 whiteLeftEye.pickedColor = whiteColor;
+whiteLeftEye.diffuse = [1,1,1],
+whiteLeftEye.specular = [1,1,1],
+whiteLeftEye.ambient = [1,1,1],
+whiteLeftEye.shininess = 1,
+whiteLeftEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 whiteLeftEye.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -98,6 +158,15 @@ blackRightEye.transform = {
   scale: [1, 1, 1],
 };
 blackRightEye.pickedColor = blackColor;
+blackRightEye.diffuse = [1,1,1],
+blackRightEye.specular = [1,1,1],
+blackRightEye.ambient = [1,1,1],
+blackRightEye.shininess = 1,
+blackRightEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 blackRightEye.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -119,6 +188,15 @@ blackLeftEye.transform = {
   scale: [1, 1, 1],
 };
 blackLeftEye.pickedColor = blackColor;
+blackLeftEye.diffuse = [1,1,1],
+blackLeftEye.specular = [1,1,1],
+blackLeftEye.ambient = [1,1,1],
+blackLeftEye.shininess = 1,
+blackLeftEye.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 blackLeftEye.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -140,6 +218,15 @@ nose.transform = {
   scale: [1, 1, 1],
 };
 nose.pickedColor = blackColor;
+nose.diffuse = [1,1,1],
+nose.specular = [1,1,1],
+nose.ambient = [1,1,1],
+nose.shininess = 1,
+nose.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 nose.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -151,6 +238,7 @@ nose.animation = {
   isAnimate: false,
   degAnimate: 0.1,
 };
+
 const undernose = new Node();
 undernose.name = "undernose";
 undernose.model = boxModel(0.1, 0.3, 0.2, [0, 0, 0]);
@@ -160,6 +248,15 @@ undernose.transform = {
   scale: [1, 1, 1],
 };
 undernose.pickedColor = whiteColor;
+undernose.diffuse = [1,1,1],
+undernose.specular = [1,1,1],
+undernose.ambient = [1,1,1],
+undernose.shininess = 1,
+undernose.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 undernose.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -181,6 +278,15 @@ rightEar.transform = {
   scale: [1, 1, 1],
 };
 rightEar.pickedColor = blackColor;
+rightEar.diffuse = [1,1,1],
+rightEar.specular = [1,1,1],
+rightEar.ambient = [1,1,1],
+rightEar.shininess = 1,
+rightEar.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightEar.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -202,6 +308,15 @@ leftEar.transform = {
   scale: [1, 1, 1],
 };
 leftEar.pickedColor = blackColor;
+leftEar.diffuse = [1,1,1],
+leftEar.specular = [1,1,1],
+leftEar.ambient = [1,1,1],
+leftEar.shininess = 1,
+leftEar.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftEar.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -223,6 +338,15 @@ rightFrontLeg.transform = {
   scale: [1, 1, 1],
 };
 rightFrontLeg.pickedColor = blackColor;
+rightFrontLeg.diffuse = [1,1,1],
+rightFrontLeg.specular = [1,1,1],
+rightFrontLeg.ambient = [1,1,1],
+rightFrontLeg.shininess = 1,
+rightFrontLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightFrontLeg.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -232,8 +356,35 @@ rightFrontLeg.viewMatrix = {
 };
 rightFrontLeg.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+  frames: rightFrontLegFrames(),
+  currentFrame: 0,
+  animationFunction: Animation.animationScript(),
+  isAuto: false,
+  isReverse: false
 };
+
+function rightFrontLegFrames () {
+  let transform = {
+    translate: [0.2, -0.25, 0.2], 
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+  for(let k = 0; k < 25; ++k){
+      let _transform = JSON.parse(JSON.stringify(transform));
+      _transform.rotate[0] = degToRad(-k);
+      frames.push(_transform);
+  }
+
+  for(let k = 0; k < 25; ++k){
+    let _transform = JSON.parse(JSON.stringify(transform));
+    _transform.rotate[0] = degToRad(k);
+    frames.push(_transform);
+  }
+  return frames;
+
+}
+
 const rightFrontToe = new Node();
 rightFrontToe.name = "rightFrontToe";
 rightFrontToe.model = boxModel(0.1, 0.2, 0.2, [0, 0, 0]);
@@ -243,6 +394,15 @@ rightFrontToe.transform = {
   scale: [1, 1, 1],
 };
 rightFrontToe.pickedColor = whiteColor;
+rightFrontToe.diffuse = [1,1,1],
+rightFrontToe.specular = [1,1,1],
+rightFrontToe.ambient = [1,1,1],
+rightFrontToe.shininess = 1,
+rightFrontToe.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightFrontToe.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -264,6 +424,15 @@ leftFrontLeg.transform = {
   scale: [1, 1, 1],
 };
 leftFrontLeg.pickedColor = blackColor;
+leftFrontLeg.diffuse = [1,1,1],
+leftFrontLeg.specular = [1,1,1],
+leftFrontLeg.ambient = [1,1,1],
+leftFrontLeg.shininess = 1,
+leftFrontLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftFrontLeg.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -273,8 +442,35 @@ leftFrontLeg.viewMatrix = {
 };
 leftFrontLeg.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+  frames: leftFrontLegFrames(),
+  currentFrame: 0,
+  animationFunction: Animation.animationScript(),
+  isAuto: false,
+  isReverse: false
 };
+
+function leftFrontLegFrames () {
+  let transform = {
+    translate: [-0.2, -0.25, 0.2], 
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+
+  for(let k = 0; k < 25; ++k){
+    let _transform = JSON.parse(JSON.stringify(transform));
+    _transform.rotate[0] = degToRad(k);
+    frames.push(_transform);
+  }
+  for(let k = 0; k < 25; ++k){
+    let _transform = JSON.parse(JSON.stringify(transform));
+    _transform.rotate[0] = degToRad(-k);
+    frames.push(_transform);
+  }
+  return frames;
+
+}
+
 const leftFrontToe = new Node();
 leftFrontToe.name = "leftFrontToe";
 leftFrontToe.model = boxModel(0.1, 0.2, 0.15, [0, 0, 0]);
@@ -284,6 +480,15 @@ leftFrontToe.transform = {
   scale: [1, 1, 1],
 };
 leftFrontToe.pickedColor = whiteColor;
+leftFrontToe.diffuse = [1,1,1],
+leftFrontToe.specular = [1,1,1],
+leftFrontToe.ambient = [1,1,1],
+leftFrontToe.shininess = 1,
+leftFrontToe.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftFrontToe.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -305,6 +510,15 @@ rightRearLeg.transform = {
   scale: [1, 1, 1],
 };
 rightRearLeg.pickedColor = blackColor;
+rightRearLeg.diffuse = [1,1,1],
+rightRearLeg.specular = [1,1,1],
+rightRearLeg.ambient = [1,1,1],
+rightRearLeg.shininess = 1,
+rightRearLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightRearLeg.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -313,9 +527,37 @@ rightRearLeg.viewMatrix = {
   far: 50,
 };
 rightRearLeg.animation = {
-  isAnimate: false,
-  degAnimate: 0.1,
+    isAnimate: false,
+    frames: rightRearLegFrames(),
+    currentFrame: 0,
+    animationFunction: Animation.animationScript(),
+    isAuto: false,
+    isReverse: false
 };
+
+function rightRearLegFrames() {
+  let transform = {
+    translate: [0.2, -0.25, -0.2],
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+  for(let k = 0; k < 25; ++k){
+    let _transform = JSON.parse(JSON.stringify(transform));
+    _transform.rotate[0] = degToRad(k - 20);
+    frames.push(_transform);
+  }
+  for(let k = 0; k < 25; ++k){
+      let _transform = JSON.parse(JSON.stringify(transform));
+      _transform.rotate[0] = degToRad(-k + 20);
+      frames.push(_transform);
+  }
+
+  
+
+  return frames;
+}
+
 const rightRearToe = new Node();
 rightRearToe.name = "rightRearToe";
 rightRearToe.model = boxModel(0.1, 0.2, 0.2, [0, 0, 0]);
@@ -325,6 +567,15 @@ rightRearToe.transform = {
   scale: [1, 1, 1],
 };
 rightRearToe.pickedColor = whiteColor;
+rightRearToe.diffuse = [1,1,1],
+rightRearToe.specular = [1,1,1],
+rightRearToe.ambient = [1,1,1],
+rightRearToe.shininess = 1,
+rightRearToe.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 rightRearToe.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -346,6 +597,15 @@ leftRearLeg.transform = {
   scale: [1, 1, 1],
 };
 leftRearLeg.pickedColor = blackColor;
+leftRearLeg.diffuse = [1,1,1],
+leftRearLeg.specular = [1,1,1],
+leftRearLeg.ambient = [1,1,1],
+leftRearLeg.shininess = 1,
+leftRearLeg.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftRearLeg.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -355,8 +615,34 @@ leftRearLeg.viewMatrix = {
 };
 leftRearLeg.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+  frames: leftRearLegFrames(),
+  currentFrame: 0,
+  animationFunction: Animation.animationScript(),
+  isAuto: false,
+  isReverse: false
 };
+
+function leftRearLegFrames() {
+  let transform = {
+    translate: [-0.2, -0.25, -0.2], 
+    rotate: [0, 0, 0],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+  for(let k = 0; k < 25; ++k){
+      let _transform = JSON.parse(JSON.stringify(transform));
+      _transform.rotate[0] = degToRad(-k + 20);
+      frames.push(_transform);
+  }
+
+  for(let k = 0; k < 25; ++k){
+    let _transform = JSON.parse(JSON.stringify(transform));
+    _transform.rotate[0] = degToRad(k - 20);
+    frames.push(_transform);
+  }
+  return frames;
+}
+
 const leftRearToe = new Node();
 leftRearToe.name = "leftRearToe";
 leftRearToe.model = boxModel(0.1, 0.2, 0.2, [0, 0, 0]);
@@ -366,6 +652,15 @@ leftRearToe.transform = {
   scale: [1, 1, 1],
 };
 leftRearToe.pickedColor = whiteColor;
+leftRearToe.diffuse = [1,1,1],
+leftRearToe.specular = [1,1,1],
+leftRearToe.ambient = [1,1,1],
+leftRearToe.shininess = 1,
+leftRearToe.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 leftRearToe.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -387,6 +682,15 @@ tail.transform = {
   scale: [1, 1, 1],
 };
 tail.pickedColor = bodyColor;
+tail.diffuse = [1,1,1],
+tail.specular = [1,1,1],
+tail.ambient = [1,1,1],
+tail.shininess = 1,
+tail.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 tail.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
@@ -398,6 +702,7 @@ tail.animation = {
   isAnimate: false,
   degAnimate: 0.1,
 };
+
 const tailedge = new Node();
 tailedge.name = "tailedge";
 tailedge.model = boxModel(0.2, 0.2, 0.2, [0, 0, 0]);
@@ -407,6 +712,15 @@ tailedge.transform = {
   scale: [1, 1, 1],
 };
 tailedge.pickedColor = whiteColor;
+tailedge.diffuse = [1,1,1],
+tailedge.specular = [1,1,1],
+tailedge.ambient = [1,1,1],
+tailedge.shininess = 1,
+tailedge.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 tailedge.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],
