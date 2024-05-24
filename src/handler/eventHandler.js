@@ -721,6 +721,37 @@ importButton.addEventListener('change', function(event){
     });
 })
 
+
+/**
+ * Character Movement
+ */
+
+document.addEventListener('keydown', function(event) {
+    switch(event.key) {
+        case 'ArrowUp':
+            CharacterController.vz = 1e-2/4;
+            break;
+        case 'ArrowDown':
+            CharacterController.vz = -1e-2/4;
+            break;
+        case 'ArrowLeft':
+            CharacterController.vx = -1e-2/4;
+            break;
+        case 'ArrowRight':
+            CharacterController.vx = 1e-2/4;
+            break;
+        // handle space
+        case ' ':
+            CharacterController.currentGround = targetRoot.transform.translate[1];
+            targetRoot.transform.translate[1] += 1e-2/4;
+            CharacterController.vy = 1e-2/2;
+            break;
+        default:
+            // Handle other keys if needed
+            break;
+    }
+});
+
 material.addEventListener('change', function(){
     target.phong = material.value == 1 ? true : false;
 });

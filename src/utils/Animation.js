@@ -202,9 +202,9 @@ export default class Animation{
         doc.getElementById("translation-x-slider").value = tx*50;
         doc.getElementById("translation-y-slider").value = ty*50;
         doc.getElementById("translation-z-slider").value = tz*50;
-        doc.getElementById("translation-x-slider-value").innerHTML = tx;    
-        doc.getElementById("translation-y-slider-value").innerHTML = ty;
-        doc.getElementById("translation-z-slider-value").innerHTML = tz;
+        doc.getElementById("translation-x-slider-value").innerHTML = tx.toFixed(2);    
+        doc.getElementById("translation-y-slider-value").innerHTML = ty.toFixed(2);
+        doc.getElementById("translation-z-slider-value").innerHTML = tz.toFixed(2);
         // rotation tx, ty, tz 
         doc.getElementById("rotation-x-slider").value = rx;
         doc.getElementById("rotation-y-slider").value = ry;
@@ -230,7 +230,7 @@ export default class Animation{
     static enableAnimation(parent_model){
         parent_model.animation.isAnimate = true;
         for(let model of parent_model.children){    
-            Animation.disableAnimation(model)
+            Animation.enableAnimation(model)
         }
     }
 
