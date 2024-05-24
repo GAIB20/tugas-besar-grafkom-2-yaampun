@@ -1,4 +1,6 @@
 import Node from "../node.js";
+import boxModel, {generateFaces, generateNormals, generateVertices} from "../boxModel.js";
+import Animation from "../../utils/Animation.js";
 
 function ring() {
     let vertices = [];
@@ -57,10 +59,40 @@ hollow.viewMatrix = {
   near: 0.1,
   far: 50,
 };
+hollow.diffuse = [1,1,1],
+hollow.specular = [1,1,1],
+hollow.ambient = [1,1,1],
+hollow.shininess = 1,
+hollow.const = {
+    kd: 0.5,
+    ks: 0.0,
+    ka: 1.0,
+}
 hollow.animation = {
-isAnimate: false,
-degAnimate: 0.1,
+  isAnimate: true,
+  frames: hollowFrames(),
+  currentFrame: 0,
+  animationFunction: Animation.animationScript(),
+  isAuto: true,
+  isReverse: false
 };
+
+function hollowFrames() {
+  let transform = {
+    translate: [0, 0, 0],
+    rotate: [degToRad(10), 0, 0],
+    scale: [1, 1, 1],
+  }
+  let frames = []
+  for(let k = 0; k < 360; ++k){
+      let _transform = JSON.parse(JSON.stringify(transform));
+      _transform.rotate[0] = degToRad((10+k) % 360)
+      _transform.rotate[1] = degToRad((k+1)%360)
+      frames.push(_transform);
+  }
+  
+  return frames;
+}
 
 var hollowRingModel = [
   hollow

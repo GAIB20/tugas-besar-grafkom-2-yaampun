@@ -50,8 +50,8 @@ export default class Camera{
 
 
         const f = Vec3.unitVector(Vec3.sub(_eye, _center)) // zAxis
-        const s = Vec3.unitVector(Vec3.cross(f, _up)) // xAxis
-        const u = Vec3.unitVector(Vec3.cross(s, f))
+        const s = Vec3.unitVector(Vec3.cross(_up, f)) // xAxis
+        const u = Vec3.unitVector(Vec3.cross(f, s))
 
         return [s.x, s.y, s.z, 0,
                 u.x, u.y, u.z, 0,

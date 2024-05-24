@@ -1,4 +1,6 @@
-function generateVertices(height, width, depth, offset) {
+import Vec3 from "./math/Vec3.js"
+
+export function generateVertices(height, width, depth, offset) {
   return [
     [offset[0] - width / 2, offset[1] - height / 2, offset[2] - depth / 2],
     [offset[0] + width / 2, offset[1] - height / 2, offset[2] - depth / 2],
@@ -11,7 +13,7 @@ function generateVertices(height, width, depth, offset) {
   ]
 }
 
-function generateFaces() {
+export function generateFaces() {
   return [
     [1, 3, 2],
     [4, 2, 3],
@@ -71,19 +73,18 @@ function generateBitangents() {
     ]
 }
 
-function generateNormals(vertices, faces) {
+export function generateNormals(vertices, faces) {
   let normals = [];
   for (let i = 0; i < faces.length; i++) {
     let face = faces[i];
-    let v1 = vertices[face[0] - 1];
-    let v2 = vertices[face[1] - 1];
-    let v3 = vertices[face[2] - 1];
+    let v1 = Vec3.fromArray(vertices[face[0] - 1])
+    let v2 = Vec3.fromArray(vertices[face[1] - 1])
+    let v3 = Vec3.fromArray(vertices[face[2] - 1])
 
-    let v1v2 = subtractVectors(v2, v1);
-    let v1v3 = subtractVectors(v3, v1);
+    let v1v2 = Vec3.sub(v2, v1);
+    let v1v3 = Vec3.sub(v3,v1);
 
-    let res = normalize(cross(v1v2, v1v3));
-
+    let res = Vec3.unitVector(Vec3.cross(v1v2,v1v3)).asArray()
     normals.push(res);
     normals.push(res);
     normals.push(res);
@@ -107,7 +108,8 @@ function generateColors(vertices, color = null) {
   }
   return colors;
 }
-function boxModel(height, width, depth, offset) {
+
+export default function boxModel(height, width, depth, offset) {
 
   let vertices = generateVertices(height, width, depth, offset);
   let center = [offset[0], offset[1], offset[2]];

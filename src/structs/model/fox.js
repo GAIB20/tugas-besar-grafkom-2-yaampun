@@ -1,6 +1,7 @@
 import Node from "../node.js";
 import { degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
+import boxModel, {generateFaces, generateNormals, generateVertices} from "../boxModel.js";
 
 const bodyColor = [0.886, 0.345, 0.133];
 const whiteColor = [0.99, 0.99, 0.99];

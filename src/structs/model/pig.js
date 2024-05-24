@@ -1,6 +1,7 @@
 import Node from "../node.js";
 import { degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
+import boxModel from "../boxModel.js";
 
 
 const pig = new Node();
