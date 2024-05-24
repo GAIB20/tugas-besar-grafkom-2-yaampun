@@ -1,5 +1,6 @@
 import Node from "../node.js";
 import boxModel, {generateFaces, generateNormals, generateVertices} from "../boxModel.js";
+import { radToDeg,degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
 
 function ring() {
@@ -51,7 +52,7 @@ translate: [0, 0, 0],
 rotate: [10, 0, 0],
 scale: [1, 1, 1],
 };
-hollow.pickedColor = [45/255,215/255,96/255],
+hollow.pickedColor = randomColors()
 hollow.viewMatrix = {
   camera: [0, 0, 5],
   lookAt: [0, 0, 0],

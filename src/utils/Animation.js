@@ -190,8 +190,7 @@ export default class Animation{
         return currFrame
     }
 
-    static handleTransform(node, doc){
-        if(!node.animation.isAnimate) return;
+    static handleGeneralTransform(node, doc){
         let [tx, ty, tz] = node.transform.translate
         let [rx, ry, rz] = node.transform.rotate
         rx = radToDeg(rx); 
@@ -223,6 +222,18 @@ export default class Animation{
         doc.getElementById("scalation-z-slider-value").innerHTML = (sz * 1.00).toFixed(2);
     }
 
+    static handleTransform(node, doc){
+        if(!node.animation.isAnimate) return;
+        Animation.handleGeneralTransform(node, doc)
+    }
+
+    static enableAnimation(parent_model){
+        parent_model.animation.isAnimate = true;
+        for(let model of parent_model.children){    
+            Animation.disableAnimation(model)
+        }
+    }
+
     static disableAnimation(parent_model){
         parent_model.animation.isAnimate = false;
         for(let model of parent_model.children){    
@@ -232,16 +243,20 @@ export default class Animation{
 
     static deleteCurrentFrame(node){
         if(node.animation.frames){
-            console.log(node.animation.frames)
-            node.animation.frames.splice(node.animation.currentFrame-1, 1);
-            console.log(node.animation.frames)
-            if(node.animation.currentFrame >= node.animation.frames.length){
-                node.animation.currentFrame = node.animation.frames.length - 1;
+            
+            node.animation.frames.splice(node.animation.currentFrame, 1);
+            if(node.animation.currentFrame != 0){
+                node.animation.currentFrame -= 1
             }
+            
             if(node.animation.frames.length == 0){
                 node.animation.frames = null;
                 node.animation.currentFrame = 0;
+                return;
             }
+        
+            node.transform = node.animation.frames[node.animation.currentFrame]
+
         }
     }
 

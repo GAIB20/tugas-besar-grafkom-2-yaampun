@@ -97,6 +97,10 @@ const deleteFrameButton = document.getElementById('delete-current-frame')
 const verifyDeleteFrameButton = document.getElementById('verify-delete-frame')
 const cancelDeleteFrameButton = document.getElementById('cancel-delete-frame')
 
+// animation
+const saveAnimation = document.getElementById('save-animation')
+const okSaveAnimationModal = document.getElementById('ok-save-animation')
+
 // ambient light
 const redAmbient = document.getElementById('red-slider');
 const greenAmbient = document.getElementById('green-slider');
@@ -399,19 +403,26 @@ reverse.addEventListener('click', function(){
 
 // next, prev, first, last
 next.addEventListener('click', function(){
+    Animation.disableAnimation(targetRoot)
     Animation.nextFrame(targetRoot);
+    Animation.handleGeneralTransform(targetRoot, document);
+    
 })
 
 prev.addEventListener('click', function(){
+    Animation.disableAnimation(targetRoot)
     Animation.prevFrame(targetRoot);
+    Animation.handleGeneralTransform(targetRoot, document);
 })
 
 first.addEventListener('click', function(){
     Animation.firstFrame(targetRoot);
+    Animation.handleGeneralTransform(targetRoot, document);
 })
 
 last.addEventListener('click', function(){
     Animation.lastFrame(targetRoot);
+    Animation.handleGeneralTransform(targetRoot, document);
 })
 
 function handleAmbientColor(node){
@@ -491,7 +502,6 @@ export function handleTotalModelFrame(parent_node){
     let _totalFrameText = totalModelFrame.textContent;
     // get total frame
     let _totalFrame = Animation.totalModelFrames(parent_node);
-    console.log(_totalFrame)
     // set total frame
     _totalFrameText = "Total Model Frames: "+ _totalFrame;
     totalModelFrame.textContent = _totalFrameText;
@@ -637,6 +647,7 @@ verifyDeleteFrameButton.addEventListener('click', function(){
     // update node frame
     handleTotalModelFrame(targetRoot);
     handleTotalNodeFrame(target);
+    Animation.handleGeneralTransform(targetRoot,document)
     // if(target.animation.frames !== null){
     //     target.animation.frames.pop();
     //     handleTotalModelFrame(targetRoot);
@@ -644,6 +655,16 @@ verifyDeleteFrameButton.addEventListener('click', function(){
     // }
     const deleteFrameModal = document.getElementById('delete-frame-modal')
     deleteFrameModal.className = deleteFrameModal.className + " hidden"
+})
+
+saveAnimation.addEventListener('click', function(){
+    let animationModal = document.getElementById('save-animation-modal')
+    animationModal.className = animationModal.className.replace(" hidden", "")
+})
+
+okSaveAnimationModal.addEventListener('click', function(){
+    let animationModal = document.getElementById('save-animation-modal')
+    animationModal.className = animationModal.className + " hidden"
 })
 
 // color

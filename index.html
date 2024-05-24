@@ -510,7 +510,7 @@
                     </div>
                     <div class="flex flex-row gap-5 pt-5">
                         <button class="btn" id="edit-current-frame">Edit Current Frame</button>
-                        <button class="btn" id="save-animation">Save Animation</button>
+                        <button class="btn" id="save-animation">Save Model Animation??</button>
                     </div>             
                 </div>
             </div>
@@ -595,6 +595,21 @@
             <div class="flex justify-end">
                 <button type="button" id="cancel-delete-frame" class="btn mr-2">Cancel</button>
                 <button type="button" id="verify-delete-frame" class="btn">Verify</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Save Animation modal -->
+<div id="save-animation-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+        <h2 class="text-2xl font-bold mb-4">Save Model Animation</h2>
+        <form id="save-animation-form">
+            <div class="mb-4">
+                <label for="animation-name" class="block text-gray-700">Animation is included when you export/save the model</label> 
+            </div>
+            <!-- Add more form inputs as needed -->
+            <div class="flex justify-end">
+                <button type="button" id="ok-save-animation" class="btn">Ok</button>
             </div>
         </form>
     </div>
