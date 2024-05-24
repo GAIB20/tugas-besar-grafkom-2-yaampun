@@ -283,8 +283,10 @@
                     </div>
 
                     <div class="flex flex-row gap-5">
-                        <button class="btn" id="save-btn">Save</button>
-                        <input type="file" class="btn" id="load-btn">Load</input>
+                        <button class="btn grow" id="save-btn">Save</button>
+                        <!-- <input type="file" class="grow" id="load-btn"></input> -->
+                        <button class="btn grow" onclick="document.getElementById('load-btn').click()">Load</button>
+                        <input type='file' id="load-btn" style="display:none">
                     </div>
                 </div>
 

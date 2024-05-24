@@ -43,5 +43,50 @@ export default class Node {
         child.setWorldMtx(worldMatrix);
       });
     }
+
+    toJSON() {
+      return {
+          name: this.name,
+          ambient: this.ambient,
+          animation: this.animation,
+          children: this.children.map(child => child.toJSON()),
+          const: this.const,
+          diffuse: this.diffuse,
+          localMatrix: this.localMatrix,
+          model: this.model,
+          pickedColor: this.pickedColor,
+          shininess: this.shininess,
+          specular: this.specular,
+          transform: this.transform,
+          viewMatrix: this.viewMatrix,  
+          worldInverseMatrix: this.worldInverseMatrix,
+          worldMatrix: this.worldMatrix,
+      };
+    }
+
+    fromJSON(data) {
+        this.name = data.name;
+        this.ambient = data.ambient;
+        this.animation = data.animation;
+        this.children = data.children.map(childData => {
+            const childNode = new Node();
+            childNode.fromJSON(childData);
+            return childNode;
+        });
+        this.const = data.const;
+        this.diffuse = data.diffuse;
+        this.localMatrix = data.localMatrix;
+        this.model = data.model;
+        this.pickedColor = data.pickedColor;
+        this.shininess = data.shininess;
+        this.specular = data.specular;
+        this.transform = data.transform;
+        this.viewMatrix = data.viewMatrix;
+        this.worldInverseMatrix = data.worldInverseMatrix;
+        this.worldMatrix = data.worldMatrix;
+        return this;
+    }
+
+    
   }
   
