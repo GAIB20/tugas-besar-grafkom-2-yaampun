@@ -382,20 +382,22 @@ export function deleteNode (name) {
       objects.splice(objects.indexOf(node), 1);
       nodeName.value = ""
       return;
-    }
-    
-    if (node.children) {
+    } 
+
+    if (node.children.length > 0) {
       for (let i = 0; i < node.children.length; i++) {
         if (node.children[i].name === name) {
           node.children.splice(i, 1);
           nodeName.value = ""
+        } else {
+          removeNode(node.children[i]);
         }
-        removeNode(node.children[i], name);
       }
     }
   }
 
   removeNode(objects[0]);
+  console.log(objects);
 }
 
 export function addNode () {

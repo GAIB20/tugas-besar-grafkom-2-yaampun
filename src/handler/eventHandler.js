@@ -123,6 +123,8 @@ export const nodeName = document.getElementById('node-name');
 const renameButton = document.getElementById('rename-btn');
 const deleteButton = document.getElementById('delete-btn');
 const addChildButton = document.getElementById('add-child-btn')
+const importButton = document.getElementById('import-btn');
+const exportButton = document.getElementById('export-btn');
 
 // save and load
 const saveButton = document.getElementById('save-btn'); 
@@ -686,5 +688,18 @@ load.addEventListener('change', function(event){
         // Set the value of modelSelection to "imported"
         modelSelection.value = model.length;
         addModel(objects);
+    });
+})
+
+exportButton.addEventListener('click', function(){
+    console.log([target]);
+    saveJSON([target]);
+});
+
+importButton.addEventListener('change', function(event){
+    loadJSON(event.target, function(object){
+        object[0].setParent(target);
+        clearComponent();
+        displayComponent(0, objects);
     });
 })

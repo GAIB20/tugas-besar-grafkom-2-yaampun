@@ -150,6 +150,12 @@
                         <button class="btn grow" id="delete-btn">Delete Current</button>
                     </div>
 
+                    <div class="flex flex-row gap-5">
+                        <button class="btn grow" onclick="document.getElementById('import-btn').click()">Import</button>
+                        <input type='file' id="import-btn" class="hidden">
+                        <button class="btn grow" id="export-btn">Export</button>
+                    </div>
+
                 </div>
             </div>
 
@@ -284,7 +290,6 @@
 
                     <div class="flex flex-row gap-5">
                         <button class="btn grow" id="save-btn">Save</button>
-                        <!-- <input type="file" class="grow" id="load-btn"></input> -->
                         <button class="btn grow" onclick="document.getElementById('load-btn').click()">Load</button>
                         <input type='file' id="load-btn" style="display:none">
                     </div>
