@@ -18,6 +18,7 @@ import { target,
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 import Animation from "../utils/Animation.js";
 import { loadJSON, saveJSON } from "../utils/fileManager.js";
+import CharacterController from "../utils/CharacterController.js";
 
 const translationX = document.getElementById('translation-x-slider');
 const translationY = document.getElementById('translation-y-slider');
@@ -724,3 +725,34 @@ importButton.addEventListener('change', function(event){
         displayComponent(0, objects);
     });
 })
+
+
+/**
+ * Character Movement
+ */
+
+document.addEventListener('keydown', function(event) {
+    switch(event.key) {
+        case 'ArrowUp':
+            CharacterController.vz = 1e-2/4;
+            break;
+        case 'ArrowDown':
+            CharacterController.vz = -1e-2/4;
+            break;
+        case 'ArrowLeft':
+            CharacterController.vx = -1e-2/4;
+            break;
+        case 'ArrowRight':
+            CharacterController.vx = 1e-2/4;
+            break;
+        // handle space
+        case ' ':
+            CharacterController.currentGround = targetRoot.transform.translate[1];
+            targetRoot.transform.translate[1] += 1e-2/4;
+            CharacterController.vy = 1e-2/2;
+            break;
+        default:
+            // Handle other keys if needed
+            break;
+    }
+});

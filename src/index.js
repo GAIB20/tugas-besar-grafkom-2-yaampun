@@ -20,6 +20,7 @@ import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from 
 import Animation from "./utils/Animation.js";
 import Node from "./structs/node.js";
 import { degToRad } from "./structs/math/mathUtils.js";
+import CharacterController from "./utils/CharacterController.js";
 
 const canvas = document.getElementById("gl-canvas");
 const gl = canvas.getContext("webgl");
@@ -267,9 +268,11 @@ function render(now) {
     if(t_animation === 0) t_animation = now;
 
     if((now - t_animation) >= fps_time){
-      t_animation = now;
       let deltaTime = now - t_animation;
+      t_animation = now;
       Animation.animate(targetRoot, deltaTime);
+      CharacterController.velocityLoop(targetRoot, deltaTime);
+      CharacterController.gravityLoop(targetRoot, deltaTime);
       handleCurrentModelFrame(targetRoot)
       handleCurrentNodeFrame(target)
     }
