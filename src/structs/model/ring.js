@@ -60,15 +60,17 @@ hollow.viewMatrix = {
   near: 0.1,
   far: 50,
 };
-hollow.diffuse = [1,1,1],
-hollow.specular = [1,1,1],
-hollow.ambient = [1,1,1],
-hollow.shininess = 1,
+hollow.ambient = [1,1,1];
+hollow.phong = true;
+hollow.phongAmbient = [0,0,0],
+hollow.diffuse = [1,1,1];
+hollow.specular = [1,1,1];
+hollow.shininess = 1;
 hollow.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
     ka: 1.0,
-}
+};
 hollow.animation = {
   isAnimate: true,
   frames: hollowFrames(),

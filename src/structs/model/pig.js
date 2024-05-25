@@ -16,14 +16,14 @@ pig.transform = {
 pig.pickedColor = [0.921568627,0.568627451,0.898039216],
 pig.ambient = [1,1,1];
 pig.phong = true;
-pig.phongAmbient = [0,0,0],
+pig.phongAmbient = [0.921568627,0.568627451,0.898039216],
 pig.diffuse = [1,1,1];
 pig.specular = [1,1,1];
 pig.shininess = 1;
 pig.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 pig.viewMatrix = {
     camera: [0, 0, 5],
@@ -69,14 +69,14 @@ head.transform = {
 head.pickedColor = [0.921568627,0.568627451,0.898039216],
 head.ambient = [1,1,1];
 head.phong = true;
-head.phongAmbient = [0,0,0],
+head.phongAmbient = [0.921568627,0.568627451,0.898039216],
 head.diffuse = [1,1,1];
 head.specular = [1,1,1];
 head.shininess = 1;
 head.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 head.viewMatrix = {
     camera: [0, 0, 5],
@@ -126,14 +126,14 @@ whiteRightEye.transform = {
 whiteRightEye.pickedColor = [0.99,0.99,0.99],
 whiteRightEye.ambient = [1,1,1];
 whiteRightEye.phong = true;
-whiteRightEye.phongAmbient = [0,0,0],
+whiteRightEye.phongAmbient = [0.99,0.99,0.99],
 whiteRightEye.diffuse = [1,1,1];
 whiteRightEye.specular = [1,1,1];
 whiteRightEye.shininess = 1;
 whiteRightEye.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 whiteRightEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -159,14 +159,14 @@ whiteLeftEye.transform = {
 whiteLeftEye.pickedColor = [0.99,0.99,0.99],
 whiteLeftEye.ambient = [1,1,1];
 whiteLeftEye.phong = true;
-whiteLeftEye.phongAmbient = [0,0,0],
+whiteLeftEye.phongAmbient = [0.99,0.99,0.99],
 whiteLeftEye.diffuse = [1,1,1];
 whiteLeftEye.specular = [1,1,1];
 whiteLeftEye.shininess = 1;
 whiteLeftEye.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 whiteLeftEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -199,7 +199,7 @@ blackRightEye.shininess = 1;
 blackRightEye.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 blackRightEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -232,7 +232,7 @@ blackLeftEye.shininess = 1;
 blackLeftEye.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 blackLeftEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -258,14 +258,14 @@ nose.transform = {
 nose.pickedColor = [0.768627451,0.376470588, 0.745098039],
 nose.ambient = [1,1,1];
 nose.phong = true;
-nose.phongAmbient = [0,0,0],
+nose.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 nose.diffuse = [1,1,1];
 nose.specular = [1,1,1];
 nose.shininess = 1;
 nose.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 nose.viewMatrix = {
     camera: [0, 0, 5],
@@ -291,14 +291,14 @@ rightHole.transform = {
 rightHole.pickedColor = [0.921568627,0.568627451,0.898039216],
 rightHole.ambient = [1,1,1];
 rightHole.phong = true;
-rightHole.phongAmbient = [0,0,0],
+rightHole.phongAmbient = [0.921568627,0.568627451,0.898039216],
 rightHole.diffuse = [1,1,1];
 rightHole.specular = [1,1,1];
 rightHole.shininess = 1;
 rightHole.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 rightHole.viewMatrix = {
     camera: [0, 0, 5],
@@ -324,14 +324,14 @@ leftHole.transform = {
 leftHole.pickedColor = [0.921568627,0.568627451,0.898039216],
 leftHole.ambient = [1,1,1];
 leftHole.phong = true;
-leftHole.phongAmbient = [0,0,0],
+leftHole.phongAmbient = [0.921568627,0.568627451,0.898039216],
 leftHole.diffuse = [1,1,1];
 leftHole.specular = [1,1,1];
 leftHole.shininess = 1;
 leftHole.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 leftHole.viewMatrix = {
     camera: [0, 0, 5],
@@ -357,14 +357,14 @@ rightFrontLeg.transform = {
 rightFrontLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 rightFrontLeg.ambient = [1,1,1];
 rightFrontLeg.phong = true;
-rightFrontLeg.phongAmbient = [0,0,0],
+rightFrontLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 rightFrontLeg.diffuse = [1,1,1];
 rightFrontLeg.specular = [1,1,1];
 rightFrontLeg.shininess = 1;
 rightFrontLeg.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 rightFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
@@ -413,14 +413,14 @@ leftFrontLeg.transform = {
 leftFrontLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 leftFrontLeg.ambient = [1,1,1];
 leftFrontLeg.phong = true;
-leftFrontLeg.phongAmbient = [0,0,0],
+leftFrontLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 leftFrontLeg.diffuse = [1,1,1];
 leftFrontLeg.specular = [1,1,1];
 leftFrontLeg.shininess = 1;
 leftFrontLeg.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 leftFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
@@ -468,14 +468,14 @@ rightRearLeg.transform = {
 rightRearLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 rightRearLeg.ambient = [1,1,1];
 rightRearLeg.phong = true;
-rightRearLeg.phongAmbient = [0,0,0],
+rightRearLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 rightRearLeg.diffuse = [1,1,1];
 rightRearLeg.specular = [1,1,1];
 rightRearLeg.shininess = 1;
 rightRearLeg.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 rightRearLeg.viewMatrix = {
     camera: [0, 0, 5],
@@ -523,14 +523,14 @@ leftRearLeg.transform = {
 leftRearLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 leftRearLeg.ambient = [1,1,1];
 leftRearLeg.phong = true;
-leftRearLeg.phongAmbient = [0,0,0],
+leftRearLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 leftRearLeg.diffuse = [1,1,1];
 leftRearLeg.specular = [1,1,1];
 leftRearLeg.shininess = 1;
 leftRearLeg.const = {
     kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 };
 leftRearLeg.viewMatrix = {
     camera: [0, 0, 5],

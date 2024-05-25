@@ -17,14 +17,16 @@ fox.transform = {
   scale: [1, 1, 1],
 };
 fox.pickedColor = bodyColor;
+fox.phong = true;
+fox.phongAmbient = bodyColor,
 fox.diffuse = [1,1,1],
 fox.specular = [1,1,1],
 fox.ambient = [1,1,1],
 fox.shininess = 1,
 fox.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 fox.viewMatrix = {
   camera: [0, 0, 5],
@@ -69,14 +71,16 @@ head.transform = {
   scale: [1, 1, 1],
 };
 head.pickedColor = bodyColor;
+head.phong = true;
+head.phongAmbient = bodyColor,
 head.diffuse = [1,1,1],
 head.specular = [1,1,1],
 head.ambient = [1,1,1],
 head.shininess = 1,
 head.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 head.viewMatrix = {
   camera: [0, 0, 5],
@@ -99,14 +103,16 @@ whiteRightEye.transform = {
   scale: [1, 1, 1],
 };
 whiteRightEye.pickedColor = whiteColor;
+whiteRightEye.phong = true;
+whiteRightEye.phongAmbient = whiteColor,
 whiteRightEye.diffuse = [1,1,1],
 whiteRightEye.specular = [1,1,1],
 whiteRightEye.ambient = [1,1,1],
 whiteRightEye.shininess = 1,
 whiteRightEye.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 whiteRightEye.viewMatrix = {
   camera: [0, 0, 5],
@@ -129,14 +135,16 @@ whiteLeftEye.transform = {
   scale: [1, 1, 1],
 };
 whiteLeftEye.pickedColor = whiteColor;
+whiteLeftEye.phong = true;
+whiteLeftEye.phongAmbient = whiteColor,
 whiteLeftEye.diffuse = [1,1,1],
 whiteLeftEye.specular = [1,1,1],
 whiteLeftEye.ambient = [1,1,1],
 whiteLeftEye.shininess = 1,
 whiteLeftEye.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 whiteLeftEye.viewMatrix = {
   camera: [0, 0, 5],
@@ -159,14 +167,16 @@ blackRightEye.transform = {
   scale: [1, 1, 1],
 };
 blackRightEye.pickedColor = blackColor;
+blackRightEye.phong = true;
+blackRightEye.phongAmbient = blackColor,
 blackRightEye.diffuse = [1,1,1],
 blackRightEye.specular = [1,1,1],
 blackRightEye.ambient = [1,1,1],
 blackRightEye.shininess = 1,
 blackRightEye.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 blackRightEye.viewMatrix = {
   camera: [0, 0, 5],
@@ -189,14 +199,16 @@ blackLeftEye.transform = {
   scale: [1, 1, 1],
 };
 blackLeftEye.pickedColor = blackColor;
+blackLeftEye.phong = true;
+blackLeftEye.phongAmbient = blackColor,
 blackLeftEye.diffuse = [1,1,1],
 blackLeftEye.specular = [1,1,1],
 blackLeftEye.ambient = [1,1,1],
 blackLeftEye.shininess = 1,
 blackLeftEye.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 blackLeftEye.viewMatrix = {
   camera: [0, 0, 5],
@@ -219,14 +231,16 @@ nose.transform = {
   scale: [1, 1, 1],
 };
 nose.pickedColor = blackColor;
+nose.phong = true;
+nose.phongAmbient = blackColor,
 nose.diffuse = [1,1,1],
 nose.specular = [1,1,1],
 nose.ambient = [1,1,1],
 nose.shininess = 1,
 nose.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 nose.viewMatrix = {
   camera: [0, 0, 5],
@@ -249,14 +263,16 @@ undernose.transform = {
   scale: [1, 1, 1],
 };
 undernose.pickedColor = whiteColor;
+undernose.phong = true;
+undernose.phongAmbient = whiteColor,
 undernose.diffuse = [1,1,1],
 undernose.specular = [1,1,1],
 undernose.ambient = [1,1,1],
 undernose.shininess = 1,
 undernose.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 undernose.viewMatrix = {
   camera: [0, 0, 5],
@@ -279,14 +295,16 @@ rightEar.transform = {
   scale: [1, 1, 1],
 };
 rightEar.pickedColor = blackColor;
+rightEar.phong = true;
+rightEar.phongAmbient = blackColor,
 rightEar.diffuse = [1,1,1],
 rightEar.specular = [1,1,1],
 rightEar.ambient = [1,1,1],
 rightEar.shininess = 1,
 rightEar.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 rightEar.viewMatrix = {
   camera: [0, 0, 5],
@@ -309,14 +327,16 @@ leftEar.transform = {
   scale: [1, 1, 1],
 };
 leftEar.pickedColor = blackColor;
+leftEar.phong = true;
+leftEar.phongAmbient = blackColor,
 leftEar.diffuse = [1,1,1],
 leftEar.specular = [1,1,1],
 leftEar.ambient = [1,1,1],
 leftEar.shininess = 1,
 leftEar.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 leftEar.viewMatrix = {
   camera: [0, 0, 5],
@@ -339,14 +359,16 @@ rightFrontLeg.transform = {
   scale: [1, 1, 1],
 };
 rightFrontLeg.pickedColor = blackColor;
+rightFrontLeg.phong = true;
+rightFrontLeg.phongAmbient = blackColor,
 rightFrontLeg.diffuse = [1,1,1],
 rightFrontLeg.specular = [1,1,1],
 rightFrontLeg.ambient = [1,1,1],
 rightFrontLeg.shininess = 1,
 rightFrontLeg.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 rightFrontLeg.viewMatrix = {
   camera: [0, 0, 5],
@@ -395,14 +417,16 @@ rightFrontToe.transform = {
   scale: [1, 1, 1],
 };
 rightFrontToe.pickedColor = whiteColor;
+rightFrontToe.phong = true;
+rightFrontToe.phongAmbient = whiteColor,
 rightFrontToe.diffuse = [1,1,1],
 rightFrontToe.specular = [1,1,1],
 rightFrontToe.ambient = [1,1,1],
 rightFrontToe.shininess = 1,
 rightFrontToe.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 rightFrontToe.viewMatrix = {
   camera: [0, 0, 5],
@@ -425,14 +449,16 @@ leftFrontLeg.transform = {
   scale: [1, 1, 1],
 };
 leftFrontLeg.pickedColor = blackColor;
+leftFrontLeg.phong = true;
+leftFrontLeg.phongAmbient = blackColor,
 leftFrontLeg.diffuse = [1,1,1],
 leftFrontLeg.specular = [1,1,1],
 leftFrontLeg.ambient = [1,1,1],
 leftFrontLeg.shininess = 1,
 leftFrontLeg.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 leftFrontLeg.viewMatrix = {
   camera: [0, 0, 5],
@@ -481,14 +507,16 @@ leftFrontToe.transform = {
   scale: [1, 1, 1],
 };
 leftFrontToe.pickedColor = whiteColor;
+leftFrontToe.phong = true;
+leftFrontToe.phongAmbient = whiteColor,
 leftFrontToe.diffuse = [1,1,1],
 leftFrontToe.specular = [1,1,1],
 leftFrontToe.ambient = [1,1,1],
 leftFrontToe.shininess = 1,
 leftFrontToe.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 leftFrontToe.viewMatrix = {
   camera: [0, 0, 5],
@@ -511,14 +539,16 @@ rightRearLeg.transform = {
   scale: [1, 1, 1],
 };
 rightRearLeg.pickedColor = blackColor;
+rightRearLeg.phong = true;
+rightRearLeg.phongAmbient = blackColor,
 rightRearLeg.diffuse = [1,1,1],
 rightRearLeg.specular = [1,1,1],
 rightRearLeg.ambient = [1,1,1],
 rightRearLeg.shininess = 1,
 rightRearLeg.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 rightRearLeg.viewMatrix = {
   camera: [0, 0, 5],
@@ -568,14 +598,16 @@ rightRearToe.transform = {
   scale: [1, 1, 1],
 };
 rightRearToe.pickedColor = whiteColor;
+rightRearToe.phong = true;
+rightRearToe.phongAmbient = whiteColor,
 rightRearToe.diffuse = [1,1,1],
 rightRearToe.specular = [1,1,1],
 rightRearToe.ambient = [1,1,1],
 rightRearToe.shininess = 1,
 rightRearToe.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 rightRearToe.viewMatrix = {
   camera: [0, 0, 5],
@@ -598,14 +630,16 @@ leftRearLeg.transform = {
   scale: [1, 1, 1],
 };
 leftRearLeg.pickedColor = blackColor;
+leftRearLeg.phong = true;
+leftRearLeg.phongAmbient = blackColor,
 leftRearLeg.diffuse = [1,1,1],
 leftRearLeg.specular = [1,1,1],
 leftRearLeg.ambient = [1,1,1],
 leftRearLeg.shininess = 1,
 leftRearLeg.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 leftRearLeg.viewMatrix = {
   camera: [0, 0, 5],
@@ -653,14 +687,16 @@ leftRearToe.transform = {
   scale: [1, 1, 1],
 };
 leftRearToe.pickedColor = whiteColor;
+leftRearToe.phong = true;
+leftRearToe.phongAmbient = whiteColor,
 leftRearToe.diffuse = [1,1,1],
 leftRearToe.specular = [1,1,1],
 leftRearToe.ambient = [1,1,1],
 leftRearToe.shininess = 1,
 leftRearToe.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 leftRearToe.viewMatrix = {
   camera: [0, 0, 5],
@@ -683,14 +719,16 @@ tail.transform = {
   scale: [1, 1, 1],
 };
 tail.pickedColor = bodyColor;
+tail.phong = true;
+tail.phongAmbient = bodyColor,
 tail.diffuse = [1,1,1],
 tail.specular = [1,1,1],
 tail.ambient = [1,1,1],
 tail.shininess = 1,
 tail.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 tail.viewMatrix = {
   camera: [0, 0, 5],
@@ -713,14 +751,16 @@ tailedge.transform = {
   scale: [1, 1, 1],
 };
 tailedge.pickedColor = whiteColor;
+tailedge.phong = true;
+tailedge.phongAmbient = whiteColor,
 tailedge.diffuse = [1,1,1],
 tailedge.specular = [1,1,1],
 tailedge.ambient = [1,1,1],
 tailedge.shininess = 1,
 tailedge.const = {
-    kd: 0.5,
+    kd: 1.0,
     ks: 0.0,
-    ka: 1.0,
+    ka: 0.5,
 }
 tailedge.viewMatrix = {
   camera: [0, 0, 5],
