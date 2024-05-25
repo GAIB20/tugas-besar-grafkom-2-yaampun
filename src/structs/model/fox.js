@@ -9,6 +9,7 @@ const blackColor = [0, 0, 0];
 const brownColor = [0.545, 0.271, 0.075];
 
 const fox = new Node();
+fox.flag = "articulated";
 fox.name = "fox";
 fox.model = boxModel(0.6, 0.7, 1, [0, 0, 0]); 
 fox.transform = {

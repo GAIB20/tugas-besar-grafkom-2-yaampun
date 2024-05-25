@@ -13,12 +13,12 @@ chicken.transform = {
     rotate: [42, -55, 27],
     scale: [1, 1, 1],
 };
-chicken.pickedColor = [0.9, 0.9, 0],
-chicken.diffuse = [0, 0, 0],
-chicken.specular = [0, 0, 0],
+chicken.pickedColor = [0.7, 0.7, 0],
+chicken.diffuse = [1,1,1];
+chicken.specular = [1,1,1];
 chicken.ambient = [1, 1, 1],
 chicken.phong = true;
-chicken.phongAmbient = [0,0,0],
+chicken.phongAmbient = [0.7, 0.7, 0],
 chicken.shininess = 1,
 chicken.const = {
     kd: 0.5,
@@ -68,12 +68,12 @@ head.transform = {
     rotate: [0, 0, 0],
     scale: [1, 1, 1],
 };
-head.pickedColor = [0.9, 0.9, 0];
-head.diffuse = [0, 0, 0];
-head.specular = [0, 0, 0];
+head.pickedColor = [0.7, 0.7, 0];
+head.diffuse = [1, 1, 1];
+head.specular = [1, 1, 1];
 head.ambient = [1, 1, 1];
 head.phong = true;
-head.phongAmbient = [0,0,0],
+head.phongAmbient = [0.7, 0.7, 0],
 head.shininess = 1,
 head.const = {
     kd: 0.5,
@@ -106,11 +106,11 @@ beak.transform = {
     scale: [1, 1, 1],
 };
 beak.pickedColor = [1, 0.5, 0];
-beak.diffuse = [0, 0, 0];
-beak.specular = [0, 0, 0];
+beak.diffuse = [1, 1, 1];
+beak.specular = [1, 1, 1];
 beak.ambient = [1, 1, 1];
 beak.phong = true;
-beak.phongAmbient = [0,0,0],
+beak.phongAmbient = [1, 0.5, 0],
 beak.shininess = 1,
 beak.const = {
     kd: 0.5,
@@ -142,11 +142,11 @@ whiteLeftEye.transform = {
     scale: [1, 1, 1],
 };
 whiteLeftEye.pickedColor = [0.99, 0.99, 0.99];
-whiteLeftEye.diffuse = [0, 0, 0];
-whiteLeftEye.specular = [0, 0, 0];
+whiteLeftEye.diffuse = [1, 1, 1];
+whiteLeftEye.specular = [1, 1, 1];
 whiteLeftEye.ambient = [1, 1, 1];
 whiteLeftEye.phong = true;
-whiteLeftEye.phongAmbient = [0,0,0],
+whiteLeftEye.phongAmbient = [0.99, 0.99, 0.99],
 whiteLeftEye.shininess = 1,
 whiteLeftEye.const = {
     kd: 0.5,
@@ -178,8 +178,8 @@ blackLeftEye.transform = {
     scale: [1, 1, 1],
 };
 blackLeftEye.pickedColor = [0, 0, 0];
-blackLeftEye.diffuse = [0, 0, 0];
-blackLeftEye.specular = [0, 0, 0];
+blackLeftEye.diffuse = [1, 1, 1];
+blackLeftEye.specular = [1, 1, 1];
 blackLeftEye.ambient = [1, 1, 1];
 blackLeftEye.phong = true;
 blackLeftEye.phongAmbient = [0,0,0],
@@ -215,11 +215,11 @@ whiteRightEye.transform = {
     scale: [1, 1, 1],
 };
 whiteRightEye.pickedColor = [0.99, 0.99, 0.99];
-whiteRightEye.diffuse = [0, 0, 0];
-whiteRightEye.specular = [0, 0, 0];
+whiteRightEye.diffuse = [1, 1, 1];
+whiteRightEye.specular = [1, 1, 1];
 whiteRightEye.ambient = [1, 1, 1];
 whiteRightEye.phong = true;
-whiteRightEye.phongAmbient = [0,0,0],
+whiteRightEye.phongAmbient = [0.99, 0.99, 0.99],
 whiteRightEye.shininess = 1,
 whiteRightEye.const = {
     kd: 0.5,
@@ -252,8 +252,8 @@ blackRightEye.transform = {
     scale: [1, 1, 1],
 };
 blackRightEye.pickedColor = [0, 0, 0];
-blackRightEye.diffuse = [0, 0, 0];
-blackRightEye.specular = [0, 0, 0];
+blackRightEye.diffuse = [1, 1, 1];
+blackRightEye.specular = [1, 1, 1];
 blackRightEye.ambient = [1, 1, 1];
 blackRightEye.phong = true;
 blackRightEye.phongAmbient = [0,0,0],
@@ -290,12 +290,12 @@ leftWing.transform = {
     rotate: [0, 0, 90],
     scale: [1, 1, 1],
 };
-leftWing.pickedColor = [0.9, 0.9, 0];
-leftWing.diffuse = [0, 0, 0];
-leftWing.specular = [0, 0, 0];
+leftWing.pickedColor = [0.7, 0.7, 0];
+leftWing.diffuse = [1, 1, 1];
+leftWing.specular = [1, 1, 1];
 leftWing.ambient = [1, 1, 1];
 leftWing.phong = true;
-leftWing.phongAmbient = [0,0,0],
+leftWing.phongAmbient = [0.7, 0.7, 0],
 leftWing.shininess = 1,
 leftWing.const = {
     kd: 0.5,
@@ -358,12 +358,12 @@ rightWing.transform = {
     rotate: [0, 0, 90],
     scale: [1, 1, 1],
 };
-rightWing.pickedColor = [0.9, 0.9, 0];
-rightWing.diffuse = [0, 0, 0];
-rightWing.specular = [0, 0, 0];
+rightWing.pickedColor = [0.7, 0.7, 0];
+rightWing.diffuse = [1, 1, 1];
+rightWing.specular = [1, 1, 1];
 rightWing.ambient = [1, 1, 1];
 rightWing.phong = true;
-rightWing.phongAmbient = [0,0,0],
+rightWing.phongAmbient = [0.7, 0.7, 0],
 rightWing.shininess = 1,
 rightWing.const = {
     kd: 0.5,
@@ -426,11 +426,11 @@ rightLeg.transform = {
     scale: [1, 1, 1],
 };
 rightLeg.pickedColor = [1, 0.5, 0];
-rightLeg.diffuse = [0, 0, 0];
-rightLeg.specular = [0, 0, 0];
+rightLeg.diffuse = [1, 1, 1];
+rightLeg.specular = [1, 1, 1];
 rightLeg.ambient = [1, 1, 1];
 rightLeg.phong = true;
-rightLeg.phongAmbient = [0,0,0],
+rightLeg.phongAmbient = [1, 0.5, 0],
 rightLeg.shininess = 1,
 rightLeg.const = {
     kd: 0.5,
@@ -500,11 +500,11 @@ rightFoot.transform = {
     scale: [1, 1, 1],
 };
 rightFoot.pickedColor = [1, 0.5, 0];
-rightFoot.diffuse = [0, 0, 0];
-rightFoot.specular = [0, 0, 0];
+rightFoot.diffuse = [1, 1, 1];
+rightFoot.specular = [1, 1, 1];
 rightFoot.ambient = [1, 1, 1];
 rightFoot.phong = true;
-rightFoot.phongAmbient = [0,0,0],
+rightFoot.phongAmbient = [1, 0.5, 0],
 rightFoot.shininess = 1,
 rightFoot.const = {
     kd: 0.5,
@@ -537,11 +537,11 @@ leftLeg.transform = {
     scale: [1, 1, 1],
 };
 leftLeg.pickedColor = [1, 0.5, 0];
-leftLeg.diffuse = [0, 0, 0];
-leftLeg.specular = [0, 0, 0];
+leftLeg.diffuse = [1, 1, 1];
+leftLeg.specular = [1, 1, 1];
 leftLeg.ambient = [1, 1, 1];
 leftLeg.phong = true;
-leftLeg.phongAmbient = [0,0,0],
+leftLeg.phongAmbient = [1, 0.5, 0],
 leftLeg.shininess = 1,
 leftLeg.const = {
     kd: 0.5,
@@ -609,11 +609,11 @@ leftFoot.transform = {
     scale: [1, 1, 1],
 };
 leftFoot.pickedColor = [1, 0.5, 0];
-leftFoot.diffuse = [0, 0, 0];
-leftFoot.specular = [0, 0, 0];
+leftFoot.diffuse = [1, 1, 1];
+leftFoot.specular = [1, 1, 1];
 leftFoot.ambient = [1, 1, 1];
 leftFoot.phong = true;
-leftFoot.phongAmbient = [0,0,0],
+leftFoot.phongAmbient = [1, 0.5, 0],
 leftFoot.shininess = 1,
 leftFoot.const = {
     kd: 0.5,
@@ -636,9 +636,7 @@ leftFoot.animation = {
     isReverse: false
 };
 
-// Create the tail node
-const tail = new Node();
-tail.name = "tail";
+
 
 
 // Assemble the chicken model

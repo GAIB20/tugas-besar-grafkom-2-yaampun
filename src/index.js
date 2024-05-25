@@ -14,7 +14,8 @@ import { displayComponent,
   handleTotalNodeFrame,
   handleCurrentModelFrame,
   handleCurrentNodeFrame,
-  nodeName} from "./handler/eventHandler.js";
+  handleCameraPosition
+  } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
 import { createTextureObject, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
@@ -293,6 +294,12 @@ function render(now) {
     normalizeLight = Vec3.unitVector(Vec3.fromArray(lightDirection)).asArray()
     renderLoop(objects);
     Animation.handleTransform(target, document);
+    // handle character controller
+    CharacterController.followPlayerLoop(targetRoot);
+    handleCameraPosition(targetRoot);
+
+    
+
     
     window.requestAnimFrame(render);
     
