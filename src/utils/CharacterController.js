@@ -57,7 +57,7 @@ export default class CharacterController{
     }
 
     static gravityLoop(parent_node, delta_time){
-        if(targetRoot === undefined) return;
+        if(targetRoot === undefined || !CharacterController.isJumping ) return;
 
         // return if <= currentGround
         if(parent_node.transform.translate[1] <= CharacterController.currentGround){
