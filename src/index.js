@@ -8,7 +8,8 @@ import Camera from "./utils/Camera.js";
 import { displayComponent, 
   clearComponent, 
   initOptionModel, 
-  handleTransform, 
+  handleTransform,
+  handleFps, 
   handleTotalModelFrame,
   handleTotalNodeFrame,
   handleCurrentModelFrame,
@@ -67,7 +68,12 @@ var cubeCount = 0;
 
 // animation
 var t_animation = 0;
-var fps_time = 0.15;
+var t_text_fps = 0;
+var freq_loop = 60;
+var freq_text_fps = 2;
+var loop_period = 1000/freq_loop;
+var text_fps_period = 1000/freq_text_fps;
+export var fps = 0;
 
 initState();
 
@@ -257,15 +263,23 @@ function render(now) {
     // delta time
     if(!now) now = 0;
     if(t_animation === 0) t_animation = now;
+    if(t_text_fps === 0) t_text_fps = now;
 
-    if((now - t_animation) >= fps_time){
+    if((now - t_animation) >= loop_period){
       let deltaTime = now - t_animation;
       t_animation = now;
+      fps = (1000 / deltaTime).toFixed(2);
       Animation.animate(targetRoot, deltaTime);
       CharacterController.velocityLoop(targetRoot, deltaTime);
       CharacterController.gravityLoop(targetRoot, deltaTime);
       handleCurrentModelFrame(targetRoot)
       handleCurrentNodeFrame(target)
+      
+    }
+
+    if((now - t_text_fps) >= text_fps_period){
+      t_text_fps = now;
+      handleFps();
     }
 
 

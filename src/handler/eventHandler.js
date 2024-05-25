@@ -14,7 +14,7 @@ import { target,
     addNode,
     loadObjects,
     model,
-    addModel} from "../index.js"
+    fps} from "../index.js"
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 import Animation from "../utils/Animation.js";
 import { loadJSON, saveJSON } from "../utils/fileManager.js";
@@ -78,6 +78,7 @@ const first = document.getElementById('first-animation');
 const last = document.getElementById('last-animation');
 
 // frame handler
+const currentFPS = document.getElementById('current-fps');
 const currentModelFrame = document.getElementById('current-model-frame');
 const currentNodeFrame = document.getElementById('current-node-frame');
 const totalModelFrame = document.getElementById('total-model-frame');
@@ -516,6 +517,10 @@ export function handleTotalNodeFrame(node){
     totalNodeFrame.textContent = _totalFrameText;
 }
 
+export function handleFps(){
+    currentFPS.textContent = "Current FPS: " + fps;
+}
+
 export function handleCurrentModelFrame(parent_model){
     let _currentFrame = Animation.currentModelFrame(parent_model)
     currentModelFrame.textContent = "Current Model Frame: " + _currentFrame
@@ -742,6 +747,8 @@ document.addEventListener('keydown', function(event) {
             break;
         // handle space
         case ' ':
+            if(CharacterController.isJumping) break;
+            CharacterController.isJumping = true;
             CharacterController.currentGround = targetRoot.transform.translate[1];
             targetRoot.transform.translate[1] += 1e-2/4;
             CharacterController.vy = 1e-2/2;

@@ -1,5 +1,6 @@
 import { targetRoot } from "../index.js";
 import { degToRad } from "../structs/math/mathUtils.js";
+import Animation from "./Animation.js";
 
 export default class CharacterController{
 
@@ -17,6 +18,7 @@ export default class CharacterController{
     static currentGround = 0;
 
     static velocityThreshold = 1e-4;
+    static isJumping = false;
 
     static velocityLoop(parent_node, delta_time){
         // handle the transformation of the character
@@ -32,7 +34,7 @@ export default class CharacterController{
         else if(CharacterController.vx < -CharacterController.velocityThreshold){
         CharacterController.vx += CharacterController.ax * delta_time;
         }
-        // handle vy
+        // handle vz
         if(CharacterController.vz > CharacterController.velocityThreshold){
         CharacterController.vz -= CharacterController.az * delta_time;
         }
@@ -50,6 +52,7 @@ export default class CharacterController{
         if(Math.abs(CharacterController.vz) < CharacterController.velocityThreshold){
             CharacterController.vz = 0;
         }
+       
         
     }
 
@@ -58,13 +61,17 @@ export default class CharacterController{
 
         // return if <= currentGround
         if(parent_node.transform.translate[1] <= CharacterController.currentGround){
-
+            parent_node.transform.translate[1] = CharacterController.currentGround;
             CharacterController.vy = 0;
+            CharacterController.isJumping = false;
+            Animation.handleGeneralTransform(parent_node, document)
             return;
         }
         // handle vy
         if(delta_time >= 20) delta_time = 15;
         CharacterController.vy += CharacterController.ay * delta_time;
+        Animation.handleGeneralTransform(parent_node, document)
+       
         
         // if()
         // CharacterController.vy += CharacterController.ay * delta_time;
