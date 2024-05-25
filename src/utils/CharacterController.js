@@ -1,6 +1,7 @@
 import { targetRoot } from "../index.js";
 import { degToRad } from "../structs/math/mathUtils.js";
 import Animation from "./Animation.js";
+import Camera from "./Camera.js";
 
 export default class CharacterController{
 
@@ -19,6 +20,8 @@ export default class CharacterController{
 
     static velocityThreshold = 1e-4;
     static isJumping = false;
+
+    static isFollowPlayer = false;
 
     static velocityLoop(parent_node, delta_time){
         // handle the transformation of the character
@@ -41,7 +44,6 @@ export default class CharacterController{
         else if(CharacterController.vz < -CharacterController.velocityThreshold){
         CharacterController.vz += CharacterController.az * delta_time;
         }
-
         // handle near 0 velocity
         if(Math.abs(CharacterController.vx) < CharacterController.velocityThreshold ){
             CharacterController.vx = 0;
@@ -52,7 +54,7 @@ export default class CharacterController{
         if(Math.abs(CharacterController.vz) < CharacterController.velocityThreshold){
             CharacterController.vz = 0;
         }
-       
+        Animation.handleGeneralTransform(parent_node, document)
         
     }
 
@@ -71,36 +73,13 @@ export default class CharacterController{
         if(delta_time >= 20) delta_time = 15;
         CharacterController.vy += CharacterController.ay * delta_time;
         Animation.handleGeneralTransform(parent_node, document)
-       
         
-        // if()
-        // CharacterController.vy += CharacterController.ay * delta_time;
-        // converge all acceleration into 0
-        // handle ax if +
-        // if(CharacterController.ax > 0.001){
-        //     CharacterController.ax -= CharacterController.jerk * delta_time;
-        // }
-        // // handle ax if -
-        // else if(CharacterController.ax < -0.001){
-        //     CharacterController.ax += CharacterController.jerk * delta_time;
-        // }
-        // // handle if ax is close to 0 but not 0
-        // else{
-        //     CharacterController.ax = 0;
-        // }
+    }
 
-        // // handle az if +
-        // if(CharacterController.az > 0){
-        //     CharacterController.az -= CharacterController.jerk * delta_time;
-        // }
-        // // handle az if -
-        // else if(CharacterController.az < 0){
-        //     CharacterController.az += CharacterController.jerk * delta_time;
-        // }
-        // // handle if az is close to 0 but not 0
-        // else if(Math.abs(CharacterController.az) < CharacterController.jerk){
-        //     CharacterController.az = 0;
-        // }
-        
+    static followPlayerLoop(parent_node, delta_time = 0){
+        if(!CharacterController.isFollowPlayer) return;
+        Camera.updateLookAt(parent_node, 0);
+        Camera.updateLookAt(parent_node, 1);
+        Camera.updateLookAt(parent_node, 2);
     }
 }

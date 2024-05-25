@@ -666,6 +666,10 @@ video {
   max-height: 100vh;
 }
 
+.w-\[50\%\] {
+  width: 50%;
+}
+
 .w-full {
   width: 100%;
 }

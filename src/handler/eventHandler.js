@@ -21,6 +21,7 @@ import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 import Animation from "../utils/Animation.js";
 import { loadJSON, saveJSON } from "../utils/fileManager.js";
 import CharacterController from "../utils/CharacterController.js";
+import Camera from "../utils/Camera.js";
 
 const translationX = document.getElementById('translation-x-slider');
 const translationY = document.getElementById('translation-y-slider');
@@ -60,6 +61,8 @@ const cameraPhi = document.getElementById('camera-phi-slider');
 orthographic.checked = true;
 // camera default view
 const defaultView = document.getElementById('default-view');
+// camera following model
+const followModel = document.getElementById('follow-model');
 
 // model 
 const modelSelection = document.getElementById('model-selection');
@@ -197,8 +200,15 @@ scalationZ.addEventListener('input', function(){
 
 // model selection
 modelSelection.addEventListener('change', function(){   
-    console.log(modelSelection.value);
     changeModelObject(modelSelection.value);
+
+    // handle auto/stop auto
+    if(target.animation.isAuto){
+        auto.textContent = "Stop Auto";
+    }
+    else{
+        auto.textContent = "Auto";
+    }
 })
 
 // camera
@@ -316,6 +326,22 @@ function handleCameraView(node) {
         handleCameraView(child);
     }
 }
+
+export function handleCameraPosition(parent_node){
+    let roll = parent_node.viewMatrix.camera[0];
+    let pitch = parent_node.viewMatrix.camera[1];
+    let radius = parent_node.viewMatrix.camera[2];
+
+    cameraRadius.value = radius*10;
+    document.getElementById('camera-radius-slider-value').textContent = radius.toFixed(2);
+
+    cameraRoll.value = radToDeg(roll);
+    document.getElementById('camera-roll-slider-value').textContent = radToDeg(roll).toFixed(2);
+
+    cameraPitch.value = radToDeg(pitch);
+    document.getElementById('camera-pitch-slider-value').textContent = radToDeg(pitch).toFixed(2);
+
+}
 cameraRadius.addEventListener('input', function(){
     let val = parseFloat(cameraRadius.value);
     val /= 10;
@@ -363,6 +389,23 @@ defaultView.addEventListener('click', function(){
     document.getElementById('camera-phi-slider-value').textContent = 90;
 })
 
+// follow model
+followModel.addEventListener('click', function(){
+    CharacterController.isFollowPlayer = !CharacterController.isFollowPlayer;
+    if(!CharacterController.isFollowPlayer){
+        followModel.textContent = "On";
+        followModel.className = `text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 \ 
+        font-medium rounded-lg text-lg px-5 py-1 mt-2 me-2 mb-2 dark:bg-blue-600  \
+        dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`
+    }
+    else{
+        followModel.textContent = "Off";
+        followModel.className = `text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 \
+        font-medium rounded-lg text-lg px-5 py-1 mt-2 me-2 mb-2 dark:bg-red-600 \
+        dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800`
+    }
+})
+
 var state = {
     objects: []
 };
@@ -375,6 +418,7 @@ mappingSelection.addEventListener("change", function (e) {
 
 // animation
 pauseContinue.addEventListener('click', function(){
+    if(Animation.currentModelFrame(targetRoot) == 0) return;
     if(targetRoot.animation.isAnimate){
         // change to continue
         pauseContinue.textContent = "Continue";

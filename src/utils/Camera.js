@@ -123,9 +123,6 @@ export default class Camera{
     }
 
     static updateLookAt(parent_model, axis){
-        // console.log(parent_model.viewMatrix)
-        // console.log(parent_model.transform.translate[axis])
-        // delta
     
         let delta = parent_model.transform.translate[axis] - parent_model.viewMatrix.lookAt[axis]
         let lookAtAxis = parent_model.transform.translate[axis]
@@ -168,7 +165,7 @@ export default class Camera{
     
             r = Math.sqrt(x*x + y*y + z*z)
             theta = Math.acos(z/r)
-            phi = Math.atan2(y, x)
+            phi = Math.atan2(y, Math.abs(x))
     
             // // set the new values
             parent_model.viewMatrix.camera[0] = phi
