@@ -49,7 +49,10 @@ var lighting;
 export var lightDirection;
 var texture;
 var projection_type;
-var phong = true;
+var spotLight = false;
+export function setSpotLight(value) {
+  spotLight = value;
+};
 
 export function setProjectionType(newProjection) {
   projection_type = newProjection;
@@ -218,12 +221,13 @@ function renderLoop(objects) {
             uDiffuseColor: object.pickedColor,
             uSpecularColor: object.specular,
             uShininess: object.shininess,
-            uLightPos: normalizeLight,
+            uLightPos: lightDirection,
             ka: object.const.ka,
             kd: object.const.kd,
             ks: object.const.ks,
             uPhong: object.phong,
             uPhongAmbientColor: object.phongAmbient,
+            uSpotLight: spotLight,
         }
 
         setUniforms(gl, object.program, uniforms);

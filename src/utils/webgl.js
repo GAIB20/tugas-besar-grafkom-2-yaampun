@@ -92,4 +92,5 @@ function setUniforms(gl, program, uniforms) {
   setUniform1f("kd", uniforms.kd);
   setUniform1f("ks", uniforms.ks);
   setUniform1i("uPhong", uniforms.uPhong);
+  setUniform1i("uSpotLight", uniforms.uSpotLight);
 }

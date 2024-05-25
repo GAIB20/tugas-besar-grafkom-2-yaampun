@@ -15,7 +15,8 @@ import { target,
     loadObjects,
     addModel,
     model,
-    fps} from "../index.js"
+    fps,
+    setSpotLight} from "../index.js"
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";
 import Animation from "../utils/Animation.js";
 import { loadJSON, saveJSON } from "../utils/fileManager.js";
@@ -140,6 +141,9 @@ const exportButton = document.getElementById('export-btn');
 // save and load
 const saveButton = document.getElementById('save-btn'); 
 const load = document.getElementById('load-btn');
+
+// spot light
+const spotLight = document.getElementById('spot-selection');
 
 
 // initial
@@ -292,6 +296,8 @@ export function handleTransform(node){
     specular.value = node.const.ks;
 
     material.value = node.phong ? 1 : 0;
+
+    nodeName.value = node.name;
 }
 
 
@@ -763,3 +769,8 @@ document.addEventListener('keydown', function(event) {
 material.addEventListener('change', function(){
     target.phong = material.value == 1 ? true : false;
 });
+
+spotLight.addEventListener('change', function(){
+    var spot = spotLight.value == 1 ? true : false;
+    setSpotLight(spot);
+})
