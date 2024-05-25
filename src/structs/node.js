@@ -55,6 +55,8 @@ export default class Node {
           localMatrix: this.localMatrix,
           model: this.model,
           pickedColor: this.pickedColor,
+          phong: this.phong,
+          phongAmbient: this.phongAmbient,
           shininess: this.shininess,
           specular: this.specular,
           transform: this.transform,
@@ -78,6 +80,8 @@ export default class Node {
         this.localMatrix = data.localMatrix;
         this.model = data.model;
         this.pickedColor = data.pickedColor;
+        this.phong = data.phong;
+        this.phongAmbient = data.phongAmbient;
         this.shininess = data.shininess;
         this.specular = data.specular;
         this.transform = data.transform;
