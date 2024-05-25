@@ -12,8 +12,20 @@ function hollowCube() {
   let texCoord = [];
   let faces = generateFaces();
 
-  // Define the beams that form the edges of the cube
   const beams = [
+    { size: [0.1, 1.1, 0.1], position: [-0.5, 0, 0] },
+    { size: [0.1, 1.1, 0.1], position: [-0.5, -1, 0] },
+    { size: [0.1, 1.1, 0.1], position: [-0.5, 0, -1] },
+    { size: [0.1, 1.1, 0.1], position: [-0.5, -1, -1] },
+    { size: [1, 0.1, 0.1], position: [0, -0.5, 0] },
+    { size: [1, 0.1, 0.1], position: [-1, -0.5, 0] },
+    { size: [1, 0.1, 0.1], position: [0, -0.5, -1] },
+    { size: [1, 0.1, 0.1], position: [-1, -0.5, -1] },
+    { size: [0.1, 0.1, 1], position: [0, 0, -0.5] },
+    { size: [0.1, 0.1, 1], position: [-1, 0, -0.5] },
+    { size: [0.1, 0.1, 1], position: [0, -1, -0.5] },
+    { size: [0.1, 0.1, 1], position: [-1, -1, -0.5] },
+
     { size: [0.1, 1.1, 0.1], position: [0, 0.5, 0.5] },
     { size: [0.1, 1.1, 0.1], position: [0, -0.5, 0.5] },
     { size: [0.1, 1.1, 0.1], position: [0, 0.5, -0.5] },
@@ -25,7 +37,20 @@ function hollowCube() {
     { size: [0.1, 0.1, 1], position: [0.5, 0.5, 0] },
     { size: [0.1, 0.1, 1], position: [-0.5, 0.5, 0] },
     { size: [0.1, 0.1, 1], position: [0.5, -0.5, 0] },
-    { size: [0.1, 0.1, 1], position: [-0.5, -0.5, 0] }
+    { size: [0.1, 0.1, 1], position: [-0.5, -0.5, 0] },
+
+    { size: [0.1, 1.1, 0.1], position: [0.5, 1, 1] },
+    { size: [0.1, 1.1, 0.1], position: [0.5, 0, 1] },
+    { size: [0.1, 1.1, 0.1], position: [0.5, 1, 0] },
+    { size: [0.1, 1.1, 0.1], position: [0.5, 0, 0] },
+    { size: [1, 0.1, 0.1], position: [1, 0.5, 1] },
+    { size: [1, 0.1, 0.1], position: [0, 0.5, 1] },
+    { size: [1, 0.1, 0.1], position: [1, 0.5, 0] },
+    { size: [1, 0.1, 0.1], position: [0, 0.5, 0] },
+    { size: [0.1, 0.1, 1], position: [1, 1, 0.5] },
+    { size: [0.1, 0.1, 1], position: [0, 1, 0.5] },
+    { size: [0.1, 0.1, 1], position: [1, 0, 0.5] },
+    { size: [0.1, 0.1, 1], position: [0, 0, 0.5] },
   ];
 
   beams.forEach(beam => {
