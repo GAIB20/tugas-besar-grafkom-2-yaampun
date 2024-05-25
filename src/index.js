@@ -18,7 +18,7 @@ import { displayComponent,
   } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
-import { createPaperTexture, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
+import { createTextureObject, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
 import Animation from "./utils/Animation.js";
 import Node from "./structs/node.js";
 import { degToRad } from "./structs/math/mathUtils.js";
@@ -115,7 +115,7 @@ function setDefaultState(objects) {
     objects.forEach(object => {
         if (!object.model.colors) {
             if (!object.pickedColor) {
-                object.model.colors = generateColors(object.model.vertices);
+                object.model.colors = randomColors();
             } else {
                 object.model.colors = generateColors(
                     object.model.vertices,
@@ -125,6 +125,9 @@ function setDefaultState(objects) {
         }
       
         if (!object.program ) {
+            
+            createTextureObject(gl, object.texType);
+            
             object.program = createShaderProgram(
                 gl,
                 vertexShaderSource,
@@ -205,14 +208,12 @@ function renderLoop(objects) {
 
         object.worldMatrix = setProjectionMatrix(object.worldMatrix, object)
 
-
         var a_position = new Float32Array(object.model.vertices.flat(1));
         var a_normal = new Float32Array(object.model.normals.flat(1));
         var a_color = new Float32Array(object.pickedColor.flat(1));
         var a_texture = new Float32Array(object.model.texCoord);
         var a_tangent = new Float32Array(object.model.tangents.flat(1));
         var a_bitangent = new Float32Array(object.model.bitangents.flat(1));
-
         setAttr(gl, object.program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent);
         var uniforms = {
             uWorldViewProjection: object.worldMatrix,
@@ -229,6 +230,8 @@ function renderLoop(objects) {
             uPhong: object.phong,
             uPhongAmbientColor: object.phongAmbient,
             uSpotLight: spotLight,
+            uTexType: object.texType,
+            ushading: object.shading,
         }
 
         setUniforms(gl, object.program, uniforms);
@@ -343,36 +346,22 @@ export function changeModelObject (index) {
     render();
 }
 
-export function changeMappingTexture(objects, textureType) {
+export function changeMappingTexture() {
   objects.forEach((object) => {
     if (textureType === "0") {
       object.program = createShaderProgram(
         gl,
         vertex_shader_3d,
-        fragment_shader_3d_no_lighting
+        fragment_shader_texture
       );
     } else if (textureType === "1") {
-      createPaperTexture(gl);
+      createTextureObject(gl, 1);
       object.program = createShaderProgram(
         gl,
         vertex_shader_3d,
         fragment_shader_texture
       );
-    } else if (textureType === "2") {
-      createEnvironmentTexture(gl);
-      object.program = createShaderProgram(
-        gl,
-        vertex_shader_3d,
-        fragment_shader_environment
-      )
-    } else if (textureType === "3") {
-      createBumpTexture(gl);
-      object.program = createShaderProgram(
-        gl,
-        vertex_shader_3d,
-        fragment_shader_bump
-      );
-    }
+    } 
     if (object.children.length > 0) {
       changeMappingTexture(object.children, textureType);
     }
@@ -382,8 +371,6 @@ export function changeMappingTexture(objects, textureType) {
 export function renameTarget (newName) {
   for( let i = 0; i < objects.length; i++){
     if(objects[i].name === target.name){
-      console.log(objects[i].name)
-      console.log(newName)
       objects[i].name = newName;
     }
   }
@@ -413,7 +400,6 @@ export function deleteNode (name) {
   }
 
   removeNode(objects[0]);
-  console.log(objects);
 }
 
 export function addNode () {

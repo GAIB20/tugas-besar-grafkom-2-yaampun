@@ -413,7 +413,8 @@ var state = {
 // texture selection
 mappingSelection.addEventListener("change", function (e) {
     console.log(mappingSelection.value)
-    changeMappingTexture(state.objects, mappingSelection.value);
+    target.texType = mappingSelection.value;
+    changeMappingTexture();
 });
 
 // animation

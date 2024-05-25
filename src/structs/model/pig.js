@@ -3,6 +3,10 @@ import { degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
 import boxModel from "../boxModel.js";
 
+var texType = 0;
+var shading = true;
+var phong = true;
+
 
 const pig = new Node();
 pig.flag = "articulated";
@@ -15,7 +19,7 @@ pig.transform = {
 };
 pig.pickedColor = [0.921568627,0.568627451,0.898039216],
 pig.ambient = [1,1,1];
-pig.phong = true;
+pig.phong = phong;
 pig.phongAmbient = [0.921568627,0.568627451,0.898039216],
 pig.diffuse = [1,1,1];
 pig.specular = [1,1,1];
@@ -40,6 +44,8 @@ pig.animation = {
     isAuto: false,
     isReverse: false
 };
+pig.texType = texType;
+pig.shading = shading;
 
 
 function pigFrames() {
@@ -68,7 +74,7 @@ head.transform = {
 };
 head.pickedColor = [0.921568627,0.568627451,0.898039216],
 head.ambient = [1,1,1];
-head.phong = true;
+head.phong = phong;
 head.phongAmbient = [0.921568627,0.568627451,0.898039216],
 head.diffuse = [1,1,1];
 head.specular = [1,1,1];
@@ -93,7 +99,9 @@ head.animation = {
     isAuto: false,
     isReverse: false
 };
-head.phong = true;
+head.phong = phong;
+head.texType = texType;
+head.shading = shading;
 
 function headFrames() {
     let transform = {
@@ -125,7 +133,7 @@ whiteRightEye.transform = {
 };
 whiteRightEye.pickedColor = [0.99,0.99,0.99],
 whiteRightEye.ambient = [1,1,1];
-whiteRightEye.phong = true;
+whiteRightEye.phong = phong;
 whiteRightEye.phongAmbient = [0.99,0.99,0.99],
 whiteRightEye.diffuse = [1,1,1];
 whiteRightEye.specular = [1,1,1];
@@ -146,7 +154,9 @@ whiteRightEye.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-whiteRightEye.phong = true;
+whiteRightEye.phong = phong;
+whiteRightEye.texType = texType;
+whiteRightEye.shading = shading;
 
 const whiteLeftEye = new Node();
 whiteLeftEye.name = "whiteLeftEye";
@@ -158,7 +168,7 @@ whiteLeftEye.transform = {
 };
 whiteLeftEye.pickedColor = [0.99,0.99,0.99],
 whiteLeftEye.ambient = [1,1,1];
-whiteLeftEye.phong = true;
+whiteLeftEye.phong = phong;
 whiteLeftEye.phongAmbient = [0.99,0.99,0.99],
 whiteLeftEye.diffuse = [1,1,1];
 whiteLeftEye.specular = [1,1,1];
@@ -179,7 +189,9 @@ whiteLeftEye.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-whiteLeftEye.phong = true;
+whiteLeftEye.phong = phong;
+whiteLeftEye.texType = texType;
+whiteLeftEye.shading = shading;
 
 const blackRightEye = new Node();
 blackRightEye.name = "blackRightEye";
@@ -191,7 +203,7 @@ blackRightEye.transform = {
 };
 blackRightEye.pickedColor = [0,0,0],
 blackRightEye.ambient = [1,1,1];
-blackRightEye.phong = true;
+blackRightEye.phong = phong;
 blackRightEye.phongAmbient = [0,0,0],
 blackRightEye.diffuse = [1,1,1];
 blackRightEye.specular = [1,1,1];
@@ -212,7 +224,9 @@ blackRightEye.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-blackRightEye.phong = true;
+blackRightEye.phong = phong;
+blackRightEye.texType = texType;
+blackRightEye.shading = shading;
 
 const blackLeftEye = new Node();
 blackLeftEye.name = "blackLeftEye";
@@ -224,7 +238,7 @@ blackLeftEye.transform = {
 };
 blackLeftEye.pickedColor = [0,0,0],
 blackLeftEye.ambient = [1,1,1];
-blackLeftEye.phong = true;
+blackLeftEye.phong = phong;
 blackLeftEye.phongAmbient = [0,0,0],
 blackLeftEye.diffuse = [1,1,1];
 blackLeftEye.specular = [1,1,1];
@@ -245,7 +259,9 @@ blackLeftEye.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-blackLeftEye.phong = true;
+blackLeftEye.phong = phong;
+blackLeftEye.texType = texType;
+blackLeftEye.shading = shading;
 
 const nose = new Node();
 nose.name = "nose";
@@ -257,7 +273,7 @@ nose.transform = {
 };
 nose.pickedColor = [0.768627451,0.376470588, 0.745098039],
 nose.ambient = [1,1,1];
-nose.phong = true;
+nose.phong = phong;
 nose.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 nose.diffuse = [1,1,1];
 nose.specular = [1,1,1];
@@ -278,7 +294,9 @@ nose.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-nose.phong = true;
+nose.phong = phong;
+nose.texType = texType;
+nose.shading = shading;
 
 const rightHole = new Node();
 rightHole.name = "rightHole";
@@ -290,7 +308,7 @@ rightHole.transform = {
 };
 rightHole.pickedColor = [0.921568627,0.568627451,0.898039216],
 rightHole.ambient = [1,1,1];
-rightHole.phong = true;
+rightHole.phong = phong;
 rightHole.phongAmbient = [0.921568627,0.568627451,0.898039216],
 rightHole.diffuse = [1,1,1];
 rightHole.specular = [1,1,1];
@@ -311,7 +329,9 @@ rightHole.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-rightHole.phong = true;
+rightHole.phong = phong;
+rightHole.texType = texType;
+rightHole.shading = shading;
 
 const leftHole = new Node();
 leftHole.name = "leftHole";
@@ -323,7 +343,7 @@ leftHole.transform = {
 };
 leftHole.pickedColor = [0.921568627,0.568627451,0.898039216],
 leftHole.ambient = [1,1,1];
-leftHole.phong = true;
+leftHole.phong = phong;
 leftHole.phongAmbient = [0.921568627,0.568627451,0.898039216],
 leftHole.diffuse = [1,1,1];
 leftHole.specular = [1,1,1];
@@ -344,7 +364,9 @@ leftHole.animation = {
     isAnimate: false,
     degAnimate: 0.1,
 };
-leftHole.phong = true;
+leftHole.phong = phong;
+leftHole.texType = texType;
+leftHole.shading = shading;
 
 const rightFrontLeg = new Node();
 rightFrontLeg.name = "rightFrontLeg";
@@ -356,7 +378,7 @@ rightFrontLeg.transform = {
 };
 rightFrontLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 rightFrontLeg.ambient = [1,1,1];
-rightFrontLeg.phong = true;
+rightFrontLeg.phong = phong;
 rightFrontLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 rightFrontLeg.diffuse = [1,1,1];
 rightFrontLeg.specular = [1,1,1];
@@ -381,7 +403,9 @@ rightFrontLeg.animation = {
     isAuto: false,
     isReverse: false
 };
-rightFrontLeg.phong = true;
+rightFrontLeg.phong = phong;
+rightFrontLeg.texType = texType;
+rightFrontLeg.shading = shading;
 
 function rightFrontLegFrames() {
     let transform = {
@@ -412,7 +436,7 @@ leftFrontLeg.transform = {
 };
 leftFrontLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 leftFrontLeg.ambient = [1,1,1];
-leftFrontLeg.phong = true;
+leftFrontLeg.phong = phong;
 leftFrontLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 leftFrontLeg.diffuse = [1,1,1];
 leftFrontLeg.specular = [1,1,1];
@@ -437,7 +461,9 @@ leftFrontLeg.animation = {
     isAuto: false,
     isReverse: false
 };
-leftFrontLeg.phong = true;
+leftFrontLeg.phong = phong;
+leftFrontLeg.texType = texType;
+leftFrontLeg.shading = shading;
 
 function leftFrontFrames() {
     let transform = {
@@ -467,7 +493,7 @@ rightRearLeg.transform = {
 };
 rightRearLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 rightRearLeg.ambient = [1,1,1];
-rightRearLeg.phong = true;
+rightRearLeg.phong = phong;
 rightRearLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 rightRearLeg.diffuse = [1,1,1];
 rightRearLeg.specular = [1,1,1];
@@ -492,7 +518,9 @@ rightRearLeg.animation = {
     isAuto: false,
     isReverse: false
 };
-rightRearLeg.phong = true;
+rightRearLeg.phong = phong;
+rightRearLeg.texType = texType;
+rightRearLeg.shading = shading;
 
 function rightRearLegFrames() {
     let transform = {
@@ -522,7 +550,7 @@ leftRearLeg.transform = {
 };
 leftRearLeg.pickedColor = [0.768627451,0.376470588, 0.745098039],
 leftRearLeg.ambient = [1,1,1];
-leftRearLeg.phong = true;
+leftRearLeg.phong = phong;
 leftRearLeg.phongAmbient = [0.768627451,0.376470588, 0.745098039],
 leftRearLeg.diffuse = [1,1,1];
 leftRearLeg.specular = [1,1,1];
@@ -547,7 +575,9 @@ leftRearLeg.animation = {
     isAuto: false,
     isReverse: false
 };
-leftRearLeg.phong = true;
+leftRearLeg.phong = phong;
+leftRearLeg.texType = texType;
+leftRearLeg.shading = shading;
 
 function leftRearFrames() {
     let transform = {
