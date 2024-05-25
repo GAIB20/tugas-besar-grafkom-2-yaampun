@@ -22,7 +22,7 @@ pig.specular = [1,1,1];
 pig.shininess = 1;
 pig.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 pig.viewMatrix = {
@@ -75,7 +75,7 @@ head.specular = [1,1,1];
 head.shininess = 1;
 head.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 head.viewMatrix = {
@@ -132,7 +132,7 @@ whiteRightEye.specular = [1,1,1];
 whiteRightEye.shininess = 1;
 whiteRightEye.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 whiteRightEye.viewMatrix = {
@@ -165,7 +165,7 @@ whiteLeftEye.specular = [1,1,1];
 whiteLeftEye.shininess = 1;
 whiteLeftEye.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 whiteLeftEye.viewMatrix = {
@@ -198,7 +198,7 @@ blackRightEye.specular = [1,1,1];
 blackRightEye.shininess = 1;
 blackRightEye.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 blackRightEye.viewMatrix = {
@@ -231,7 +231,7 @@ blackLeftEye.specular = [1,1,1];
 blackLeftEye.shininess = 1;
 blackLeftEye.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 blackLeftEye.viewMatrix = {
@@ -264,7 +264,7 @@ nose.specular = [1,1,1];
 nose.shininess = 1;
 nose.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 nose.viewMatrix = {
@@ -297,7 +297,7 @@ rightHole.specular = [1,1,1];
 rightHole.shininess = 1;
 rightHole.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 rightHole.viewMatrix = {
@@ -330,7 +330,7 @@ leftHole.specular = [1,1,1];
 leftHole.shininess = 1;
 leftHole.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 leftHole.viewMatrix = {
@@ -363,7 +363,7 @@ rightFrontLeg.specular = [1,1,1];
 rightFrontLeg.shininess = 1;
 rightFrontLeg.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 rightFrontLeg.viewMatrix = {
@@ -419,7 +419,7 @@ leftFrontLeg.specular = [1,1,1];
 leftFrontLeg.shininess = 1;
 leftFrontLeg.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 leftFrontLeg.viewMatrix = {
@@ -474,7 +474,7 @@ rightRearLeg.specular = [1,1,1];
 rightRearLeg.shininess = 1;
 rightRearLeg.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 rightRearLeg.viewMatrix = {
@@ -529,7 +529,7 @@ leftRearLeg.specular = [1,1,1];
 leftRearLeg.shininess = 1;
 leftRearLeg.const = {
     kd: 1.0,
-    ks: 0.0,
+    ks: 1.0,
     ka: 0.5,
 };
 leftRearLeg.viewMatrix = {

@@ -446,7 +446,7 @@ blueAmbient.addEventListener('input', function(){
 })
 
 function handlePhong(node){
-    node.shininess = 100 - shininess.value;
+    node.shininess = shininess.value;
     node.phongAmbient = hexToRgb(ambientColor.value);
     node.specular = hexToRgb(specularColor.value);
     node.diffuse = hexToRgb(diffuseColor.value);
