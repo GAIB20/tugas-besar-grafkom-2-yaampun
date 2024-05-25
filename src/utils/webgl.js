@@ -1,15 +1,26 @@
-function createShaderProgram(gl, vertexShaderTxt, fragmentShaderTxt) {
-    vShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vShader, vertexShaderTxt);
-    gl.compileShader(vShader);
+function compileShader(gl, shaderSource, shaderType) {
+  // Create the shader object
+  var shader = gl.createShader(shaderType);
+ 
+  // Set the shader source code.
+  gl.shaderSource(shader, shaderSource);
+ 
+  // Compile the shader
+  gl.compileShader(shader);
+ 
+  // Check if it compiled
+  var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+  if (!success) {
+    // Something went wrong during compilation; get the error
+    throw "could not compile shader:" + gl.getShaderInfoLog(shader);
+  }
+ 
+  return shader;
+}
 
-    const vertexShader = vShader;
-
-    fShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fShader, fragmentShaderTxt);
-    gl.compileShader(fShader);
-
-    const fragmentShader = fShader;
+function createShaderProgram(gl, vertexShaderSource, fragmentShaderSource) {
+    const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+    const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
 
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
@@ -24,68 +35,62 @@ function createShaderProgram(gl, vertexShaderTxt, fragmentShaderTxt) {
 }
 
 function setAttr(gl, program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent) {
+  const bindAttrib = (bufferData, attribName, size) => {
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, bufferData, gl.STATIC_DRAW);
+      const location = gl.getAttribLocation(program, attribName);
+      gl.enableVertexAttribArray(location);
+      gl.vertexAttribPointer(location, size, gl.FLOAT, false, 0, 0);
+  };
 
-    const vertexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_position, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aPosition"));
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aPosition"), 3, gl.FLOAT, false, 0, 0);
-  
-    const normalBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_normal, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aNormal"));
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aNormal"), 3, gl.FLOAT, false, 0, 0);
-  
-    const colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_color, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aColor"), 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aColor"));
-  
-    const textureBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, a_texture, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aTexture"), 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aTexture"));
-  
-    const vbo_tang = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo_tang);
-    gl.bufferData(gl.ARRAY_BUFFER, a_tangent, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aTangent"), 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aTangent"));
-  
-    const vbo_bitang = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo_bitang);
-    gl.bufferData(gl.ARRAY_BUFFER, a_bitangent, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(gl.getAttribLocation(program, "aBitangent"), 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(gl.getAttribLocation(program, "aBitangent"));
+  bindAttrib(a_position, "aPosition", 3);
+  bindAttrib(a_normal, "aNormal", 3);
+  bindAttrib(a_color, "aColor", 3);
+  bindAttrib(a_texture, "aTexture", 2);
+  bindAttrib(a_tangent, "aTangent", 3);
+  bindAttrib(a_bitangent, "aBitangent", 3);
 }
 
 function setUniforms(gl, program, uniforms) {
-    worldViewProjection = gl.getUniformLocation(program, "uWorldViewProjection");
-    worldInverseTranspose = gl.getUniformLocation(program,"uWorldInverseTranspose");
-    color = gl.getUniformLocation(program, "uColor");
-    reverseLightDirection = gl.getUniformLocation(program,"uReverseLightDirection");
-    texture =  gl.getUniformLocation(program, "uTexture");
-    worldCameraPosition = gl.getUniformLocation(program, "uWorldCameraPosition");
-    modelMatrix = gl.getUniformLocation(program, "uModelMatrix");
-  
-    gl.uniformMatrix4fv(
-      worldViewProjection,
-      false,
-      uniforms.uWorldViewProjection
-    );
-    gl.uniformMatrix4fv(
-      worldInverseTranspose,
-      false,
-      uniforms.uWorldInverseTranspose
-    );
-    gl.uniform4fv(color, uniforms.uColor);
-    gl.uniform3fv(
-      reverseLightDirection,
-      uniforms.uReverseLightDirection
-    );
-    gl.uniform1i(texture, 0);
-    gl.uniformMatrix4fv(modelMatrix, false, uniforms.uModelMatrix);
+  const setUniformMatrix4fv = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniformMatrix4fv(location, false, data);
+  };
+
+  const setUniform3fv = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniform3fv(location, data);
+  };
+
+  const setUniform4fv = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniform4fv(location, data);
+  };
+
+  const setUniform1f = (name, data) => {
+      const location = gl.getUniformLocation(program, name);
+      gl.uniform1f(location, data);
+  };
+
+  const setUniform1i = (name, data) => {
+    const location = gl.getUniformLocation(program, name);
+    gl.uniform1i(location, data);
+  };
+
+
+  setUniformMatrix4fv("uWorldViewProjection", uniforms.uWorldViewProjection);
+  setUniformMatrix4fv("uWorldInverseTranspose", uniforms.uWorldInverseTranspose);
+  setUniform4fv("uColor", uniforms.uColor);
+  setUniform3fv("uAmbientColor", uniforms.uAmbientColor); 
+  setUniform3fv("uPhongAmbientColor", uniforms.uPhongAmbientColor);
+  setUniform3fv("uDiffuseColor", uniforms.uDiffuseColor); 
+  setUniform3fv("uSpecularColor", uniforms.uSpecularColor);
+  setUniform1f("uShininess", uniforms.uShininess); 
+  setUniform3fv("uLightPos", uniforms.uLightPos);
+  setUniform1f("ka", uniforms.ka);
+  setUniform1f("kd", uniforms.kd);
+  setUniform1f("ks", uniforms.ks);
+  setUniform1i("uPhong", uniforms.uPhong);
+  setUniform1i("uSpotLight", uniforms.uSpotLight);
 }

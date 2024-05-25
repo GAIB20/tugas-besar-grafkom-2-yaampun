@@ -15,17 +15,20 @@
 
         uniform mat4 uWorldViewProjection;
         uniform mat4 uWorldInverseTranspose;
+        uniform vec3 uLightPos;
+        uniform vec3 uViewPos;
 
         varying vec3 vNormal;
         varying vec3 vPosition;
         varying vec4 fragColor;
         varying vec2 vTexture;
-        varying float colorFactor;
-        varying mat4 viewMatrix;
         varying mat3 vTBN;
         varying vec3 ts_light_pos; 
         varying vec3 ts_view_pos;  
         varying vec3 ts_frag_pos;
+
+        varying vec3 vViewDir;
+        varying vec3 vLightDir;
 
         mat3 transpose(in mat3 inMatrix)
         {
@@ -43,11 +46,10 @@
         }
 
         void main(void) {
-            viewMatrix = uWorldViewProjection;
             gl_Position = uWorldViewProjection * vec4(aPosition, 1.0);
-        
+    
             vPosition = (uWorldInverseTranspose * vec4(aPosition, 1.0)).xyz;
-            vNormal = mat3(uWorldInverseTranspose) * aNormal;
+            vNormal = normalize(mat3(uWorldInverseTranspose) * aNormal); 
             fragColor = vec4(aColor, 1.0);
             vTexture = aTexture;
 
@@ -59,45 +61,124 @@
             ts_frag_pos = vec3(uWorldViewProjection * vec4(aPosition, 1.0));
 
             vTBN = tbn;
-            vec3 light_pos = vec3(0, 0, 1);
-            ts_light_pos = tbn * light_pos;
-            ts_view_pos = tbn * vec3(0, 0, 0);
+            ts_light_pos = tbn * uLightPos;  
+            ts_view_pos = tbn * uViewPos;   
             ts_frag_pos = tbn * ts_frag_pos;
+            
+            vec4 worldPos = uWorldViewProjection * vec4(aPosition, 1.0);
+            vViewDir = normalize(vec3(0, 0, 1) - worldPos.xyz);    
+            vLightDir = normalize(vec3(uLightPos) - worldPos.xyz);  
         }
     </script>
     <script id="fragment-shader-3d" type="x-shader/x-fragment">
         precision mediump float;
-
         varying vec3 vNormal;
+        varying vec3 vViewDir;
+        varying vec3 vLightDir;
 
-        uniform vec3 uReverseLightDirection;
+        uniform vec3 uAmbientColor;
+        uniform vec3 uPhongAmbientColor;
+        uniform vec3 uDiffuseColor;
+        uniform vec3 uSpecularColor;
+        uniform float uShininess;
+        uniform vec3 uLightPos;
+        uniform bool uPhong;
+        uniform bool uSpotLight;
+
+        uniform float kd;
+        uniform float ks;
+        uniform float ka;
         uniform vec4 uColor;
 
         void main(void) {
-            vec3 normal = normalize(vNormal);
+            if (uPhong) {     
+                vec3 normal = normalize(vNormal);  
+                vec3 viewDir = normalize(vViewDir);
+                vec3 lightDir = normalize(vLightDir);
+                
+                // Lambertian (diffuse) reflection
+                float diffuseFactor = max(dot(normal, lightDir), 0.0);
+                vec3 diffuse = uDiffuseColor * diffuseFactor;
+        
+                // Specular reflection
+                vec3 reflectDir = reflect(-lightDir, normal);
+                float specularFactor = pow(max(dot(viewDir, reflectDir), 0.0), uShininess);
+                vec3 specular = uSpecularColor * specularFactor;
+        
+                // Ambient reflection
+                vec3 ambient = uPhongAmbientColor * uAmbientColor;  // Combine Phong ambient with overall ambient
+        
+                vec3 finalColor = (ambient * ka + diffuse * kd + specular * ks);
+        
+                gl_FragColor = vec4(finalColor, 1.0);
+            } else {
+                gl_FragColor = vec4(uAmbientColor  * uColor.rgb, 1.0);
+            }
 
-            float light = dot(normal, uReverseLightDirection);
-            gl_FragColor = uColor;
-            //add the ambience light
-            gl_FragColor.rgb *= light;
+            if (uSpotLight) {
+                vec3 normal = normalize(vNormal);  
+                vec3 viewDir = normalize(vViewDir);
+                vec3 lightDir = normalize(vLightDir);
+
+                vec3 halfVector = normalize(lightDir + viewDir);
+
+                float light = 0.0;
+                float specular = 0.0;
+                float dotFromDirection = dot(lightDir, vec3(0.0, 0.0, 1.0));
+
+                if(dotFromDirection > 0.95) {
+                    light = dot(normal, lightDir);
+                    if (light > 0.0) {
+                        specular = pow(dot(normal, halfVector), 4.0);
+                    }
+                };
+
+                gl_FragColor = uColor;
+                gl_FragColor.rgb *= light;
+                gl_FragColor.rgb += specular;
+            }
         }
     </script>
     
     <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
     <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
+    <script type="module" src="src/index.js"></script>
+    <script type="module" src="src/handler/eventHandler.js"></script>
+
 </head>
-<body class="h-screen w-screen overflow-auto px-5 flex flex-col items-center">
-    <p class="text-3xl font-bold text-center">3D MODEL WEBGL</p>
-    <div class="flex flex-row w-full">
+<body class="h-screen w-screen px-5 flex flex-col">
+    <div class="flex flex-row max-w-full max-h-screen overflow-hidden">
 
         <!-- left side -->
-        <div class="grow">
+        <div class="grow max-h-full overflow-auto">
             <div>
                 <p class="sub">Graph</p>
                 <div class="divider"></div>
 
-                <div class="max-h-[40vh] overflow-auto">
-                    <div class="bg-slate-400 w-full h-[1000px]">test</div>
+                <div class="max-h-[40vh] overflow-auto " id="component-container">
+                </div>
+            </div>
+            <div>
+                <p class="sub">Current Node</p>
+                <div class="divider"></div>
+                
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-row items-center">
+                        <label for="node-name" class="">Name</label>
+                        <input type="text" id="node-name" name="node-name" class="border-gray-300 border-2 grow px-2 mx-2">
+                        <button class="btn" id="rename-btn">Rename</button>
+                    </div>
+                    <div class="flex flex-row gap-5">
+                        <button class="btn grow" id="add-child-btn">Add Child</button>
+                        <button class="btn grow" id="delete-btn">Delete Current</button>
+                    </div>
+
+                    <div class="flex flex-row gap-5">
+                        <button class="btn grow" onclick="document.getElementById('import-btn').click()">Import</button>
+                        <input type='file' id="import-btn" class="hidden">
+                        <button class="btn grow" id="export-btn">Export</button>
+                    </div>
+
                 </div>
             </div>
 
@@ -108,25 +189,47 @@
 
                 
                     <div class="flex flex-col">
-                        <p>Translation</p>
-                        <div class="flex flex-row gap-5">
-                            <label for="camera-x-slider">X:</label>
-                            <input type="range" min="-10" max="10" value="0" id="camera-x-slider"/>
+                        <p class="font-bold">Camera Orbit Control</p>
+                        <div class="flex flex-col">
+                            <label for="camera-roll-slider">Roll (φ):</label>
+                            <input type="range" min="-89" max="89" value="0" id="camera-roll-slider"/>
+                            <a id="camera-roll-slider-value">0</a>
                         </div>
-                        <div class="flex flex-row gap-5">
-                            <label for="camera-y-slider">Y:</label>
-                            <input type="range" min="-10" max="10" value="0" id="camera-y-slider"/>
+                        <div class="flex flex-col">
+                            <label for="camera-pitch-slider">Pitch (θ):</label>
+                            <input type="range" min="-180" max="180" value="0" id="camera-pitch-slider"/>
+                            <a id="camera-pitch-slider-value">0</a>
                         </div>
+                        <p class="font-bold">Follow Model <br/> Displacement</p>
                         <div class="flex flex-row gap-5">
-                            <label for="camera-z-slider">Z:</label>
-                            <input type="range" min="-10" max="10" value="0" id="camera-z-slider"/>
+                            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                                                    font-medium rounded-lg text-lg px-5 py-1 mt-2 me-2 mb-2 dark:bg-blue-600 
+                                                    dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                id="follow-model">
+                                                    On</button>
                         </div>
                     </div>
                     <div class="flex flex-col">
+                        <p class="font-bold">Perspective Settings</p>
                         <label for="camera-radius-slider">Radius</label>
-                        <input type="range" min="-10" max="10" value="0" id="camera-radius-slider"/>
+                        <div class="flex flex-col">
+                            <input type="range" min="-100" max="100" value="50" id="camera-radius-slider"/>
+                            <a id="camera-radius-slider-value">5</a>
+                        </div>
+                        <p class="font-bold">Oblique Angle</p>
+                        <label for="camera-theta-slider">θ</label>
+                        <div class="flex flex-col">
+                            <input type="range" min="5" max="175" value="90" id="camera-theta-slider"/>
+                            <a id="camera-theta-slider-value">90</a>
+                        </div>
+                        <label for="camera-phi-slider">φ</label>
+                        <div class="flex flex-col">
+                            <input type="range" min="5" max="175" value="90" id="camera-phi-slider"/>
+                            <a id="camera-phi-slider-value">90</a>
+                        </div>
 
-                        <button class="btn mt-2">Default View</button>
+
+                        <button class="btn mt-2" id="default-view">Default View</button>
                     </div>
                 </div>
             </div>
@@ -136,43 +239,79 @@
                 <div class="divider"></div>
 
                 <div class="flex flex-row gap-5">
+                    
+                    <div class="flex flex-col w-[50%]">
 
-                
-                    <div class="flex flex-col">
                         <p>Translation</p>
-                        <div class="flex flex-row gap-5">
-                            <label for="light-x-slider">X:</label>
-                            <input type="range" min="-10" max="10" value="0" id="light-x-slider"/>
-                        </div>
-                        <div class="flex flex-row gap-5">
-                            <label for="light-y-slider">Y:</label>
-                            <input type="range" min="-10" max="10" value="0" id="light-y-slider"/>
-                        </div>
-                        <div class="flex flex-row gap-5">
-                            <label for="light-z-slider">Z:</label>
-                            <input type="range" min="-10" max="10" value="0" id="light-z-slider"/>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex flex-row"> 
+                                <label for="light-x-slider">X:</label>
+                                <input type="range" min="-1" max="1" value="0" step="0.1" id="light-x-slider"/>
+                            </div>
+                            <div class="flex flex-row">
+                                <label for="light-y-slider">Y:</label>
+                                <input type="range" min="-1" max="1" value="0" step="0.1" id="light-y-slider"/>
+                            </div>
+                            <div class="flex flex-row">
+                                <label for="light-z-slider">Z:</label>
+                                <input type="range" min="-1" max="1" value="0" step="0.1" id="light-z-slider"/>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex flex-col">
-                        <label for="light-radius-slider">Radius</label>
-                        <input type="range" min="-10" max="10" value="0" id="light-radius-slider"/>
+                    <div class="flex flex-col w-[50%]">
+                        <p>Spot light</p>
+                        <select class="border-2 border-slate rounded-md" name="spot-selection" id="spot-selection">
+                            <option value="0" selected>Off</option>
+                            <option value="1">On</option>
+                        </select>
+                        
                     </div>
+                </div>
+
+                <div class="flex flex-row gap-5">
+
+                    
+                    
+                    <!-- directional -->
+                    <div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
 
 
-        <!-- canvas -->
-        <div class="mt-5 px-5 grow flex justify-center">
-            <div>
-                <canvas id="gl-canvas" class="w-[30vw] h-[30vw] border-dashed border-2 border-indigo-600"></canvas>
+        <!-- canvas, frame, animation info -->
+        <div class="grow px-5 flex">
+            <div class="w-full items-center flex flex-col">
+                <!-- Canvas-->
+                <p class="text-3xl font-bold mb-5">3D MODEL WEBGL</p>
+                <canvas id="gl-canvas" width="620" height="620" class="border-dashed border-2 border-indigo-600"></canvas>
+                <div class="bg-slate-100 mt-5 p-2 w-full">
+                    <p class="text-xl font-bold" id="current-fps">Current FPS: </p>
+                    <div class="flex flex-row w-full justify-between">
+                        <div>
+                            <p class="text-xl font-bold" id="current-model-frame">Current Model Frame:</p>
+                            <p class="text-xl font-bold" id="current-node-frame">Current Node Frame:</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold" id="total-model-frame">Total Model Frame:</p>
+                            <p class="text-xl font-bold" id="total-node-frame">Total Node Frame:</p>
+                        </div>
+                    </div>  
+                </div>              
+                
+
             </div>
+
+
         </div>
         
 
         <!-- right side -->
-        <div class="grow ">
+        <div class="grow max-h-full overflow-auto pb-20">
             <div>
                 <p class="sub">Model & Projection</p>
                 <div class="divider"></div>
@@ -183,18 +322,15 @@
                     <div class="flex flex-row gap-5 items-center">
                         <label for="model-selection">Model</label>
                         <select class="border-2 border-slate rounded-md" name="model-selection" id="model-selection">
-                            <option value="">Hollow model 1</option>
-                            <option value="">Hollow model 2</option>
-                            <option value="">Hollow model 3</option>
-                            <option value="">Articulated model 1</option>
-                            <option value="">Articulated model 2</option>
-                            <option value="">Articulated model 3</option>
+                            <!-- <option value="0">Pig</option>
+                            <option value="1">Hollow thingy</option> -->
                         </select>
                     </div>
 
                     <div class="flex flex-row gap-5">
-                        <button class="btn">Save</button>
-                        <button class="btn">Load</button>
+                        <button class="btn grow" id="save-btn">Save</button>
+                        <button class="btn grow" onclick="document.getElementById('load-btn').click()">Load</button>
+                        <input type='file' id="load-btn" style="display:none">
                     </div>
                 </div>
 
@@ -291,33 +427,99 @@
 
                 <div class="flex flex-col gap-3">
                     <div>
-                        <p>Basic</p>
-                        <div class="flex flex-row items-center gap-3">
-                            <label for="color-picker">Color</label>
-                            <input type="color" id="color-picker">
+                        <div class="flex flex-row gap-4">
+
+                            <div class="flex flex-row gap-5 items-center">
+                                <label for="mapping-selection">Texture Mapping</label>
+                                <select class="border-2 border-slate rounded-md" name="mapping-selection" id="mapping-selection">
+                                    <option value="0">None</option>
+                                    <option value="1">Texture</option>
+                                    <option value="2">Environment</option>
+                                    <option value="3">Bump</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-row gap-5 items-center">
+                                <label for="shading-selection">Shading</label>
+                                <select class="border-2 border-slate rounded-md" name="shading-selection" id="shading-selection">
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex flex-row gap-5 items-center">
+                            <label for="material-selection">Material</label>
+                            <select class="border-2 border-slate rounded-md" name="material-selection" id="material-selection">
+                                <option value="0">Basic</option>
+                                <option value="1">Phong</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div>
-                        <p>Phong</p>
-                        <div>
-                            <div class="flex flex-row items-center gap-3">
-                                <label for="shiness-slider">Shiness</label>
-                                <input type="range" min="0" max="100" value="0" id="shiness-slider">
-                            </div>
-                            <div class="flex flex-row gap-4">
+                    <div class="flex flex-row">
 
-                                <div class="flex flex-row items-center gap-2">
-                                    <label for="">Specular</label>
-                                    <input type="color">
+                    
+                        <div class="grow">
+                            <p class="font-bold">Basic</p>
+                            <div class="flex flex-row gap-5">
+                                <p>Color</p>
+                                <input type="color" id="basic-color">
+                            </div>
+                            <div class="flex flex-col">
+                                <p>Ambient Color</p>
+                                <div>
+                                    <div class="flex flex-row">
+                                        <label for="red-slider">R:</label>
+                                        <input type="range" min="0" max="1" value="1" step="0.01" id="red-slider"/>
+                                    </div>
+                                    <div class="flex flex-row">
+                                        <label for="green-slider">G:</label>
+                                        <input type="range" min="0" max="1" value="1" step="0.01" id="green-slider"/>
+                                    </div>
+                                    <div class="flex flex-row">
+                                        <label for="blue-slider">B:</label>
+                                        <input type="range" min="0" max="1" value="1" step="0.01" id="blue-slider"/>
+                                    </div>
                                 </div>
-                                <div class="flex flex-row items-center gap-2">
-                                    <label for="">Diffuse</label>
-                                    <input type="color">
+        
+                            </div>
+                        </div>
+
+                        <div class="grow">
+                            <p class="font-bold">Phong</p>
+                            <div>
+                                <div class="flex flex-row items-center gap-3">
+                                    <label for="shiness-slider">Shininess</label>
+                                    <input type="range" min="1" max="32" value="0" id="shininess-slider">
                                 </div>
-                                <div class="flex flex-row items-center gap-2">
-                                    <label for="">Bump</label>
-                                    <input type="color">
+                                <!-- <div class="flex flex-row items-center gap-3">
+                                    <label for="ambient-slider">Ambient</label>
+                                    <input type="range" min="0" max="1" value="0" step="0.1" id="ambient-slider">
+                                </div> -->
+                                <div class="flex flex-col ">
+                                    <div class="flex flex-col">
+                                        <label for="">Ambient</label>
+                                        <div class="flex flex-row gap-2">
+                                            <input type="color" id="ambient-color">
+                                            <input type="range" min="0" max="1" value="0" step="0.1" id="ambient-slider">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="">Diffuse</label>
+                                        <div class="flex flex-row gap-2">
+                                            <input type="color" id="diffuse-color">
+                                            <input type="range" min="0" max="1" value="0" step="0.1" id="diffuse-slider">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="">Specular</label>
+                                        <div class="flex flex-row gap-2">
+                                            <input type="color" id="specular-color">
+                                            <input type="range" min="0" max="1" value="0" step="0.1" id="specular-slider">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -326,38 +528,150 @@
             </div>
 
             <div>
-                <p class="sub">Animation & Frame</p>
+                <p class="sub ">Animation & Frame</p>
                 <div class="divider"></div>
 
                 <div class="flex flex-row gap-5">
-                    <button class="btn">Play</button>
-                    <button class="btn">Pause</button>
-                    <button class="btn">Auto</button>
-                    <button class="btn">Reverse</button>
+                    <button class="btn" id="play-animation">Play</button>
+                    <button class="btn" id="pause-continue-animation">Pause</button>
+                    <button class="btn" id="auto-animation">Auto</button>
+                    <button class="btn" id="reverse-animation">Reverse</button>
                 </div>
 
                 <p class="mt-5">Frame</p>
                 <div class="flex flex-row gap-5">
-                    <button class="btn">Next</button>
-                    <button class="btn">Prev</button>
-                    <button class="btn">First</button>
-                    <button class="btn">Last</button>
+                    <button class="btn" id="next-animation">Next</button>
+                    <button class="btn" id="prev-animation">Prev</button>
+                    <button class="btn" id="first-animation">First</button>
+                    <button class="btn" id="last-animation">Last</button>
+                </div>
+            </div>
+            <div>
+                <p class="sub ">Manage Your Animation</p>
+                <div class="divider"></div>
+                <div>
+                    <div class="flex flex-row gap-5">
+                        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                                                    font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 
+                                                    dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                id="add-frame">
+                                                    + Add Frame</button>
+                        <button type="button" class="focus:outline-none text-white 
+                                                    bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 
+                                                    font-medium rounded-lg text-lg px-5 py-2.5 
+                                                    me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 
+                                                    dark:focus:ring-red-900"
+                                                id="delete-current-frame">
+                                                    Delete Current Frame</button>
+                    </div>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <button class="btn" id="edit-current-frame">Edit Current Frame</button>
+                        <button class="btn" id="save-animation">Save Animation</button>
+                    </div>             
                 </div>
             </div>
         </div>
     </div>
+    <!-- Add Frame Modal -->
+<div id="add-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+        <h2 class="text-2xl font-bold mb-4">+ Add Frame</h2>
+        <form id="add-frame-form">
+            <div class="mb-4">
+                <label for="frame-name" class="block text-gray-700">Translation:</label>
+                <div class="flex flex-row gap-5 pt-5">
+                    <input type="number" id="add-translation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-translation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-translation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+                <label for="frame-name" class="block text-gray-700">Rotation:</label>
+                <div class="flex flex-row gap-5 pt-5">
+                    <input type="number" id="add-rotation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-rotation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-rotation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                </div>  
+                <label for="frame-name" class="block text-gray-700">Scalation:</label>
+                <div class="flex flex-row gap-5 pt-5">
+                    <input type="number" id="add-scalation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-scalation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" id="add-scalation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                </div>  
+               
+            </div>
+            <div class="flex justify-end">
+                <button type="button" id="cancel-add-frame" class="btn mr-2">Cancel</button>
+                <button type="button" id="verify-add-frame" class="btn">Add Frame</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Edit Frame Modal -->
+    <div id="edit-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+            <h2 class="text-2xl font-bold mb-4">Edit Current Frame</h2>
+            <form id="edit-frame-form">
+                <div class="mb-4">
+                    <label for="frame-name" class="block text-gray-700">Translation:</label>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <input type="number" id="edit-translation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-translation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-translation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    </div>
+                    <label for="frame-name" class="block text-gray-700">Rotation:</label>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <input type="number" id="edit-rotation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-rotation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-rotation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    </div>  
+                    <label for="frame-name" class="block text-gray-700">Scalation:</label>
+                    <div class="flex flex-row gap-5 pt-5">
+                        <input type="number" id="edit-scalation-x" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-scalation-y" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                        <input type="number" id="edit-scalation-z" name="frameName" class="w-full p-2 border border-gray-300 rounded">
+                    </div>  
+                   
+                </div>
+                <!-- Add more form inputs as needed -->
+                <div class="flex justify-end">
+                    <button type="button" id="cancel-edit-frame" class="btn mr-2">Cancel</button>
+                    <button type="button" id="verify-edit-frame" class="btn">Verify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<!-- Delete Frame Modal -->
+<div id="delete-frame-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+        <h2 class="text-2xl font-bold mb-4">Delete Current Frame</h2>
+        <form id="delete-frame-form">
+            <div class="mb-4">
+                <label for="frame-name" class="block text-gray-700">Are you sure to delete current animation frame?</label> 
+            </div>
+            <!-- Add more form inputs as needed -->
+            <div class="flex justify-end">
+                <button type="button" id="cancel-delete-frame" class="btn mr-2">Cancel</button>
+                <button type="button" id="verify-delete-frame" class="btn">Verify</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Save Animation modal -->
+<div id="save-animation-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
+        <h2 class="text-2xl font-bold mb-4">Save Model Animation</h2>
+        <form id="save-animation-form">
+            <div class="mb-4">
+                <label for="animation-name" class="block text-gray-700">Animation is included when you export/save the model</label> 
+            </div>
+            <!-- Add more form inputs as needed -->
+            <div class="flex justify-end">
+                <button type="button" id="ok-save-animation" class="btn">Ok</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
-<script src="src/structs/boxModel.js"></script>
-<script src="src/structs/node.js"></script>
 <script src="src/utils/webgl.js"></script>
 <script src="src/utils/helper.js"></script>
-<script src="src/structs/math/mat4.js"></script>
 <script src="src/structs/math/Transform.js"></script>
-<script src="src/handler/handler.js"></script>
-
-<script src="src/structs//math/matrices.js"></script>
-
-<script src="src/structs/model/test.js"></script>
-
-<script src="src/index.js"></script>
 </html>

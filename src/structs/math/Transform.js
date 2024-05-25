@@ -1,7 +1,6 @@
-import Mat4 from "./mat4";
-import { degToRad } from "./mathUtils";
 
-export default class Transform{
+
+class Transform{
     constructor(projection, translation, rotation, scale, centroid){
         let [xp, yp, zp] = projection;
         this.projection = {
