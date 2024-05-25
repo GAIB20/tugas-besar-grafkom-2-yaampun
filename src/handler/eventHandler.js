@@ -13,6 +13,7 @@ import { target,
     changeMappingTexture,
     addNode,
     loadObjects,
+    addModel,
     model,
     fps} from "../index.js"
 import { degToRad, radToDeg } from "../structs/math/mathUtils.js";

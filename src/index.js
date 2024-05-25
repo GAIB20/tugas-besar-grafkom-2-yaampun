@@ -22,6 +22,7 @@ import Animation from "./utils/Animation.js";
 import Node from "./structs/node.js";
 import { degToRad } from "./structs/math/mathUtils.js";
 import CharacterController from "./utils/CharacterController.js";
+import boxModel from "./structs/boxModel.js";
 
 const canvas = document.getElementById("gl-canvas");
 const gl = canvas.getContext("webgl");
@@ -416,15 +417,17 @@ export function addNode () {
     scale: [1, 1, 1],
   };
   newNode.pickedColor = randomColors(),
-  newNode.diffuse = [1,1,1],
-  newNode.specular = [1,1,1],
-  newNode.ambient = [1,1,1],
-  newNode.shininess = 1,
+  newNode.ambient = [1,1,1];
+  newNode.phong = true;
+  newNode.phongAmbient = [0,0,0],
+  newNode.diffuse = [1,1,1];
+  newNode.specular = [1,1,1];
+  newNode.shininess = 1;
   newNode.const = {
-      kd: 0.5,
+      kd: 1.0,
       ks: 0.0,
       ka: 1.0,
-  }
+  };
   newNode.viewMatrix = {
       camera: [0, 0, 5],
       lookAt: [0, 0, 0],
@@ -442,7 +445,7 @@ export function addNode () {
     objects.push(newNode);
     target = objects[0];
     targetRoot = objects[0];
-    console.log(objects)
+    render();
   }
   clearComponent();
   displayComponent(0, objects);
