@@ -91,6 +91,9 @@ function setUniforms(gl, program, uniforms) {
   setUniform1f("ka", uniforms.ka);
   setUniform1f("kd", uniforms.kd);
   setUniform1f("ks", uniforms.ks);
+  setUniform1f("uTexType", uniforms.uTexType);
   setUniform1i("uPhong", uniforms.uPhong);
   setUniform1i("uSpotLight", uniforms.uSpotLight);
+  setUniform1i("uShading", uniforms.ushading);
+  setUniform1i("uTexture", 0);
 }

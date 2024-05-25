@@ -1,4 +1,4 @@
-export function createPaperTexture(gl) {
+export function createTextureObject(gl, type) {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texImage2D(
@@ -12,8 +12,21 @@ export function createPaperTexture(gl) {
     gl.UNSIGNED_BYTE,
     new Uint8Array([0, 0, 0, 0])
   );
+  var url;
+  switch (type) {
+    case 1:
+      url = "./mapping/paper.jpeg";
+      break;
+    // case 2:
+    //   url = "./mapping/brick.jpg";
+    //   break;
+    // case 3:
+    //   url = "./mapping/paper.jpg";
+    //   break;
+  }
 
   const image = new Image();
+  image.src = url; 
   image.onload = function() {
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
@@ -25,7 +38,6 @@ export function createPaperTexture(gl) {
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     }
   };
-  image.src = "./mapping/paper.jpeg"; 
   return texture;
 }
 
