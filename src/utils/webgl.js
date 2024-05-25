@@ -81,7 +81,6 @@ function setUniforms(gl, program, uniforms) {
 
   setUniformMatrix4fv("uWorldViewProjection", uniforms.uWorldViewProjection);
   setUniformMatrix4fv("uWorldInverseTranspose", uniforms.uWorldInverseTranspose);
-  setUniformMatrix4fv("uModelMatrix", uniforms.uModelMatrix);
   setUniform4fv("uColor", uniforms.uColor);
   setUniform3fv("uAmbientColor", uniforms.uAmbientColor); 
   setUniform3fv("uPhongAmbientColor", uniforms.uPhongAmbientColor);

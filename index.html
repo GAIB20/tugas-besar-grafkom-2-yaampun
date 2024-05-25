@@ -22,8 +22,6 @@
         varying vec3 vPosition;
         varying vec4 fragColor;
         varying vec2 vTexture;
-        varying float colorFactor;
-        varying mat4 viewMatrix;
         varying mat3 vTBN;
         varying vec3 ts_light_pos; 
         varying vec3 ts_view_pos;  
@@ -48,7 +46,6 @@
         }
 
         void main(void) {
-            viewMatrix = uWorldViewProjection;
             gl_Position = uWorldViewProjection * vec4(aPosition, 1.0);
         
             vPosition = (uWorldInverseTranspose * vec4(aPosition, 1.0)).xyz;
@@ -92,8 +89,6 @@
         uniform float kd;
         uniform float ks;
         uniform float ka;
-
-        uniform vec3 uReverseLightDirection;
         uniform vec4 uColor;
 
         void main(void) {

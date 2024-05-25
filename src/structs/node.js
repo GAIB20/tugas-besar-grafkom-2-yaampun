@@ -8,10 +8,6 @@ export default class Node {
         this.worldMatrix = Mat4.getIdentity();
         this.worldInverseMatrix = Mat4.getIdentity();
     }
-
-    getWorldMatrix() {
-        return this.worldMatrix;
-    }
   
     setParent(parent) {
         // already have parent

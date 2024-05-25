@@ -197,7 +197,6 @@ function setDefaultRotation(objects) {
 function renderLoop(objects) {
     objects.forEach(object => {
         gl.useProgram(object.program);
-        var modelMatrix = object.getWorldMatrix();
 
         object.worldMatrix = setProjectionMatrix(object.worldMatrix, object)
 
@@ -213,9 +212,7 @@ function renderLoop(objects) {
         var uniforms = {
             uWorldViewProjection: object.worldMatrix,
             uWorldInverseTranspose: object.worldInverseMatrix,
-            uReverseLightDirection: normalizeLight,
             uColor: object.pickedColor.concat(1.0),
-            uModelMatrix: modelMatrix,
             uAmbientColor: object.ambient,
             uDiffuseColor: object.pickedColor,
             uSpecularColor: object.specular,
