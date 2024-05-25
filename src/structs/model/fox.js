@@ -747,7 +747,7 @@ const tailedge = new Node();
 tailedge.name = "tailedge";
 tailedge.model = boxModel(0.2, 0.2, 0.2, [0, 0, 0]);
 tailedge.transform = {
-  translate: [0, 0, -0.95], 
+  translate: [0, 0, -0.30], 
   rotate: [0, 0, 0],
   scale: [1, 1, 1],
 };
@@ -793,7 +793,7 @@ rightRearToe.setParent(rightRearLeg);
 leftRearLeg.setParent(fox);
 leftRearToe.setParent(leftRearLeg);
 tail.setParent(fox);
-tailedge.setParent(fox);
+tailedge.setParent(tail);
 
 var foxModel = [
   fox
