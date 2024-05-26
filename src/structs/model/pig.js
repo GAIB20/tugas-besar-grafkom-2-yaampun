@@ -3,8 +3,8 @@ import { degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
 import boxModel from "../boxModel.js";
 
-var texType = 1;
-var shading = true;
+var texType = 0;
+var shading = false;
 var phong = true;
 
 
@@ -26,8 +26,8 @@ pig.specular = [1,1,1];
 pig.shininess = 1;
 pig.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 pig.viewMatrix = {
     camera: [0, 0, 5],
@@ -81,8 +81,8 @@ head.specular = [1,1,1];
 head.shininess = 1;
 head.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 head.viewMatrix = {
     camera: [0, 0, 5],
@@ -140,8 +140,8 @@ whiteRightEye.specular = [1,1,1];
 whiteRightEye.shininess = 1;
 whiteRightEye.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 whiteRightEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -152,11 +152,7 @@ whiteRightEye.viewMatrix = {
 };
 whiteRightEye.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 whiteRightEye.phong = phong;
 whiteRightEye.texType = texType;
@@ -179,8 +175,8 @@ whiteLeftEye.specular = [1,1,1];
 whiteLeftEye.shininess = 1;
 whiteLeftEye.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 whiteLeftEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -191,11 +187,7 @@ whiteLeftEye.viewMatrix = {
 };
 whiteLeftEye.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 whiteLeftEye.phong = phong;
 whiteLeftEye.texType = texType;
@@ -218,8 +210,8 @@ blackRightEye.specular = [1,1,1];
 blackRightEye.shininess = 1;
 blackRightEye.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 blackRightEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -230,11 +222,7 @@ blackRightEye.viewMatrix = {
 };
 blackRightEye.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 blackRightEye.phong = phong;
 blackRightEye.texType = texType;
@@ -257,8 +245,8 @@ blackLeftEye.specular = [1,1,1];
 blackLeftEye.shininess = 1;
 blackLeftEye.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 blackLeftEye.viewMatrix = {
     camera: [0, 0, 5],
@@ -269,11 +257,7 @@ blackLeftEye.viewMatrix = {
 };
 blackLeftEye.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 blackLeftEye.phong = phong;
 blackLeftEye.texType = texType;
@@ -296,8 +280,8 @@ nose.specular = [1,1,1];
 nose.shininess = 1;
 nose.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 nose.viewMatrix = {
     camera: [0, 0, 5],
@@ -308,11 +292,7 @@ nose.viewMatrix = {
 };
 nose.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 nose.phong = phong;
 nose.texType = texType;
@@ -335,8 +315,8 @@ rightHole.specular = [1,1,1];
 rightHole.shininess = 1;
 rightHole.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 rightHole.viewMatrix = {
     camera: [0, 0, 5],
@@ -347,11 +327,7 @@ rightHole.viewMatrix = {
 };
 rightHole.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 rightHole.phong = phong;
 rightHole.texType = texType;
@@ -374,8 +350,8 @@ leftHole.specular = [1,1,1];
 leftHole.shininess = 1;
 leftHole.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 leftHole.viewMatrix = {
     camera: [0, 0, 5],
@@ -386,11 +362,7 @@ leftHole.viewMatrix = {
 };
 leftHole.animation = {
     isAnimate: false,
-    frames: null,
-    currentFrame: 0,
-    animationFunction: null,
-    isAuto: false,
-    isReverse: false
+    degAnimate: 0.1,
 };
 leftHole.phong = phong;
 leftHole.texType = texType;
@@ -413,8 +385,8 @@ rightFrontLeg.specular = [1,1,1];
 rightFrontLeg.shininess = 1;
 rightFrontLeg.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 rightFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
@@ -471,8 +443,8 @@ leftFrontLeg.specular = [1,1,1];
 leftFrontLeg.shininess = 1;
 leftFrontLeg.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 leftFrontLeg.viewMatrix = {
     camera: [0, 0, 5],
@@ -528,8 +500,8 @@ rightRearLeg.specular = [1,1,1];
 rightRearLeg.shininess = 1;
 rightRearLeg.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 rightRearLeg.viewMatrix = {
     camera: [0, 0, 5],
@@ -585,8 +557,8 @@ leftRearLeg.specular = [1,1,1];
 leftRearLeg.shininess = 1;
 leftRearLeg.const = {
     kd: 1.0,
-    ks: 1.0,
-    ka: 0.5,
+    ks: 0.0,
+    ka: 0.8,
 };
 leftRearLeg.viewMatrix = {
     camera: [0, 0, 5],
