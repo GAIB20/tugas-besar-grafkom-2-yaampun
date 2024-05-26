@@ -435,6 +435,8 @@ export function addNode () {
       isAnimate: false,
   };
   newNode.worldMatrix = target.worldMatrix;
+  newNode.texType = 0;
+  newNode.shading = false;
   if (objects.length !== 0) {
     newNode.setParent(target);
   } else {

@@ -824,6 +824,7 @@ material.addEventListener('change', function(){
 
 shadingSelection.addEventListener('change', function(){
     target.shading = shadingSelection.value == 1 ? true : false;
+    console.log(target)
 });
 
 spotLight.addEventListener('change', function(){

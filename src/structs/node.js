@@ -53,8 +53,10 @@ export default class Node {
           pickedColor: this.pickedColor,
           phong: this.phong,
           phongAmbient: this.phongAmbient,
+          shading:this.shading,
           shininess: this.shininess,
           specular: this.specular,
+          texType: this.texType,
           transform: this.transform,
           viewMatrix: this.viewMatrix,  
           worldInverseMatrix: this.worldInverseMatrix,
@@ -78,8 +80,10 @@ export default class Node {
         this.pickedColor = data.pickedColor;
         this.phong = data.phong;
         this.phongAmbient = data.phongAmbient;
+        this.shading = data.shading;
         this.shininess = data.shininess;
         this.specular = data.specular;
+        this.texType = data.texType;
         this.transform = data.transform;
         this.viewMatrix = data.viewMatrix;
         this.worldInverseMatrix = data.worldInverseMatrix;
