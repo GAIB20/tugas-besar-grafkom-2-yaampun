@@ -19,7 +19,7 @@ import { displayComponent,
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
 import hollowCubeModel from "./structs/model/Cube.js";
-import { createTextureObject, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js";
+import { createTextureObject } from "./utils/texture.js";
 import { nodeName } from "./handler/eventHandler.js";
 import Animation from "./utils/Animation.js";
 import Node from "./structs/node.js";
