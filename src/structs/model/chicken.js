@@ -3,6 +3,9 @@ import { degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
 import boxModel from "../boxModel.js";
 
+var texType = 0;
+var shading = true;
+
 // Create the chicken body node
 const chicken = new Node();
 chicken.flag = "articulated";
@@ -32,6 +35,9 @@ chicken.viewMatrix = {
     near: 0.1,
     far: 50,
 };
+chicken.texType = texType;
+chicken.shading = shading;
+
 
 function chickenFrames(){
     let transform = {
@@ -95,6 +101,8 @@ head.animation = {
     isAuto: false,
     isReverse: false
 };
+head.texType = texType;
+head.shading = shading;
 
 // Create the beak node
 const beak = new Node();
@@ -132,6 +140,8 @@ beak.animation = {
     isAuto: false,
     isReverse: false
 };
+beak.texType = texType;
+beak.shading = shading;
 
 const whiteLeftEye = new Node();
 whiteLeftEye.name = "whiteLeftEye";
@@ -168,6 +178,8 @@ whiteLeftEye.animation = {
     isAuto: false,
     isReverse: false
 };
+whiteLeftEye.texType = texType;
+whiteLeftEye.shading = shading;
 
 const blackLeftEye = new Node();
 blackLeftEye.name = "blackLeftEye";
@@ -205,6 +217,8 @@ blackLeftEye.animation = {
     isReverse: false
 
 };
+blackLeftEye.texType = texType;
+blackLeftEye.shading = shading;
 
 const whiteRightEye = new Node();
 whiteRightEye.name = "whiteRightEye";
@@ -242,6 +256,8 @@ whiteRightEye.animation = {
     isReverse: false
 
 };
+whiteRightEye.texType = texType;
+whiteRightEye.shading = shading;
 
 const blackRightEye = new Node();
 blackRightEye.name = "blackRightEye";
@@ -278,6 +294,8 @@ blackRightEye.animation = {
     isAuto: false,
     isReverse: false
 };
+blackRightEye.texType = texType;
+blackRightEye.shading = shading;
 
 
 
@@ -348,6 +366,8 @@ leftWing.animation = {
     isAuto: false,
     isReverse: false
 };
+leftWing.texType = texType;
+leftWing.shading = shading;
 
 // Create the right wing node
 const rightWing = new Node();
@@ -416,6 +436,9 @@ rightWing.animation = {
     isReverse: false
 };
 
+rightWing.texType = texType;
+rightWing.shading = shading;
+
 // Create the right leg node
 const rightLeg = new Node();
 rightLeg.name = "rightLeg";
@@ -444,6 +467,8 @@ rightLeg.viewMatrix = {
     near: 0.1,
     far: 50,
 };
+rightLeg.texType = texType;
+rightLeg.shading = shading;
 
 function rightLegFrames(){
     let transform = {
@@ -526,6 +551,8 @@ rightFoot.animation = {
     isAuto: false,
     isReverse: false
 };
+rightFoot.texType = texType;
+rightFoot.shading = shading;
 
 // Create the left leg node
 const leftLeg = new Node();
@@ -599,6 +626,9 @@ leftLeg.animation = {
     isReverse: false
 };
 
+leftLeg.texType = texType;
+leftLeg.shading = shading;
+
 // Create the left foot node
 const leftFoot = new Node();
 leftFoot.name = "leftFoot";
@@ -635,17 +665,10 @@ leftFoot.animation = {
     isAuto: false,
     isReverse: false
 };
+leftFoot.texType = texType;
+leftFoot.shading = shading;
 
 
-
-
-// Assemble the chicken model
-// chicken.addChild(head);
-// head.addChild(beak);
-// chicken.addChild(leftWing);
-// chicken.addChild(rightWing);
-// chicken.addChild(leftLeg);
-// chicken.addChild(rightLeg);
 
 // Assemble the chicken model
 head.setParent(chicken);

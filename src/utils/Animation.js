@@ -202,16 +202,16 @@ export default class Animation{
         doc.getElementById("translation-x-slider").value = tx*50;
         doc.getElementById("translation-y-slider").value = ty*50;
         doc.getElementById("translation-z-slider").value = tz*50;
-        doc.getElementById("translation-x-slider-value").innerHTML = tx.toFixed(2);    
-        doc.getElementById("translation-y-slider-value").innerHTML = ty.toFixed(2);
-        doc.getElementById("translation-z-slider-value").innerHTML = tz.toFixed(2);
+        doc.getElementById("translation-x-slider-value").innerHTML = (tx * 1.00).toFixed(2);    
+        doc.getElementById("translation-y-slider-value").innerHTML = (ty * 1.00).toFixed(2);
+        doc.getElementById("translation-z-slider-value").innerHTML = (tz * 1.00).toFixed(2);
         // rotation tx, ty, tz 
         doc.getElementById("rotation-x-slider").value = rx;
         doc.getElementById("rotation-y-slider").value = ry;
         doc.getElementById("rotation-z-slider").value = rz;
-        doc.getElementById("rotation-x-slider-value").innerHTML = rx.toFixed(2);
-        doc.getElementById("rotation-y-slider-value").innerHTML = ry.toFixed(2);
-        doc.getElementById("rotation-z-slider-value").innerHTML = rz.toFixed(2);
+        doc.getElementById("rotation-x-slider-value").innerHTML = (rx * 1.00).toFixed(2);
+        doc.getElementById("rotation-y-slider-value").innerHTML = (ry * 1.00).toFixed(2);
+        doc.getElementById("rotation-z-slider-value").innerHTML = (rz * 1.00).toFixed(2);
         // scale sx, sy, sz
         doc.getElementById("scalation-x-slider").value = sx*10;
         doc.getElementById("scalation-y-slider").value = sy*10;

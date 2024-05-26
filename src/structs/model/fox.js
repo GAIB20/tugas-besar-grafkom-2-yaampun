@@ -8,6 +8,9 @@ const whiteColor = [0.99, 0.99, 0.99];
 const blackColor = [0, 0, 0];
 const brownColor = [0.545, 0.271, 0.075];
 
+var texType = 0
+var shading = true
+
 const fox = new Node();
 fox.flag = "articulated";
 fox.name = "fox";
@@ -44,6 +47,8 @@ fox.animation = {
   isAuto: false,
   isReverse: false
 };
+fox.texType = 0;
+fox.shading = true;
 
 function foxFrames() {
   let transform = {
@@ -92,8 +97,16 @@ head.viewMatrix = {
 };
 head.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+
+head.texType = 0;
+head.shading = true;
+
 
 const whiteRightEye = new Node();
 whiteRightEye.name = "whiteRightEye";
@@ -124,7 +137,11 @@ whiteRightEye.viewMatrix = {
 };
 whiteRightEye.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 
 const whiteLeftEye = new Node();
@@ -156,8 +173,16 @@ whiteLeftEye.viewMatrix = {
 };
 whiteLeftEye.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+
+whiteLeftEye.texType = 0;
+whiteLeftEye.shading = true;
+
 
 const blackRightEye = new Node();
 blackRightEye.name = "blackRightEye";
@@ -188,8 +213,15 @@ blackRightEye.viewMatrix = {
 };
 blackRightEye.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+blackRightEye.texType = 0;
+blackRightEye.shading = true;
+
 
 const blackLeftEye = new Node();
 blackLeftEye.name = "blackLeftEye";
@@ -220,8 +252,16 @@ blackLeftEye.viewMatrix = {
 };
 blackLeftEye.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+
+blackLeftEye.texType = 0;
+blackLeftEye.shading = true;
+
 
 const nose = new Node();
 nose.name = "nose";
@@ -252,8 +292,15 @@ nose.viewMatrix = {
 };
 nose.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+nose.texType = 0;
+nose.shading = true;
+
 
 const undernose = new Node();
 undernose.name = "undernose";
@@ -284,8 +331,15 @@ undernose.viewMatrix = {
 };
 undernose.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+undernose.texType = 0;
+undernose.shading = true;
+
 
 const rightEar = new Node();
 rightEar.name = "rightEar";
@@ -316,8 +370,15 @@ rightEar.viewMatrix = {
 };
 rightEar.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+rightEar.texType = 0;
+rightEar.shading = true;
+
 
 const leftEar = new Node();
 leftEar.name = "leftEar";
@@ -348,8 +409,15 @@ leftEar.viewMatrix = {
 };
 leftEar.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+leftEar.texType = 0;
+leftEar.shading = true;
+
 
 const rightFrontLeg = new Node();
 rightFrontLeg.name = "rightFrontLeg";
@@ -386,6 +454,9 @@ rightFrontLeg.animation = {
   isAuto: false,
   isReverse: false
 };
+rightFrontLeg.texType = 0;
+rightFrontLeg.shading = true;
+
 
 function rightFrontLegFrames () {
   let transform = {
@@ -438,8 +509,15 @@ rightFrontToe.viewMatrix = {
 };
 rightFrontToe.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+rightFrontToe.texType = 0;
+rightFrontToe.shading = true;
+
 
 const leftFrontLeg = new Node();
 leftFrontLeg.name = "leftFrontLeg";
@@ -476,6 +554,10 @@ leftFrontLeg.animation = {
   isAuto: false,
   isReverse: false
 };
+
+leftFrontLeg.texType = 0;
+leftFrontLeg.shading = true;
+
 
 function leftFrontLegFrames () {
   let transform = {
@@ -528,8 +610,16 @@ leftFrontToe.viewMatrix = {
 };
 leftFrontToe.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+
+leftFrontToe.texType = 0;
+leftFrontToe.shading = true;
+
 
 const rightRearLeg = new Node();
 rightRearLeg.name = "rightRearLeg";
@@ -566,6 +656,9 @@ rightRearLeg.animation = {
     isAuto: false,
     isReverse: false
 };
+rightRearLeg.texType = 0;
+rightRearLeg.shading = true;
+
 
 function rightRearLegFrames() {
   let transform = {
@@ -619,8 +712,15 @@ rightRearToe.viewMatrix = {
 };
 rightRearToe.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+rightRearToe.texType = 0;
+rightRearToe.shading = true;
+
 
 const leftRearLeg = new Node();
 leftRearLeg.name = "leftRearLeg";
@@ -657,6 +757,10 @@ leftRearLeg.animation = {
   isAuto: false,
   isReverse: false
 };
+
+leftRearLeg.texType = 0;
+leftRearLeg.shading = true;
+
 
 function leftRearLegFrames() {
   let transform = {
@@ -708,8 +812,15 @@ leftRearToe.viewMatrix = {
 };
 leftRearToe.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+leftRearToe.texType = 0;
+leftRearToe.shading = true;
+
 
 const tail = new Node();
 tail.name = "tail";
@@ -740,14 +851,21 @@ tail.viewMatrix = {
 };
 tail.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+tail.texType = 0;
+tail.shading = true;
+
 
 const tailedge = new Node();
 tailedge.name = "tailedge";
 tailedge.model = boxModel(0.2, 0.2, 0.2, [0, 0, 0]);
 tailedge.transform = {
-  translate: [0, 0, -0.95], 
+  translate: [0, 0, -0.30], 
   rotate: [0, 0, 0],
   scale: [1, 1, 1],
 };
@@ -772,8 +890,16 @@ tailedge.viewMatrix = {
 };
 tailedge.animation = {
   isAnimate: false,
-  degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
+
+tailedge.texType = 0;
+tailedge.shading = true;
+
 
 head.setParent(fox);
 rightEar.setParent(head);
@@ -793,7 +919,7 @@ rightRearToe.setParent(rightRearLeg);
 leftRearLeg.setParent(fox);
 leftRearToe.setParent(leftRearLeg);
 tail.setParent(fox);
-tailedge.setParent(fox);
+tailedge.setParent(tail);
 
 var foxModel = [
   fox

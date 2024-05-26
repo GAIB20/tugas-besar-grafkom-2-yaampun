@@ -18,6 +18,7 @@ import { displayComponent,
   } from "./handler/eventHandler.js";
 import hollowModel from "./structs/model/hollowThingy.js";
 import hollowRingModel from "./structs/model/ring.js";
+import hollowCubeModel from "./structs/model/Cube.js";
 import { createTextureObject, createEnvironmentTexture, createBumpTexture } from "./utils/texture.js"
 import Animation from "./utils/Animation.js";
 import Node from "./structs/node.js";
@@ -33,7 +34,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-export var model = [pigModel, chickenModel, foxModel, hollowModel, hollowRingModel];
+export var model = [pigModel, chickenModel, foxModel, hollowModel, hollowRingModel, hollowCubeModel];
 export var objects;
 export function setObjects(value) {
   objects = value;

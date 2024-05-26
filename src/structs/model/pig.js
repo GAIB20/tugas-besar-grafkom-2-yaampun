@@ -152,7 +152,11 @@ whiteRightEye.viewMatrix = {
 };
 whiteRightEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 whiteRightEye.phong = phong;
 whiteRightEye.texType = texType;
@@ -187,7 +191,11 @@ whiteLeftEye.viewMatrix = {
 };
 whiteLeftEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 whiteLeftEye.phong = phong;
 whiteLeftEye.texType = texType;
@@ -222,7 +230,11 @@ blackRightEye.viewMatrix = {
 };
 blackRightEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 blackRightEye.phong = phong;
 blackRightEye.texType = texType;
@@ -257,7 +269,11 @@ blackLeftEye.viewMatrix = {
 };
 blackLeftEye.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 blackLeftEye.phong = phong;
 blackLeftEye.texType = texType;
@@ -292,7 +308,11 @@ nose.viewMatrix = {
 };
 nose.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 nose.phong = phong;
 nose.texType = texType;
@@ -327,7 +347,11 @@ rightHole.viewMatrix = {
 };
 rightHole.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 rightHole.phong = phong;
 rightHole.texType = texType;
@@ -362,7 +386,11 @@ leftHole.viewMatrix = {
 };
 leftHole.animation = {
     isAnimate: false,
-    degAnimate: 0.1,
+    frames: null,
+    currentFrame: 0,
+    animationFunction: null,
+    isAuto: false,
+    isReverse: false
 };
 leftHole.phong = phong;
 leftHole.texType = texType;
