@@ -45,33 +45,6 @@ function generateTexCoor () {
     0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1,
   ]
 }
-function generateTangents() {
-  return [
-    //back
-    0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
-    //bottom
-    0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0,
-    //left
-    -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
-    //right
-    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
-    //top
-    0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-    //front
-    0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
-  ]
-}
-
-function generateBitangents() {
-    return [
-        0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-        0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
-        0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
-        0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0,
-        -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0,
-        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
-    ]
-}
 
 export function generateNormals(vertices, faces) {
   let normals = [];
@@ -117,16 +90,11 @@ export default function boxModel(height, width, depth, offset) {
   let texCoord = generateTexCoor();
   let normals = generateNormals(vertices, faces);
   vertices = toVertices(vertices, faces);
-
-  let tangents = generateTangents();
-  let bitangents = generateBitangents();
   let colors = generateColors(vertices);
   
   return {
     vertices: vertices,
     faces: faces,
-    tangents: tangents,
-    bitangents: bitangents,
     normals: normals,
     colors: colors,
     texCoord: texCoord,

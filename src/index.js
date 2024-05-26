@@ -125,14 +125,14 @@ function setDefaultState(objects) {
         }
       
         if (!object.program ) {
-            
-            createTextureObject(gl, object.texType);
-            
-            object.program = createShaderProgram(
-                gl,
-                vertexShaderSource,
-                fragmentShaderSource
-            );
+          if (object.texType == "0") {
+            object.program = createShaderProgram(gl, vertexShaderSource, fragmentShaderSource);
+            object.texture = null;
+          } else {
+            const texture = createTextureObject(gl, object.texType);
+            object.texture = texture;
+            object.program = createShaderProgram(gl, vertexShaderSource, fragmentShaderSource);
+          }
         } 
         object.localMatrix = setTransform(object);
         if (object.children.length > 0) {
@@ -206,15 +206,18 @@ function renderLoop(objects) {
     objects.forEach(object => {
         gl.useProgram(object.program);
 
+        if (object.texture) {
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, object.texture);    
+        }
+
         object.worldMatrix = setProjectionMatrix(object.worldMatrix, object)
 
         var a_position = new Float32Array(object.model.vertices.flat(1));
         var a_normal = new Float32Array(object.model.normals.flat(1));
         var a_color = new Float32Array(object.pickedColor.flat(1));
         var a_texture = new Float32Array(object.model.texCoord);
-        var a_tangent = new Float32Array(object.model.tangents.flat(1));
-        var a_bitangent = new Float32Array(object.model.bitangents.flat(1));
-        setAttr(gl, object.program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent);
+        setAttr(gl, object.program, a_position, a_normal, a_color, a_texture);
         var uniforms = {
             uWorldViewProjection: object.worldMatrix,
             uWorldInverseTranspose: object.worldInverseMatrix,
@@ -237,8 +240,11 @@ function renderLoop(objects) {
         setUniforms(gl, object.program, uniforms);
 
         gl.drawArrays(gl.TRIANGLES, 0, object.model.vertices.length);
+
+        
         if (object.children.length > 0) {
             renderLoop(object.children);
+            
         }
     });
 }
@@ -346,26 +352,18 @@ export function changeModelObject (index) {
     render();
 }
 
-export function changeMappingTexture() {
-  objects.forEach((object) => {
-    if (textureType === "0") {
-      object.program = createShaderProgram(
-        gl,
-        vertex_shader_3d,
-        fragment_shader_texture
-      );
-    } else if (textureType === "1") {
-      createTextureObject(gl, 1);
-      object.program = createShaderProgram(
-        gl,
-        vertex_shader_3d,
-        fragment_shader_texture
-      );
-    } 
-    if (object.children.length > 0) {
-      changeMappingTexture(object.children, textureType);
+
+
+
+export function changeMappingTexture(target) {
+    if (target.texType == "0") {
+      target.program = createShaderProgram(gl, vertexShaderSource, fragmentShaderSource);
+      target.texture = null;
+    } else {
+      const texture = createTextureObject(gl, target.texType);
+      target.texture = texture;
+      target.program = createShaderProgram(gl, vertexShaderSource, fragmentShaderSource);
     }
-  });
 }
 
 export function renameTarget (newName) {

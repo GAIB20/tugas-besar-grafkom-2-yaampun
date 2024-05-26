@@ -67,6 +67,7 @@ const followModel = document.getElementById('follow-model');
 // model 
 const modelSelection = document.getElementById('model-selection');
 const mappingSelection = document.getElementById('mapping-selection');
+const shadingSelection = document.getElementById('shading-selection');
 
 // animation
 
@@ -308,6 +309,9 @@ export function handleTransform(node){
     material.value = node.phong ? 1 : 0;
 
     nodeName.value = node.name;
+
+    mappingSelection.value = node.texType;
+    shadingSelection.value = node.shading ? 1 : 0;
 }
 
 
@@ -406,15 +410,12 @@ followModel.addEventListener('click', function(){
     }
 })
 
-var state = {
-    objects: []
-};
 
 // texture selection
 mappingSelection.addEventListener("change", function (e) {
     console.log(mappingSelection.value)
     target.texType = mappingSelection.value;
-    changeMappingTexture();
+    changeMappingTexture(target);
 });
 
 // animation
@@ -813,6 +814,10 @@ document.addEventListener('keydown', function(event) {
 
 material.addEventListener('change', function(){
     target.phong = material.value == 1 ? true : false;
+});
+
+shadingSelection.addEventListener('change', function(){
+    target.shading = shadingSelection.value == 1 ? true : false;
 });
 
 spotLight.addEventListener('change', function(){

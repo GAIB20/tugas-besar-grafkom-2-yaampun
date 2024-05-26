@@ -34,7 +34,7 @@ function createShaderProgram(gl, vertexShaderSource, fragmentShaderSource) {
     return program;
 }
 
-function setAttr(gl, program, a_position, a_normal, a_color, a_texture, a_tangent, a_bitangent) {
+function setAttr(gl, program, a_position, a_normal, a_color, a_texture) {
   const bindAttrib = (bufferData, attribName, size) => {
       const buffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -46,10 +46,7 @@ function setAttr(gl, program, a_position, a_normal, a_color, a_texture, a_tangen
 
   bindAttrib(a_position, "aPosition", 3);
   bindAttrib(a_normal, "aNormal", 3);
-  bindAttrib(a_color, "aColor", 3);
   bindAttrib(a_texture, "aTexture", 2);
-  bindAttrib(a_tangent, "aTangent", 3);
-  bindAttrib(a_bitangent, "aBitangent", 3);
 }
 
 function setUniforms(gl, program, uniforms) {

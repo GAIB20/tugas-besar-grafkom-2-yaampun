@@ -1,4 +1,8 @@
 export function createTextureObject(gl, type) {
+  
+  type = Number(type);
+
+
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texImage2D(
@@ -17,12 +21,18 @@ export function createTextureObject(gl, type) {
     case 1:
       url = "./mapping/paper.jpeg";
       break;
-    // case 2:
-    //   url = "./mapping/brick.jpg";
-    //   break;
-    // case 3:
-    //   url = "./mapping/paper.jpg";
-    //   break;
+    case 2:
+      url = "./mapping/bump.png";
+      break;
+    case 3:
+      url = "./mapping/brick.jpg";
+      break;
+  }
+
+  if (url === undefined) {
+    console.log("Invalid texture type");
+    return texture;
+
   }
 
   const image = new Image();

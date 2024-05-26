@@ -3,7 +3,7 @@ import { degToRad } from "../math/mathUtils.js";
 import Animation from "../../utils/Animation.js";
 import boxModel from "../boxModel.js";
 
-var texType = 0;
+var texType = 1;
 var shading = true;
 var phong = true;
 
