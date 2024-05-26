@@ -81,6 +81,9 @@ hollow.animation = {
   isAuto: true,
   isReverse: false
 };
+hollow.texType = 0;
+hollow.shading = true;
+
 
 function hollowFrames () {
   let transform = {

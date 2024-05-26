@@ -621,6 +621,12 @@ verifyAddFrameButton.addEventListener('click', function(){
         handleTotalModelFrame(targetRoot);
         handleTotalNodeFrame(target);
     }
+    else{
+        target.animation.frames = [transform]
+        handleTotalModelFrame(targetRoot);
+        handleTotalNodeFrame(target);
+        target.animation.animationFunction = Animation.animationScript()
+    }
 
     
     

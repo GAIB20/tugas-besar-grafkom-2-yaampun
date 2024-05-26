@@ -34,7 +34,7 @@ const vertexShaderSource = document.getElementById("vertex-shader-3d")?.textCont
 const fragmentShaderSource = document.getElementById("fragment-shader-3d")?.textContent;
 
 // state
-export var model = [hollowCubeModel, pigModel, chickenModel, foxModel, hollowModel, hollowRingModel];
+export var model = [pigModel, chickenModel, foxModel, hollowModel, hollowRingModel, hollowCubeModel];
 export var objects;
 export function setObjects(value) {
   objects = value;
